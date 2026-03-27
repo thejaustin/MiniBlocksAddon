@@ -1,0 +1,119 @@
+{
+  "resource_pack_name": "MiniBlocksAddon",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "mini_dirt": {
+      "textures": "textures/blocks/mini_dirt"
+    },
+    "cobblestone": {
+      "textures": "textures/blocks/cobblestone"
+    },
+    "andesite": {
+      "textures": "textures/blocks/andesite"
+    },
+    "birch": {
+      "textures": "textures/blocks/birch"
+    },
+    "blackstone": {
+      "textures": "textures/blocks/blackstone"
+    },
+    "brick": {
+      "textures": "textures/blocks/brick"
+    },
+    "crimson": {
+      "textures": "textures/blocks/crimson"
+    },
+    "cut_copper": {
+      "textures": "textures/blocks/cut_copper"
+    },
+    "cut_red_sandstone": {
+      "textures": "textures/blocks/cut_red_sandstone"
+    },
+    "cut_sandstone": {
+      "textures": "textures/blocks/cut_sandstone"
+    },
+    "dark_oak": {
+      "textures": "textures/blocks/dark_oak"
+    },
+    "deepslate": {
+      "textures": "textures/blocks/deepslate"
+    },
+    "diorite": {
+      "textures": "textures/blocks/diorite"
+    },
+    "end_stone_brick": {
+      "textures": "textures/blocks/end_stone_brick"
+    },
+    "granite": {
+      "textures": "textures/blocks/granite"
+    },
+    "jungle": {
+      "textures": "textures/blocks/jungle"
+    },
+    "mossy_cobblestone": {
+      "textures": "textures/blocks/mossy_cobblestone"
+    },
+    "mossy_stone_brick": {
+      "textures": "textures/blocks/mossy_stone_brick"
+    },
+    "nether_brick": {
+      "textures": "textures/blocks/nether_brick"
+    },
+    "oak": {
+      "textures": "textures/blocks/oak"
+    },
+    "polished_andesite": {
+      "textures": "textures/blocks/polished_andesite"
+    },
+    "polished_blackstone": {
+      "textures": "textures/blocks/polished_blackstone"
+    },
+    "polished_diorite": {
+      "textures": "textures/blocks/polished_diorite"
+    },
+    "polished_granite": {
+      "textures": "textures/blocks/polished_granite"
+    },
+    "purpur": {
+      "textures": "textures/blocks/purpur"
+    },
+    "quartz": {
+      "textures": "textures/blocks/quartz"
+    },
+    "red_nether_brick": {
+      "textures": "textures/blocks/red_nether_brick"
+    },
+    "red_sandstone": {
+      "textures": "textures/blocks/red_sandstone"
+    },
+    "sandstone": {
+      "textures": "textures/blocks/sandstone"
+    },
+    "smooth_quartz": {
+      "textures": "textures/blocks/smooth_quartz"
+    },
+    "smooth_red_sandstone": {
+      "textures": "textures/blocks/smooth_red_sandstone"
+    },
+    "smooth_sandstone": {
+      "textures": "textures/blocks/smooth_sandstone"
+    },
+    "smooth_stone": {
+      "textures": "textures/blocks/smooth_stone"
+    },
+    "spruce": {
+      "textures": "textures/blocks/spruce"
+    },
+    "stone": {
+      "textures": "textures/blocks/stone"
+    },
+    "stone_brick": {
+      "textures": "textures/blocks/stone_brick"
+    },
+    "warped": {
+      "textures": "textures/blocks/warped"
+    }
+  }
+}

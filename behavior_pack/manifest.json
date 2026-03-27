@@ -1,0 +1,24 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "MiniBlocks Addon Behaviors",
+        "name": "MiniBlocksAddon Behaviors",
+        "uuid": "bc0185a8-9c3b-49c6-ae39-bb00c30be6c6",
+        "version": [1, 0, 0],
+        "min_engine_version": [ 1, 21, 111 ]
+    },
+    "modules": [
+        {
+            "description": "MiniBlocks Addon Behaviors",
+            "type": "data",
+            "uuid": "cfac9ab0-4a76-420e-93e1-6f6cb44222d4",
+            "version": [1, 0, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "dcb30d8d-9ac8-4c34-bf67-49f3419aceb3",
+            "version": [1, 0, 0]
+        }
+    ]
+}
