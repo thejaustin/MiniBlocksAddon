@@ -1,0 +1,25 @@
+{
+  "format_version": "1.19.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "addon:cobblestone_slab"
+    },
+    "components": {
+      "minecraft:display_name": "tile.addon:cobblestone_slab.name",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "cobblestone",
+          "render_method": "opaque"
+        }
+      },
+      "minecraft:geometry": "geometry.slab",
+      "minecraft:block_light_absorption": 0,
+      "minecraft:creative_category": {
+        "group": "itemGroup.name.construction",
+        "category": "construction"
+      },
+      "minecraft:loot": "self",
+      "minecraft:destroy_time": 2.0
+    }
+  }
+}

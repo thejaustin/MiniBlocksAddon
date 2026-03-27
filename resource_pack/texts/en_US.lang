@@ -1,0 +1,65 @@
+## Comments can be added to any line in a .lang file by starting the line with the '#' character.
+##
+## Comments can also be added after a key and value definition on the same line.
+## However, they must be separated by a 'tab' character.
+##
+## The format for a key and value definition is "key=value".
+##
+## It is recommended that you use a tab character to separate your key and value definition.
+## This will allow you to align all the values in your .lang file.
+##
+## For example:
+##
+## key.name.1=Value 1
+## key.name.2=Value 2
+##
+## You can also use color codes in your lang file.
+## For example:
+##
+## key.name.3=§eValue 3
+##
+## This will make "Value 3" appear in yellow text in the game.
+##
+## A list of all the color codes can be found here:
+## https://minecraft.fandom.com/wiki/Formatting_codes
+pack.name=MiniBlocksAddon
+pack.description=Adds mini blocks to the game.
+
+tile.addon:mini_dirt.name=Mini Dirt
+tile.addon:cobblestone_slab.name=Cobblestone Slab
+tile.addon:andesite_wall_slab.name=Andesite Wall Slab
+tile.addon:birch_wall_slab.name=Birch Wall Slab
+tile.addon:blackstone_wall_slab.name=Blackstone Wall Slab
+tile.addon:brick_wall_slab.name=Brick Wall Slab
+tile.addon:cobblestone_wall_slab.name=Cobblestone Wall Slab
+tile.addon:crimson_wall_slab.name=Crimson Wall Slab
+tile.addon:cut_copper_wall_slab.name=Cut Copper Wall Slab
+tile.addon:cut_red_sandstone_wall_slab.name=Cut Red Sandstone Wall Slab
+tile.addon:cut_sandstone_wall_slab.name=Cut Sandstone Wall Slab
+tile.addon:dark_oak_wall_slab.name=Dark Oak Wall Slab
+tile.addon:deepslate_wall_slab.name=Deepslate Wall Slab
+tile.addon:diorite_wall_slab.name=Diorite Wall Slab
+tile.addon:end_stone_brick_wall_slab.name=End Stone Brick Wall Slab
+tile.addon:granite_wall_slab.name=Granite Wall Slab
+tile.addon:jungle_wall_slab.name=Jungle Wall Slab
+tile.addon:mossy_cobblestone_wall_slab.name=Mossy Cobblestone Wall Slab
+tile.addon:mossy_stone_brick_wall_slab.name=Mossy Stone Brick Wall Slab
+tile.addon:nether_brick_wall_slab.name=Nether Brick Wall Slab
+tile.addon:oak_wall_slab.name=Oak Wall Slab
+tile.addon:polished_andesite_wall_slab.name=Polished Andesite Wall Slab
+tile.addon:polished_blackstone_wall_slab.name=Polished Blackstone Wall Slab
+tile.addon:polished_diorite_wall_slab.name=Polished Diorite Wall Slab
+tile.addon:polished_granite_wall_slab.name=Polished Granite Wall Slab
+tile.addon:purpur_wall_slab.name=Purpur Wall Slab
+tile.addon:quartz_wall_slab.name=Quartz Wall Slab
+tile.addon:red_nether_brick_wall_slab.name=Red Nether Brick Wall Slab
+tile.addon:red_sandstone_wall_slab.name=Red Sandstone Wall Slab
+tile.addon:sandstone_wall_slab.name=Sandstone Wall Slab
+tile.addon:smooth_quartz_wall_slab.name=Smooth Quartz Wall Slab
+tile.addon:smooth_red_sandstone_wall_slab.name=Smooth Red Sandstone Wall Slab
+tile.addon:smooth_sandstone_wall_slab.name=Smooth Sandstone Wall Slab
+tile.addon:smooth_stone_wall_slab.name=Smooth Stone Wall Slab
+tile.addon:spruce_wall_slab.name=Spruce Wall Slab
+tile.addon:stone_brick_wall_slab.name=Stone Brick Wall Slab
+tile.addon:stone_wall_slab.name=Stone Wall Slab
+tile.addon:warped_wall_slab.name=Warped Wall Slab

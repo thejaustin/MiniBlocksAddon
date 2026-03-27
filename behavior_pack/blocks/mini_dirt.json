@@ -1,0 +1,25 @@
+{
+  "format_version": "1.19.0",
+  "minecraft:block": {
+    "description": {
+      "identifier": "addon:mini_dirt"
+    },
+    "components": {
+      "minecraft:display_name": "tile.addon:mini_dirt.name",
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "mini_dirt",
+          "render_method": "alpha_test"
+        }
+      },
+      "minecraft:geometry": "geometry.mini_block",
+      "minecraft:block_light_absorption": 0,
+      "minecraft:creative_category": {
+        "group": "itemGroup.name.construction",
+        "category": "construction"
+      },
+      "minecraft:loot": "self",
+      "minecraft:destroy_time": 0.5
+    }
+  }
+}

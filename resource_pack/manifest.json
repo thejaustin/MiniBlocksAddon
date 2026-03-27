@@ -1,0 +1,18 @@
+{
+    "format_version": 2,
+    "header": {
+        "description": "MiniBlocks Addon Resources",
+        "name": "MiniBlocksAddon Resources",
+        "uuid": "dcb30d8d-9ac8-4c34-bf67-49f3419aceb3",
+        "version": [1, 0, 0],
+        "min_engine_version": [ 1, 21, 111 ]
+    },
+    "modules": [
+        {
+            "description": "MiniBlocks Addon Resources",
+            "type": "resources",
+            "uuid": "ae0492e9-b3f2-47db-b611-0cec4be4f801",
+            "version": [1, 0, 0]
+        }
+    ]
+}
