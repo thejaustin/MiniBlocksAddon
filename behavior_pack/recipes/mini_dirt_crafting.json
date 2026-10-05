@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_dirt_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      " # ",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:dirt"
+      }
+    },
+    "result": {
+      "item": "addon:mini_dirt",
+      "count": 6
+    }
+  }
+}
