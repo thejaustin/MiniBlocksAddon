@@ -24,7 +24,7 @@
       "minecraft:geometry": {
         "identifier": "geometry.wall_slab",
         "bone_visibility": {
-          "north": false,
+          "north": true,
           "south": false,
           "east": false,
           "west": false
