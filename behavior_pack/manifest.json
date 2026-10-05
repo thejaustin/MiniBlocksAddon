@@ -13,12 +13,24 @@
             "type": "data",
             "uuid": "cfac9ab0-4a76-420e-93e1-6f6cb44222d4",
             "version": [1, 0, 0]
+        },
+        {
+            "description": "MiniBlocks Addon Scripts",
+            "language": "javascript",
+            "type": "script",
+            "uuid": "2d8a82fa-ce56-4e0b-acdf-5eacbd9528fb",
+            "version": [1, 0, 0],
+            "entry": "scripts/main.js"
         }
     ],
     "dependencies": [
         {
             "uuid": "dcb30d8d-9ac8-4c34-bf67-49f3419aceb3",
             "version": [1, 0, 0]
+        },
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.11.0"
         }
     ]
 }
