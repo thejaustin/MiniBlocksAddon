@@ -1,0 +1,25 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:smooth_sandstone_wall_slab_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " # ",
+      " # ",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:sandstone"
+      }
+    },
+    "result": {
+      "item": "addon:smooth_sandstone_wall_slab",
+      "count": 6
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_stonecutting": {
+    "description": {
+      "identifier": "addon:diorite_wall_slab_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "input": {
+      "item": "minecraft:diorite"
+    },
+    "result": {
+      "item": "addon:diorite_wall_slab",
+      "count": 2
+    }
+  }
+}

@@ -4,17 +4,11 @@
   "padding": 8,
   "num_mip_levels": 4,
   "texture_data": {
-    "mini_dirt": {
-      "textures": "textures/blocks/mini_dirt"
-    },
-    "cobblestone": {
-      "textures": "textures/blocks/cobblestone"
-    },
     "andesite": {
-      "textures": "textures/blocks/andesite"
+      "textures": "textures/blocks/stone_andesite"
     },
     "birch": {
-      "textures": "textures/blocks/birch"
+      "textures": "textures/blocks/planks_birch"
     },
     "blackstone": {
       "textures": "textures/blocks/blackstone"
@@ -22,98 +16,104 @@
     "brick": {
       "textures": "textures/blocks/brick"
     },
+    "cobblestone": {
+      "textures": "textures/blocks/cobblestone"
+    },
     "crimson": {
-      "textures": "textures/blocks/crimson"
+      "textures": "textures/blocks/crimson_planks"
     },
     "cut_copper": {
       "textures": "textures/blocks/cut_copper"
     },
     "cut_red_sandstone": {
-      "textures": "textures/blocks/cut_red_sandstone"
+      "textures": "textures/blocks/red_sandstone_smooth"
     },
     "cut_sandstone": {
-      "textures": "textures/blocks/cut_sandstone"
+      "textures": "textures/blocks/sandstone_smooth"
     },
     "dark_oak": {
-      "textures": "textures/blocks/dark_oak"
+      "textures": "textures/blocks/planks_big_oak"
     },
     "deepslate": {
-      "textures": "textures/blocks/deepslate"
+      "textures": "textures/blocks/cobbled_deepslate"
     },
     "diorite": {
-      "textures": "textures/blocks/diorite"
+      "textures": "textures/blocks/stone_diorite"
     },
     "end_stone_brick": {
-      "textures": "textures/blocks/end_stone_brick"
+      "textures": "textures/blocks/end_bricks"
     },
     "granite": {
-      "textures": "textures/blocks/granite"
+      "textures": "textures/blocks/stone_granite"
     },
     "jungle": {
-      "textures": "textures/blocks/jungle"
+      "textures": "textures/blocks/planks_jungle"
     },
     "mossy_cobblestone": {
-      "textures": "textures/blocks/mossy_cobblestone"
+      "textures": "textures/blocks/cobblestone_mossy"
     },
     "mossy_stone_brick": {
-      "textures": "textures/blocks/mossy_stone_brick"
+      "textures": "textures/blocks/stonebrick_mossy"
     },
     "nether_brick": {
       "textures": "textures/blocks/nether_brick"
     },
     "oak": {
-      "textures": "textures/blocks/oak"
+      "textures": "textures/blocks/planks"
     },
     "polished_andesite": {
-      "textures": "textures/blocks/polished_andesite"
+      "textures": "textures/blocks/stone_andesite_smooth"
     },
     "polished_blackstone": {
       "textures": "textures/blocks/polished_blackstone"
     },
     "polished_diorite": {
-      "textures": "textures/blocks/polished_diorite"
+      "textures": "textures/blocks/stone_diorite_smooth"
     },
     "polished_granite": {
-      "textures": "textures/blocks/polished_granite"
+      "textures": "textures/blocks/stone_granite_smooth"
     },
     "purpur": {
-      "textures": "textures/blocks/purpur"
+      "textures": "textures/blocks/purpur_block_side"
     },
     "quartz": {
-      "textures": "textures/blocks/quartz"
+      "textures": "textures/blocks/quartz_block_side"
     },
     "red_nether_brick": {
       "textures": "textures/blocks/red_nether_brick"
     },
     "red_sandstone": {
-      "textures": "textures/blocks/red_sandstone"
+      "textures": "textures/blocks/red_sandstone_normal"
     },
     "sandstone": {
-      "textures": "textures/blocks/sandstone"
+      "textures": "textures/blocks/sandstone_normal"
     },
     "smooth_quartz": {
-      "textures": "textures/blocks/smooth_quartz"
+      "textures": "textures/blocks/quartz_block_bottom"
     },
     "smooth_red_sandstone": {
-      "textures": "textures/blocks/smooth_red_sandstone"
+      "textures": "textures/blocks/red_sandstone_smooth"
     },
     "smooth_sandstone": {
-      "textures": "textures/blocks/smooth_sandstone"
+      "textures": "textures/blocks/sandstone_smooth"
     },
     "smooth_stone": {
-      "textures": "textures/blocks/smooth_stone"
+      "textures": "textures/blocks/stone_slab_top"
     },
     "spruce": {
-      "textures": "textures/blocks/spruce"
+      "textures": "textures/blocks/planks_spruce"
+    },
+    "stone_brick": {
+      "textures": "textures/blocks/stonebrick"
     },
     "stone": {
       "textures": "textures/blocks/stone"
     },
-    "stone_brick": {
-      "textures": "textures/blocks/stone_brick"
-    },
     "warped": {
-      "textures": "textures/blocks/warped"
+      "textures": "textures/blocks/warped_planks"
+    },
+    "mini_dirt": {
+      "textures": "textures/blocks/mini_dirt"
     }
   }
 }
