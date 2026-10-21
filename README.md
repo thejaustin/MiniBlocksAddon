@@ -17,6 +17,10 @@ The project is organized into two main parts: a resource pack and a behavior pac
     -   `blocks/`: Will contain JSON files defining custom blocks.
     -   `manifest.json`: Describes the behavior pack to Minecraft and links it to the resource pack.
 
+## Requirements
+
+Minecraft: Bedrock Edition 26.50 or newer.
+
 ## How to Use
 
 1.  **Download:** Clone or download this repository as a ZIP file.
@@ -28,3 +32,7 @@ The project is organized into two main parts: a resource pack and a behavior pac
 3.  **Activate:** In your Minecraft world settings, activate both the "MiniBlocksAddon Resources" and "MiniBlocksAddon Behaviors" packs. The behavior pack should be applied to the world, and the resource pack should be active for players.
 
 Enjoy your mini blocks!
+
+## Development
+
+Block, recipe, texture, sound and lang files are generated. Edit `tools/generate_addon.py` and run `python3 tools/generate_addon.py` instead of hand-editing them.

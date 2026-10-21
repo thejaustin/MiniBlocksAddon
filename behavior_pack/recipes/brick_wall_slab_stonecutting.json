@@ -1,15 +1,23 @@
 {
-  "format_version": "1.21.0",
-  "minecraft:recipe_stonecutting": {
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
     "description": {
       "identifier": "addon:brick_wall_slab_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
-    "input": {
-      "item": "minecraft:brick_block"
-    },
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:brick_block"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:brick_block"
+      }
+    ],
     "result": {
       "item": "addon:brick_wall_slab",
       "count": 2

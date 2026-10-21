@@ -1,15 +1,23 @@
 {
-  "format_version": "1.21.0",
-  "minecraft:recipe_stonecutting": {
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
     "description": {
       "identifier": "addon:mossy_stone_brick_wall_slab_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
-    "input": {
-      "item": "minecraft:mossy_stonebrick"
-    },
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:mossy_stone_bricks"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:mossy_stone_bricks"
+      }
+    ],
     "result": {
       "item": "addon:mossy_stone_brick_wall_slab",
       "count": 2

@@ -20,7 +20,7 @@
       "textures": "textures/blocks/cobblestone"
     },
     "crimson": {
-      "textures": "textures/blocks/crimson_planks"
+      "textures": "textures/blocks/huge_fungus/crimson_planks"
     },
     "cut_copper": {
       "textures": "textures/blocks/cut_copper"
@@ -35,7 +35,7 @@
       "textures": "textures/blocks/planks_big_oak"
     },
     "deepslate": {
-      "textures": "textures/blocks/cobbled_deepslate"
+      "textures": "textures/blocks/deepslate/cobbled_deepslate"
     },
     "diorite": {
       "textures": "textures/blocks/stone_diorite"
@@ -59,7 +59,7 @@
       "textures": "textures/blocks/nether_brick"
     },
     "oak": {
-      "textures": "textures/blocks/planks"
+      "textures": "textures/blocks/planks_oak"
     },
     "polished_andesite": {
       "textures": "textures/blocks/stone_andesite_smooth"
@@ -74,7 +74,7 @@
       "textures": "textures/blocks/stone_granite_smooth"
     },
     "purpur": {
-      "textures": "textures/blocks/purpur_block_side"
+      "textures": "textures/blocks/purpur_block"
     },
     "quartz": {
       "textures": "textures/blocks/quartz_block_side"
@@ -92,10 +92,10 @@
       "textures": "textures/blocks/quartz_block_bottom"
     },
     "smooth_red_sandstone": {
-      "textures": "textures/blocks/red_sandstone_smooth"
+      "textures": "textures/blocks/red_sandstone_top"
     },
     "smooth_sandstone": {
-      "textures": "textures/blocks/sandstone_smooth"
+      "textures": "textures/blocks/sandstone_top"
     },
     "smooth_stone": {
       "textures": "textures/blocks/stone_slab_top"
@@ -110,10 +110,10 @@
       "textures": "textures/blocks/stone"
     },
     "warped": {
-      "textures": "textures/blocks/warped_planks"
+      "textures": "textures/blocks/huge_fungus/warped_planks"
     },
     "mini_dirt": {
-      "textures": "textures/blocks/mini_dirt"
+      "textures": "textures/blocks/dirt"
     }
   }
 }

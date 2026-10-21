@@ -1,11 +1,11 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.26.20",
   "minecraft:block": {
     "description": {
       "identifier": "addon:cobblestone_slab",
       "menu_category": {
         "category": "construction",
-        "group": "itemGroup.name.construction"
+        "group": "minecraft:itemGroup.name.slab"
       }
     },
     "components": {
@@ -16,7 +16,6 @@
         }
       },
       "minecraft:geometry": "geometry.slab",
-      "minecraft:loot": "self",
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 2.0
       },

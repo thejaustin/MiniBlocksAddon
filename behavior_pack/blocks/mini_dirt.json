@@ -1,24 +1,46 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.26.20",
   "minecraft:block": {
     "description": {
       "identifier": "addon:mini_dirt",
       "menu_category": {
-        "category": "nature",
-        "group": "itemGroup.name.dirt"
+        "category": "nature"
       }
     },
     "components": {
       "minecraft:material_instances": {
         "*": {
           "texture": "mini_dirt",
-          "render_method": "alpha_test"
+          "render_method": "opaque"
         }
       },
       "minecraft:geometry": "geometry.mini_block",
-      "minecraft:loot": "self",
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 0.5
+      },
+      "minecraft:collision_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ]
+      },
+      "minecraft:selection_box": {
+        "origin": [
+          -4,
+          0,
+          -4
+        ],
+        "size": [
+          8,
+          8,
+          8
+        ]
       }
     }
   }
