@@ -310,7 +310,6 @@ mini_dirt = {
             "identifier": "addon:mini_dirt",
             "menu_category": {
                 "category": "nature",
-                "group": "minecraft:itemGroup.name.dirt",
             },
         },
         "components": {
