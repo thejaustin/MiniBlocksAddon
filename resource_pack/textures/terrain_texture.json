@@ -17,7 +17,7 @@
       "textures": "textures/blocks/brick"
     },
     "cobblestone": {
-      "textures": "textures/blocks/cobblestone"
+      "textures": "textures/blocks/miniblocks_cobblestone"
     },
     "crimson": {
       "textures": "textures/blocks/huge_fungus/crimson_planks"

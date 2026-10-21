@@ -63,7 +63,7 @@ TEXTURE_PATHS = {
     "birch":              "textures/blocks/planks_birch",
     "blackstone":         "textures/blocks/blackstone",
     "brick":              "textures/blocks/brick",
-    "cobblestone":        "textures/blocks/cobblestone",
+    "cobblestone":        "textures/blocks/miniblocks_cobblestone",  # own file; vanilla path would override all cobblestone
     "crimson":            "textures/blocks/huge_fungus/crimson_planks",
     "cut_copper":         "textures/blocks/cut_copper",
     "cut_red_sandstone":  "textures/blocks/red_sandstone_smooth",
