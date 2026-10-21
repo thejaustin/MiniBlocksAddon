@@ -1,4 +1,4 @@
-import { world, system, Direction, GameMode } from "@minecraft/server";
+import { world, system, Direction, GameMode, PlayerPermissionLevel } from "@minecraft/server";
 import { SLAB_TO_FULL_BLOCK } from "./slab_map.js";
 
 // When a player right-clicks the open face of a wall slab while holding the
@@ -14,6 +14,30 @@ const OPEN_FACE = {
   west:  Direction.East,
 };
 
+// Entities that don't stop vanilla block placement.
+const NON_BLOCKING_ENTITIES = new Set(["minecraft:item", "minecraft:xp_orb"]);
+
+function canBuild(player) {
+  const mode = player.getGameMode();
+  if (mode !== GameMode.Survival && mode !== GameMode.Creative) return false;
+  return player.playerPermissionLevel !== PlayerPermissionLevel.Visitor;
+}
+
+// True when any entity's hitbox overlaps the block space being filled.
+function isObstructed(dimension, { x, y, z }) {
+  const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
+  for (const entity of dimension.getEntities({ location: center, maxDistance: 3 })) {
+    if (NON_BLOCKING_ENTITIES.has(entity.typeId)) continue;
+    const { center: c, extent: e } = entity.getAABB();
+    if (c.x - e.x < x + 1 && c.x + e.x > x &&
+        c.y - e.y < y + 1 && c.y + e.y > y &&
+        c.z - e.z < z + 1 && c.z + e.z > z) {
+      return true;
+    }
+  }
+  return false;
+}
+
 world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   const { block, player, itemStack, blockFace } = event;
   if (!event.isFirstEvent) return;
@@ -26,28 +50,35 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   const facing = block.permutation.getState("minecraft:cardinal_direction");
   if (blockFace !== OPEN_FACE[facing]) return;
 
-  event.cancel = true;
-
+  // Leave anything vanilla would refuse to vanilla.
+  if (!canBuild(player)) return;
   const location = block.location;
   const dimension = block.dimension;
+  if (isObstructed(dimension, location)) return;
+
+  event.cancel = true;
+
   const slabTypeId = block.typeId;
   const selectedSlot = player.selectedSlotIndex;
 
   system.run(() => {
     const target = dimension.getBlock(location);
     if (target?.typeId !== slabTypeId) return;
-    target.setType(fullBlockId);
+    if (!player.isValid || !canBuild(player)) return;
 
-    if (player.getGameMode() === GameMode.Creative) return;
-    const container = player.getComponent("minecraft:inventory")?.container;
-    if (!container) return;
-    const item = container.getItem(selectedSlot);
-    if (item?.typeId !== slabTypeId) return;
-    if (item.amount > 1) {
-      item.amount -= 1;
-      container.setItem(selectedSlot, item);
-    } else {
-      container.setItem(selectedSlot, undefined);
+    // Take the slab first so a failed deduction never yields a free merge.
+    if (player.getGameMode() !== GameMode.Creative) {
+      const container = player.getComponent("minecraft:inventory")?.container;
+      const item = container?.getItem(selectedSlot);
+      if (item?.typeId !== slabTypeId) return;
+      if (item.amount > 1) {
+        item.amount -= 1;
+        container.setItem(selectedSlot, item);
+      } else {
+        container.setItem(selectedSlot, undefined);
+      }
     }
+
+    target.setType(fullBlockId);
   });
 });
