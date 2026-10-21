@@ -113,7 +113,7 @@
       "textures": "textures/blocks/huge_fungus/warped_planks"
     },
     "mini_dirt": {
-      "textures": "textures/blocks/dirt"
+      "textures": "textures/blocks/mini_dirt"
     }
   }
 }

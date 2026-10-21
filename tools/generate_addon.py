@@ -95,7 +95,7 @@ TEXTURE_PATHS = {
     "stone_brick":        "textures/blocks/stonebrick",
     "stone":              "textures/blocks/stone",
     "warped":             "textures/blocks/huge_fungus/warped_planks",
-    "mini_dirt":          "textures/blocks/dirt",
+    "mini_dirt":          "textures/blocks/mini_dirt",  # ships in resource_pack/textures/blocks
 }
 
 DIRECTIONS = ["north", "south", "east", "west"]
