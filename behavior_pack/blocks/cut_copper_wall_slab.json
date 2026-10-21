@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "cut_copper",
+          "texture": "miniblocks_cut_copper",
           "render_method": "opaque"
         }
       },

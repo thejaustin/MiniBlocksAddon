@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "crimson",
+          "texture": "miniblocks_crimson",
           "render_method": "opaque"
         }
       },

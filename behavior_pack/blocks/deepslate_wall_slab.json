@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "deepslate",
+          "texture": "miniblocks_deepslate",
           "render_method": "opaque"
         }
       },

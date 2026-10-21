@@ -10,7 +10,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "mini_dirt",
+          "texture": "miniblocks_mini_dirt",
           "render_method": "opaque"
         }
       },

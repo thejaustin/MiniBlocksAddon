@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "andesite",
+          "texture": "miniblocks_andesite",
           "render_method": "opaque"
         }
       },

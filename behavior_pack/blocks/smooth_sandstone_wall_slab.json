@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "smooth_sandstone",
+          "texture": "miniblocks_smooth_sandstone",
           "render_method": "opaque"
         }
       },

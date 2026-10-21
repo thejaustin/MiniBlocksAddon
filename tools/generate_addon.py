@@ -14,6 +14,7 @@ RP = os.path.join(REPO, "resource_pack")
 
 BLOCK_FORMAT = "1.26.20"   # latest block schema in bedrock-samples v1.26.50
 RECIPE_FORMAT = "1.20.10"  # matches vanilla recipes in 26.50
+TEX_PREFIX = "miniblocks_" # terrain_texture keys share a namespace with vanilla
 
 # (name_slug, source_item, hardness, stone_cutter, sound)
 # source_item doubles as the full block a merged pair of slabs turns into.
@@ -249,7 +250,7 @@ def make_wall_slab_block(name, hardness):
             "components": {
                 "minecraft:material_instances": {
                     "*": {
-                        "texture": name,
+                        "texture": f"{TEX_PREFIX}{name}",
                         "render_method": "opaque",
                     }
                 },
@@ -287,7 +288,7 @@ floor_slab = {
         },
         "components": {
             "minecraft:material_instances": {
-                "*": {"texture": "cobblestone", "render_method": "opaque"}
+                "*": {"texture": f"{TEX_PREFIX}cobblestone", "render_method": "opaque"}
             },
             "minecraft:geometry": "geometry.slab",
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 2.0},
@@ -314,7 +315,7 @@ mini_dirt = {
         },
         "components": {
             "minecraft:material_instances": {
-                "*": {"texture": "mini_dirt", "render_method": "opaque"}
+                "*": {"texture": f"{TEX_PREFIX}mini_dirt", "render_method": "opaque"}
             },
             "minecraft:geometry": "geometry.mini_block",
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 0.5},
@@ -382,7 +383,8 @@ terrain_texture = {
     "texture_name": "atlas.terrain",
     "padding": 8,
     "num_mip_levels": 4,
-    "texture_data": {k: {"textures": v} for k, v in TEXTURE_PATHS.items()},
+    # Prefixed so our keys never replace vanilla ones of the same name.
+    "texture_data": {f"{TEX_PREFIX}{k}": {"textures": v} for k, v in TEXTURE_PATHS.items()},
 }
 write_json(os.path.join(RP, "textures/terrain_texture.json"), terrain_texture)
 

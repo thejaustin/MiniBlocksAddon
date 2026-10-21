@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "cobblestone",
+          "texture": "miniblocks_cobblestone",
           "render_method": "opaque"
         }
       },

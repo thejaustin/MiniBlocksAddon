@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "polished_granite",
+          "texture": "miniblocks_polished_granite",
           "render_method": "opaque"
         }
       },

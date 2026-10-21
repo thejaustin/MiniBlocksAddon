@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "stone",
+          "texture": "miniblocks_stone",
           "render_method": "opaque"
         }
       },

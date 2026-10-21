@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "purpur",
+          "texture": "miniblocks_purpur",
           "render_method": "opaque"
         }
       },

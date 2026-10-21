@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "polished_diorite",
+          "texture": "miniblocks_polished_diorite",
           "render_method": "opaque"
         }
       },

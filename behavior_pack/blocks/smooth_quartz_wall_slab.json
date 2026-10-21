@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "smooth_quartz",
+          "texture": "miniblocks_smooth_quartz",
           "render_method": "opaque"
         }
       },

@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "dark_oak",
+          "texture": "miniblocks_dark_oak",
           "render_method": "opaque"
         }
       },

@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "jungle",
+          "texture": "miniblocks_jungle",
           "render_method": "opaque"
         }
       },

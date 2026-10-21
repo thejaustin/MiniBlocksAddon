@@ -19,7 +19,7 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "red_nether_brick",
+          "texture": "miniblocks_red_nether_brick",
           "render_method": "opaque"
         }
       },
