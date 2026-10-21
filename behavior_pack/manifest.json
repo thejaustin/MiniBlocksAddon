@@ -4,33 +4,33 @@
         "description": "MiniBlocks Addon Behaviors",
         "name": "MiniBlocksAddon Behaviors",
         "uuid": "bc0185a8-9c3b-49c6-ae39-bb00c30be6c6",
-        "version": [1, 0, 0],
-        "min_engine_version": [ 1, 21, 111 ]
+        "version": [1, 1, 0],
+        "min_engine_version": [ 1, 26, 50 ]
     },
     "modules": [
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
             "uuid": "cfac9ab0-4a76-420e-93e1-6f6cb44222d4",
-            "version": [1, 0, 0]
+            "version": [1, 1, 0]
         },
         {
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
             "uuid": "2d8a82fa-ce56-4e0b-acdf-5eacbd9528fb",
-            "version": [1, 0, 0],
+            "version": [1, 1, 0],
             "entry": "scripts/main.js"
         }
     ],
     "dependencies": [
         {
             "uuid": "dcb30d8d-9ac8-4c34-bf67-49f3419aceb3",
-            "version": [1, 0, 0]
+            "version": [1, 1, 0]
         },
         {
             "module_name": "@minecraft/server",
-            "version": "1.11.0"
+            "version": "2.10.0"
         }
     ]
 }

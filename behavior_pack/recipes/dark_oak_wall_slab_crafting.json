@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "addon:dark_oak_wall_slab_crafting"
@@ -8,15 +8,20 @@
       "crafting_table"
     ],
     "pattern": [
-      " # ",
-      " # ",
-      " # "
+      "#",
+      "#",
+      "#"
     ],
     "key": {
       "#": {
         "item": "minecraft:dark_oak_planks"
       }
     },
+    "unlock": [
+      {
+        "item": "minecraft:dark_oak_planks"
+      }
+    ],
     "result": {
       "item": "addon:dark_oak_wall_slab",
       "count": 6
