@@ -1,20 +1,11 @@
 import { world, system, Direction, GameMode, PlayerPermissionLevel } from "@minecraft/server";
 import { SLAB_TO_FULL_BLOCK } from "./slab_map.js";
 
-// When a player right-clicks the open face of a wall slab while holding the
-// same slab type, the second half fills in and the slab upgrades to the
-// corresponding full block. This recreates the original Mini Blocks Mod
-// combining mechanic. Sneak to place a slab normally instead.
+// Mini Blocks Addon - Wall Slab Combining Mechanic
+// Recreates the classic Mini Blocks Mod combining behavior.
+// Interacting with a wall slab while holding the matching slab type combines
+// both halves into the full vanilla block. Sneak while placing to build adjacent slabs.
 
-// The face opposite each panel — the side of the block that is still empty.
-const OPEN_FACE = {
-  north: Direction.South,
-  south: Direction.North,
-  east:  Direction.West,
-  west:  Direction.East,
-};
-
-// Entities that don't stop vanilla block placement.
 const NON_BLOCKING_ENTITIES = new Set(["minecraft:item", "minecraft:xp_orb"]);
 
 function canBuild(player) {
@@ -23,7 +14,6 @@ function canBuild(player) {
   return player.playerPermissionLevel !== PlayerPermissionLevel.Visitor;
 }
 
-// True when any entity's hitbox overlaps the block space being filled.
 function isObstructed(dimension, { x, y, z }) {
   const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
   for (const entity of dimension.getEntities({ location: center, maxDistance: 3 })) {
@@ -38,35 +28,31 @@ function isObstructed(dimension, { x, y, z }) {
   return false;
 }
 
-world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-  const { block, player, itemStack, blockFace } = event;
-  if (!event.isFirstEvent) return;
+const FACE_OFFSET = {
+  [Direction.Down]:  { x: 0, y: -1, z: 0 },
+  [Direction.Up]:    { x: 0, y: 1,  z: 0 },
+  [Direction.North]: { x: 0, y: 0,  z: -1 },
+  [Direction.South]: { x: 0, y: 0,  z: 1 },
+  [Direction.West]:  { x: -1, y: 0, z: 0 },
+  [Direction.East]:  { x: 1,  y: 0, z: 0 },
+};
 
-  const fullBlockId = SLAB_TO_FULL_BLOCK[block.typeId];
-  if (!fullBlockId) return;
-  if (itemStack?.typeId !== block.typeId) return;
-  if (player.isSneaking) return;
+function tryMerge(player, targetBlock, slabTypeId) {
+  const fullBlockId = SLAB_TO_FULL_BLOCK[slabTypeId];
+  if (!fullBlockId) return false;
+  if (!canBuild(player)) return false;
 
-  const facing = block.permutation.getState("minecraft:cardinal_direction");
-  if (blockFace !== OPEN_FACE[facing]) return;
+  const location = targetBlock.location;
+  const dimension = targetBlock.dimension;
+  if (isObstructed(dimension, location)) return false;
 
-  // Leave anything vanilla would refuse to vanilla.
-  if (!canBuild(player)) return;
-  const location = block.location;
-  const dimension = block.dimension;
-  if (isObstructed(dimension, location)) return;
-
-  event.cancel = true;
-
-  const slabTypeId = block.typeId;
   const selectedSlot = player.selectedSlotIndex;
 
   system.run(() => {
-    const target = dimension.getBlock(location);
-    if (target?.typeId !== slabTypeId) return;
+    const current = dimension.getBlock(location);
+    if (current?.typeId !== slabTypeId) return;
     if (!player.isValid || !canBuild(player)) return;
 
-    // Take the slab first so a failed deduction never yields a free merge.
     if (player.getGameMode() !== GameMode.Creative) {
       const container = player.getComponent("minecraft:inventory")?.container;
       const item = container?.getItem(selectedSlot);
@@ -79,6 +65,36 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    target.setType(fullBlockId);
+    current.setType(fullBlockId);
   });
+
+  return true;
+}
+
+world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
+  const { block, player, itemStack, blockFace } = event;
+  if (!event.isFirstEvent) return;
+  if (player.isSneaking) return;
+  if (!itemStack) return;
+
+  // Case 1: Interacting directly with the wall slab from any face
+  if (block.typeId === itemStack.typeId && SLAB_TO_FULL_BLOCK[block.typeId]) {
+    if (tryMerge(player, block, block.typeId)) {
+      event.cancel = true;
+      return;
+    }
+  }
+
+  // Case 2: Interacting with an adjacent block face pointing into an existing wall slab
+  const offset = FACE_OFFSET[blockFace];
+  if (offset) {
+    const adjLoc = { x: block.location.x + offset.x, y: block.location.y + offset.y, z: block.location.z + offset.z };
+    const adjBlock = block.dimension.getBlock(adjLoc);
+    if (adjBlock?.typeId === itemStack.typeId && SLAB_TO_FULL_BLOCK[adjBlock.typeId]) {
+      if (tryMerge(player, adjBlock, adjBlock.typeId)) {
+        event.cancel = true;
+        return;
+      }
+    }
+  }
 });
