@@ -16,18 +16,20 @@ The official Bedrock Edition successor to the classic Pocket Edition (MCPE 0.11.
 
 ## 🚀 What's New in v1.2.0
 
-### ✨ Wall Slabs Can Be Combined (Touch Control Overhaul)
-* In the original `miniblocks_v1.9.bin`, wall slabs merged when placing a matching slab into the open side.
-* In modern Minecraft Bedrock on mobile touch controls, aiming at the narrow 8px back side is frustrating.
-* **v1.2.0 Solution**:
+### ✨ Wall Slabs Can Be Combined: FINALLY FIXED (again)!
+* In the original `miniblocks_v1.9.bin`, the changelog famously cheered: *"v1.9 Changelog: Correct Lighting, & Wall Slabs can be combined!"*
+* Fast forward to Bedrock on mobile: wall slabs once again resisted combining on touch controls because tapping an invisible 8px rear plane on glass is practically impossible.
+* **v1.2.0 Solution — FINALLY FIXED (again)**:
   * **Direct Face Merge**: Tap or right-click **any face** of a placed wall slab while holding the matching slab item to combine it into the full block!
   * **Adjacent Placement Merge**: Placing a matching slab into the open half of an existing wall slab will merge it seamlessly.
   * **Build Mode**: Crouch / sneak while placing to build adjacent slabs without merging.
   * **Survival Parity**: Respects block protection, deducts from active inventory slot in Survival, and includes collision checks to prevent suffocation.
 
-### 🧭 Directional Placement & androidKaghon Shoutout
-* **Wall Slabs**: Directional facing works cleanly with modern Bedrock traits (`minecraft:placement_direction`). Slabs automatically orient towards the player upon placement, carrying forward the legacy logic originally credited to **androidKaghon**.
-* **Mini Blocks**: Mini dirt places as a crisp 8x8x8 centered cube with collision. *(Mini block directional placement is currently work-in-progress—they're still looking where they want to look!)*
+### 🧭 Directional Placement: FINALLY FIXED (again)... Mostly!
+* In MCPE 0.11.1, directional placement was a notorious headache until the original code noted: *"The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!"*
+* In Bedrock 1.26, history repeats itself:
+  * **Wall Slabs**: **FINALLY FIXED (again)!** Slabs use modern Bedrock traits (`minecraft:placement_direction`) to automatically orient towards the player upon placement.
+  * **Mini Blocks**: Currently reliving the classic 2015 directional bug! Mini dirt places and renders as a crisp 8x8x8 centered cube with collision, but directional facing is stubborn and looks wherever it wants until the next patch.
 
 ### 🎨 Custom Iconography & Clean In-Game Branding
 * **Custom Pack Icon**: Added custom 128x128 pixel-art `pack_icon.png` depicting classic Oak & Stone Brick Wall Slabs alongside the floating Mini Dirt block.
@@ -44,20 +46,21 @@ The official Bedrock Edition successor to the classic Pocket Edition (MCPE 0.11.
 
 ```text
 === v1.2.0 (Bedrock Port) ===
+* [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
+* [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.
-* [Feature] Wall Slabs can be combined on touch controls: tap any face or place adjacent with matching slab.
 * [Feature] Crouching allows placing wall slabs adjacent without combining.
 * [Fix] Fixed Bedrock import failure: "Duplicate pack detected" (fresh UUIDs & 1.2.0 versioning).
 * [Fix] Renamed in-game manifests to 'Mini Blocks Add-on (Behaviors)' and '(Resources)'.
 * [Fix] Fixed terrain texture collisions with vanilla cobblestone and deepslate.
 * [Fix] Lowered min_engine_version to [1, 21, 0] and aligned @minecraft/server to stable runtime.
-* [Known Issue] Mini block directional placement needs work (mini blocks place and render, directional facing WIP).
+* [Known Issue] Mini block directional placement is experiencing the classic 2015 directional placement bug (places and renders fine, but faces wherever it wants).
 * [Humor] Fixed raw.githubusercontent.com update check failing when airplane mode is on.
 * Removed Herobrine.
 
 === v1.9 (MCPE 0.11.1 - The Classic ModPE Era) ===
 * Correct Lighting, & Wall Slabs can be combined!
-* 'Blocks turn in the direction you're facing' code by androidKaghon added!
+* 'Blocks turn in the direction you're facing' code by androidKaghon added! (FINALLY FIXED!)
 * Added in-game update checker via raw.githubusercontent.com/thejaustin/ModPE.
 * Creative inventory support for Stone, Cobble, Wood variants, Brick, Sandstone, Stone Brick, Quartz, and Glass Wall Slabs.
 * Follow me on Twitter, @thejaustin!
