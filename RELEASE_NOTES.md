@@ -23,7 +23,8 @@ Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative b
 
 ### Multi-Agent On-Device Development History
 This Bedrock release reflects an on-device AI pair-programming workflow traced across git history:
-* **Google Labs Jules (`google-labs-jules[bot]`)**: Repository parity and structural alignment (PR #1).
+* **Repository Unification (`thejaustin/ModPE` & `thejaustin/MiniBlocksAddon`)**: The project lineage unifies the original 2015 BlockLauncher mod from [`thejaustin/ModPE`](https://github.com/thejaustin/ModPE) (which powered in-game updates via `MiniBlocksVersion` and `changelog`) with the modern Bedrock codebase in [`thejaustin/MiniBlocksAddon`](https://github.com/thejaustin/MiniBlocksAddon) (created Dec 2024; an earlier exploratory repo `thejaustin/MCBedrock` from May 2023 remained dormant).
+* **Google Labs Jules (`google-labs-jules[bot]`)**: Repository parity and structural alignment (PR #1), merging early schemas from `feat/initial-addon-structure`.
 * **Claude (Sonnet 4.6 & Opus 5.5) on Termux (Android Mobile)**: Authored October 2026 commits directly on-device in Termux using Claude Code. Modernized block schemas from 1.19 to 1.21/1.26 format, created Python generation tooling, and drafted early server script slab merging. (Any older Warp terminal sessions occurred ~a year prior on separate project work).
 * **Antigravity on Termux (Android Mobile)**: Continued the mobile Termux workflow over loopback ADB in November 2026. Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
 

@@ -68,6 +68,19 @@ The project grew out of three landmark modding inspirations from that era:
 
 The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics. Following the v1.9 release, work began on a highly anticipated **v2.0 Beta**, announced and tested on the Minecraft Forums, aiming to overhaul collision boundaries, expand the mini block catalog, and rewrite the underlying script structure. As MCPE shifted away from ModPE scripting toward native C++ and modern add-ons, v2.0 Beta remained the unfinished frontier of the mod.
 
+### Repository Lineage: Combining `thejaustin/ModPE` & `thejaustin/MiniBlocksAddon`
+Tracing the codebases across GitHub highlights how development transitioned across two primary repositories:
+1. **`thejaustin/ModPE` (2015–2018) — The Original ModPE Home**:
+   * **Distribution & Script Hosting**: The original JavaScript mod lived at [`thejaustin/ModPE`](https://github.com/thejaustin/ModPE), serving as both the open-source repository and the live update backend for BlockLauncher.
+   * **Auto-Update Endpoint**: The in-game `AlertDialog` auto-updater polled `raw.githubusercontent.com/thejaustin/ModPE/master/MiniBlocksVersion` (which reached `v1.9`) and displayed update notifications dynamically based on `changelog` (*"Improved placement, re-wrote EVERYTHING, added ACTUAL MINI BLOCKS, removed glass wall slabs, and bug fixes."*).
+   * **Companion Work**: Also hosted related ModPE experiments such as `Shards-Mod`.
+2. **Repository Transition & Modern Consolidation**:
+   * While an early placeholder repository ([`thejaustin/MCBedrock`](https://github.com/thejaustin/MCBedrock)) was created in May 2023 for general Bedrock experimentation, it remained inactive with only an initial commit.
+   * On **December 26, 2024**, [`thejaustin/MiniBlocksAddon`](https://github.com/thejaustin/MiniBlocksAddon) was established as the dedicated repository for the Bedrock port (*"Welcome to the FUTURE of the Mini Blocks Mod! Now in Bedrock Addon form!"*).
+   * Early block schemas were prepared on branch `feat/initial-addon-structure` and merged into `main` by Google Labs Jules in March 2026 (PR #1).
+   * In October 2026, development continued natively on-device in Termux using Claude Code, migrating schemas to Bedrock 1.21/1.26.20 and authoring the Python generator scripts in `tools/`.
+   * In November 2026, Antigravity finalized mobile touch-control combining, visual iconography, texture namespacing, and full release packaging directly on Termux over loopback ADB.
+
 ---
 
 ## Code Archaeology: The 2014–2015 ModPE Heritage

@@ -24,6 +24,11 @@ The original mod was created by **thejaustin** on **January 16, 2015** for Minec
 
 Following early releases through v1.9 and an experimental **v2.0 Beta** teased on Minecraft Forum, development paused as MCPE moved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
 
+### Repository Lineage: Combining `thejaustin/ModPE` & `thejaustin/MiniBlocksAddon`
+The project's history spans two dedicated GitHub repositories:
+* **[`thejaustin/ModPE`](https://github.com/thejaustin/ModPE) (2015–2018)**: Hosted the original JavaScript ModPE script (`Mini Blocks Mod`), the live in-game auto-updater manifest (`MiniBlocksVersion` tracking v1.4 through v1.9), the update alert message (`changelog`), and related experiments such as `Shards-Mod`.
+* **[`thejaustin/MiniBlocksAddon`](https://github.com/thejaustin/MiniBlocksAddon) (2024–Present)**: Established on December 26, 2024 as the dedicated modern home for the native Bedrock Add-on port. (An exploratory repo, `thejaustin/MCBedrock`, was created in May 2023 but remained dormant with only an initial commit). Early 1.19 block schemas were staged on `feat/initial-addon-structure` and merged by Jules in March 2026, before Claude and Antigravity completed modernization on Termux.
+
 ### Multi-Agent On-Device Development Lineage
 The modern Bedrock port reflects an on-device AI pair-programming workflow traced across the repository history:
 * **Google Labs Jules (`google-labs-jules[bot]`)**: Performed initial repository parity fixes (PR #1).
