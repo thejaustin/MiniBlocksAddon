@@ -1,9 +1,9 @@
-# Mini Blocks Add-on v1.2.0 (Bedrock Edition)
+# Mini Blocks Add-on v1.3.0 (Bedrock Edition)
 *A modern Bedrock Edition port of the classic Pocket Edition Mini Blocks Mod by thejaustin.*
 
 ```text
 // =========================================================================
-// Mini Blocks Mod v1.2.0 by thejaustin
+// Mini Blocks Mod v1.3.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
 // Originally made for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
 // Directional placement logic originally credited to androidKaghon.
@@ -78,6 +78,18 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 ## Full Version History
 
 ```text
+=== v1.3.0 (Bedrock Port — The Return of Mini Blocks — 2026) ===
+* [Feature] The Return of Mini Blocks: Expanded from preview to full 9-block catalog (Dirt, Cobblestone, Oak Planks, Stone, Stone Bricks, Brick, Sandstone, Obsidian, Glass).
+* [Feature] Multi-Surface Mini Block Attachment: Mount mini blocks to floors, ceilings, and all 4 walls via native Bedrock `minecraft:placement_position` traits.
+* [Feature] Glass Wall Slabs Restored: Originally cut in 2015 v1.5 due to MCPE 0.10 render glitches; fully restored with `render_method: "alpha_test"`, zero light dampening, and authentic breaking sounds.
+* [Feature] Modern Wood Wall Slabs: Added Bamboo, Cherry, Mangrove, and Pale Oak (expanding wall slab set to 41 variants).
+* [Feature] Nostalgic Session Greeting: Plays authentic one-time welcome greeting in chat on session spawn.
+* [Fix] Bone Visibility Fallback: Ensured wall slabs and mini blocks render visibly in inventory UI and hand slots when direction states are unset.
+* [Fix] Per-Face UV Scaling: Rewrote slab and mini block geometry UV maps from box-UV to explicit per-face coordinates, eliminating distorted textures on 16x16 tiles.
+* [Fix] Survival Tool Destructibility: Added `minecraft:is_axe_item_destructible` and `minecraft:is_pickaxe_item_destructible` tags for survival tool parity.
+* [Fix] Localization Loading: Added `resource_pack/texts/languages.json` ensuring custom block names load across all Bedrock game language settings.
+* [Tooling] Automated Packaging: Added `tools/package.py` compiling .mcpack and .mcaddon bundles directly to Android shared storage.
+
 === v1.2.0 (Bedrock Port — 2026) ===
 * [Development] Rebuilt via on-device AI-assisted engineering across Google Labs Jules, Claude (Termux), and Antigravity (Termux).
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.

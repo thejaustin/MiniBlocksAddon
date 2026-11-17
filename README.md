@@ -3,7 +3,7 @@
 
 ```text
 // =========================================================================
-// Mini Blocks Mod v1.9 -> v1.2.0 by thejaustin
+// Mini Blocks Mod v1.9 -> v1.3.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
 // Originally created for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
 // Directional placement logic originally credited to androidKaghon.
@@ -36,13 +36,15 @@ The modern Bedrock port reflects an on-device AI pair-programming workflow trace
 * **Antigravity on Termux (Android Mobile)**: Continued the mobile Termux workflow over loopback ADB in November 2026. Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
 
 ### Core Features
-* **36 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, and copper.
+* **41 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped, and modern additions Bamboo, Cherry, Mangrove, Pale Oak), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, copper, and the newly restored Glass Wall Slab.
 * **Interactive Slab Combining**: Tap any face or place adjacent with a matching wall slab to merge into the full block. Sneaking allows building adjacent slabs without merging.
-* **Directional Placement**: Wall slabs orient automatically toward the player upon placement.
-* **Mini Blocks**: 8x8x8 centered custom blocks (starting with Mini Dirt).
+* **Directional Placement**: Wall slabs orient automatically toward the player upon placement with robust GUI/in-hand rendering fallback.
+* **Multi-Surface Mini Blocks (9 Variants)**: 8×8×8 miniature decorative blocks with native 6-surface attachment (floors, ceilings, walls) via `minecraft:placement_position` (`minecraft:block_face`). Includes Dirt, Cobblestone, Oak Planks, Stone, Stone Bricks, Brick, Sandstone, Obsidian, and Glass.
 * **Survival & Stonecutter Parity**:
-  * 3 stacked blocks in crafting grid -> 6 wall slabs.
-  * 1 stone-type block in stonecutter -> 2 wall slabs.
+  * 3 stacked blocks in crafting grid -> 6 wall slabs or 6 mini blocks.
+  * 1 stone-type block in stonecutter -> 2 wall slabs or 2 mini blocks.
+  * Tool destructibility tags (`is_pickaxe_item_destructible`, `is_axe_item_destructible`) for immediate survival tool mining speed parity.
+* **Nostalgic One-Time In-Game Greeting**: Optional welcome greeting on initial world join referencing the original 2015 script release.
 
 ---
 
@@ -55,6 +57,30 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **In-Game Auto-Updater**: The background Java thread and `AlertDialog.Builder` popup (`MiniBlocksVersion`) were adapted from community templates popularized by **Desno365** and **500ISE**, leveraging **Zhuowei Zhang**'s `net.zhuoweizhang.mcpelauncher.ScriptManager` to hot-reload scripts live.
 * **The 52-Block ID Workaround**: Because MCPE 0.10.x lacked rotation permutations, every wall slab required four separate global block IDs (e.g. Stone Wall Slabs consumed IDs 249, 248, 242, and 241, plus 192 for the full block), consuming over 52 IDs across the mod.
 * **Modern Bedrock Resolution**: All 52 legacy block IDs and recursive yaw calculations have been replaced with single unified identifiers using Bedrock cardinal placement direction traits and `@minecraft/server` scripting.
+
+---
+
+## Release Notes — v1.3.0 (Bedrock Edition)
+
+### Key Improvements
+
+#### The Return of Mini Blocks & Multi-Surface Attachment
+* **Historical Context**: In v1.5 (January 2015), the original script boldly declared *"Added ACTUAL MINI BLOCKS!"*. While v1.2.0 introduced a basic preview of Mini Dirt, v1.3.0 implements the full, authentic vision of the namesake **Mini Blocks** system.
+* **Multi-Surface Attachment**: Utilizing modern Bedrock block traits (`minecraft:placement_position` with `minecraft:block_face`), mini blocks can now be mounted onto floors (`up`), ceilings (`down`), and all four cardinal walls (`north`, `south`, `east`, `west`).
+* **Expanded Catalog (9 Blocks)**: Includes Mini Dirt, Mini Cobblestone, Mini Oak Planks, Mini Stone, Mini Stone Bricks, Mini Brick, Mini Sandstone, Mini Obsidian, and Mini Glass.
+* **Per-Face Scaled UV Mapping**: Fixed box-UV texture scrambling by generating dedicated per-face UV maps (`uv(0, 0, 16, 16)`), ensuring 16×16 terrain textures scale cleanly onto 8×8×8 miniature faces.
+
+#### Glass Wall Slabs Restored & Modern Woods
+* **Glass Wall Slabs (`addon:glass_wall_slab`)**: Originally present in 2015, glass wall slabs were cut in v1.5 due to MCPE 0.10.x transparency rendering bugs (*"Removed glass wall slabs (too many render glitches)"*). Re-implemented with Bedrock `render_method: "alpha_test"`, breaking sounds, and zero light dampening.
+* **Modern Wood Wall Slabs**: Added full wall slab support for modern vanilla woods: **Bamboo**, **Cherry**, **Mangrove**, and **Pale Oak** (bringing the total to 41 wall slab variants).
+
+#### Safety, Quality & Survival Parity
+* **In-Hand & GUI Rendering Fallback**: Added a Molang fallback expression to bone visibility, ensuring wall slabs and mini blocks render visibly in inventory slots and held in third/first-person hands when block state queries evaluate to null.
+* **Tool Destructibility Tags**: Added native `minecraft:tags` (`minecraft:is_axe_item_destructible` and `minecraft:is_pickaxe_item_destructible`) so pickaxes and axes mine slabs and mini blocks with authentic vanilla tool speeds.
+* **Missing `languages.json` Fixed**: Created `resource_pack/texts/languages.json` to ensure Bedrock's localization engine reliably loads `en_US.lang` custom tile names.
+* **Nostalgic Session Greeting**: Added a one-time welcome greeting in chat on session spawn echoing the classic 2015 script message:  
+  *`"Welcome back to Minecraft PE! You are using the Mini Blocks Add-on v1.3.0! Originally created by thejaustin"`*.
+* **Automated Packaging (`tools/package.py`)**: One-command compilation generating `.mcpack` and `.mcaddon` archives, syncing directly to `/storage/emulated/0/Download/` and triggering Android media scanner broadcasts.
 
 ---
 

@@ -7,6 +7,9 @@
     "miniblocks_andesite": {
       "textures": "textures/blocks/stone_andesite"
     },
+    "miniblocks_bamboo": {
+      "textures": "textures/blocks/bamboo_planks"
+    },
     "miniblocks_birch": {
       "textures": "textures/blocks/planks_birch"
     },
@@ -15,6 +18,9 @@
     },
     "miniblocks_brick": {
       "textures": "textures/blocks/brick"
+    },
+    "miniblocks_cherry": {
+      "textures": "textures/blocks/cherry_planks"
     },
     "miniblocks_cobblestone": {
       "textures": "textures/blocks/miniblocks_cobblestone"
@@ -43,11 +49,17 @@
     "miniblocks_end_stone_brick": {
       "textures": "textures/blocks/end_bricks"
     },
+    "miniblocks_glass": {
+      "textures": "textures/blocks/glass"
+    },
     "miniblocks_granite": {
       "textures": "textures/blocks/stone_granite"
     },
     "miniblocks_jungle": {
       "textures": "textures/blocks/planks_jungle"
+    },
+    "miniblocks_mangrove": {
+      "textures": "textures/blocks/mangrove_planks"
     },
     "miniblocks_mossy_cobblestone": {
       "textures": "textures/blocks/cobblestone_mossy"
@@ -60,6 +72,9 @@
     },
     "miniblocks_oak": {
       "textures": "textures/blocks/planks_oak"
+    },
+    "miniblocks_pale_oak": {
+      "textures": "textures/blocks/pale_oak_planks"
     },
     "miniblocks_polished_andesite": {
       "textures": "textures/blocks/stone_andesite_smooth"
@@ -114,6 +129,30 @@
     },
     "miniblocks_mini_dirt": {
       "textures": "textures/blocks/mini_dirt"
+    },
+    "miniblocks_mini_cobblestone": {
+      "textures": "textures/blocks/miniblocks_cobblestone"
+    },
+    "miniblocks_mini_oak_planks": {
+      "textures": "textures/blocks/planks_oak"
+    },
+    "miniblocks_mini_stone": {
+      "textures": "textures/blocks/stone"
+    },
+    "miniblocks_mini_stone_bricks": {
+      "textures": "textures/blocks/stonebrick"
+    },
+    "miniblocks_mini_brick": {
+      "textures": "textures/blocks/brick"
+    },
+    "miniblocks_mini_sandstone": {
+      "textures": "textures/blocks/sandstone_normal"
+    },
+    "miniblocks_mini_obsidian": {
+      "textures": "textures/blocks/obsidian"
+    },
+    "miniblocks_mini_glass": {
+      "textures": "textures/blocks/glass"
     }
   }
 }

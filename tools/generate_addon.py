@@ -20,9 +20,11 @@ TEX_PREFIX = "miniblocks_" # terrain_texture keys share a namespace with vanilla
 # source_item doubles as the full block a merged pair of slabs turns into.
 WALL_SLABS = [
     ("andesite",             "minecraft:andesite",             1.5, True,  "stone"),
+    ("bamboo",               "minecraft:bamboo_planks",        1.5, False, "wood"),
     ("birch",                "minecraft:birch_planks",         1.5, False, "wood"),
     ("blackstone",           "minecraft:blackstone",           1.5, True,  "stone"),
     ("brick",                "minecraft:brick_block",          2.0, True,  "stone"),
+    ("cherry",               "minecraft:cherry_planks",        1.5, False, "wood"),
     ("cobblestone",          "minecraft:cobblestone",          2.0, True,  "stone"),
     ("crimson",              "minecraft:crimson_planks",       1.5, False, "nether_wood"),
     ("cut_copper",           "minecraft:cut_copper",           3.0, True,  "copper"),
@@ -32,12 +34,15 @@ WALL_SLABS = [
     ("deepslate",            "minecraft:cobbled_deepslate",    3.5, True,  "deepslate"),
     ("diorite",              "minecraft:diorite",              1.5, True,  "stone"),
     ("end_stone_brick",      "minecraft:end_bricks",           3.0, True,  "stone"),
+    ("glass",                "minecraft:glass",                0.3, False, "glass"),
     ("granite",              "minecraft:granite",              1.5, True,  "stone"),
     ("jungle",               "minecraft:jungle_planks",        1.5, False, "wood"),
+    ("mangrove",             "minecraft:mangrove_planks",      1.5, False, "wood"),
     ("mossy_cobblestone",    "minecraft:mossy_cobblestone",    2.0, True,  "stone"),
     ("mossy_stone_brick",    "minecraft:mossy_stone_bricks",   1.5, True,  "stone"),
     ("nether_brick",         "minecraft:nether_brick",         2.0, True,  "nether_brick"),
     ("oak",                  "minecraft:oak_planks",           1.5, False, "wood"),
+    ("pale_oak",             "minecraft:pale_oak_planks",      1.5, False, "wood"),
     ("polished_andesite",    "minecraft:polished_andesite",    1.5, True,  "stone"),
     ("polished_blackstone",  "minecraft:polished_blackstone",  2.0, True,  "stone"),
     ("polished_diorite",     "minecraft:polished_diorite",     1.5, True,  "stone"),
@@ -57,46 +62,73 @@ WALL_SLABS = [
     ("warped",               "minecraft:warped_planks",        1.5, False, "nether_wood"),
 ]
 
+# (name_slug, source_item, hardness, sound, category, stonecutter_allowed, tool_type)
+MINI_BLOCKS = [
+    ("dirt",         "minecraft:dirt",         0.5,  "gravel", "nature",       False, None),
+    ("cobblestone",  "minecraft:cobblestone",  2.0,  "stone",  "construction", True,  "pickaxe"),
+    ("oak_planks",   "minecraft:oak_planks",   1.5,  "wood",   "construction", False, "axe"),
+    ("stone",        "minecraft:stone",        1.5,  "stone",  "construction", True,  "pickaxe"),
+    ("stone_bricks", "minecraft:stone_bricks", 1.5,  "stone",  "construction", True,  "pickaxe"),
+    ("brick",        "minecraft:brick_block",  2.0,  "stone",  "construction", True,  "pickaxe"),
+    ("sandstone",    "minecraft:sandstone",    0.8,  "stone",  "construction", True,  "pickaxe"),
+    ("obsidian",     "minecraft:obsidian",     10.0, "stone",  "construction", False, "pickaxe"),
+    ("glass",        "minecraft:glass",        0.3,  "glass",  "construction", False, None),
+]
+
 # Vanilla Bedrock RP texture paths (resolved from the vanilla pack at runtime).
 # Verified against bedrock-samples v1.26.50.4.
 TEXTURE_PATHS = {
-    "andesite":           "textures/blocks/stone_andesite",
-    "birch":              "textures/blocks/planks_birch",
-    "blackstone":         "textures/blocks/blackstone",
-    "brick":              "textures/blocks/brick",
-    "cobblestone":        "textures/blocks/miniblocks_cobblestone",  # own file; vanilla path would override all cobblestone
-    "crimson":            "textures/blocks/huge_fungus/crimson_planks",
-    "cut_copper":         "textures/blocks/cut_copper",
-    "cut_red_sandstone":  "textures/blocks/red_sandstone_smooth",
-    "cut_sandstone":      "textures/blocks/sandstone_smooth",
-    "dark_oak":           "textures/blocks/planks_big_oak",
-    "deepslate":          "textures/blocks/deepslate/cobbled_deepslate",
-    "diorite":            "textures/blocks/stone_diorite",
-    "end_stone_brick":    "textures/blocks/end_bricks",
-    "granite":            "textures/blocks/stone_granite",
-    "jungle":             "textures/blocks/planks_jungle",
-    "mossy_cobblestone":  "textures/blocks/cobblestone_mossy",
-    "mossy_stone_brick":  "textures/blocks/stonebrick_mossy",
-    "nether_brick":       "textures/blocks/nether_brick",
-    "oak":                "textures/blocks/planks_oak",
-    "polished_andesite":  "textures/blocks/stone_andesite_smooth",
-    "polished_blackstone":"textures/blocks/polished_blackstone",
-    "polished_diorite":   "textures/blocks/stone_diorite_smooth",
-    "polished_granite":   "textures/blocks/stone_granite_smooth",
-    "purpur":             "textures/blocks/purpur_block",
-    "quartz":             "textures/blocks/quartz_block_side",
-    "red_nether_brick":   "textures/blocks/red_nether_brick",
-    "red_sandstone":      "textures/blocks/red_sandstone_normal",
-    "sandstone":          "textures/blocks/sandstone_normal",
-    "smooth_quartz":      "textures/blocks/quartz_block_bottom",
-    "smooth_red_sandstone":"textures/blocks/red_sandstone_top",
-    "smooth_sandstone":   "textures/blocks/sandstone_top",
-    "smooth_stone":       "textures/blocks/stone_slab_top",
-    "spruce":             "textures/blocks/planks_spruce",
-    "stone_brick":        "textures/blocks/stonebrick",
-    "stone":              "textures/blocks/stone",
-    "warped":             "textures/blocks/huge_fungus/warped_planks",
-    "mini_dirt":          "textures/blocks/mini_dirt",  # ships in resource_pack/textures/blocks
+    "andesite":             "textures/blocks/stone_andesite",
+    "bamboo":               "textures/blocks/bamboo_planks",
+    "birch":                "textures/blocks/planks_birch",
+    "blackstone":           "textures/blocks/blackstone",
+    "brick":                "textures/blocks/brick",
+    "cherry":               "textures/blocks/cherry_planks",
+    "cobblestone":          "textures/blocks/miniblocks_cobblestone",  # own file; vanilla path would override all cobblestone
+    "crimson":              "textures/blocks/huge_fungus/crimson_planks",
+    "cut_copper":           "textures/blocks/cut_copper",
+    "cut_red_sandstone":    "textures/blocks/red_sandstone_smooth",
+    "cut_sandstone":        "textures/blocks/sandstone_smooth",
+    "dark_oak":             "textures/blocks/planks_big_oak",
+    "deepslate":            "textures/blocks/deepslate/cobbled_deepslate",
+    "diorite":              "textures/blocks/stone_diorite",
+    "end_stone_brick":      "textures/blocks/end_bricks",
+    "glass":                "textures/blocks/glass",
+    "granite":              "textures/blocks/stone_granite",
+    "jungle":               "textures/blocks/planks_jungle",
+    "mangrove":             "textures/blocks/mangrove_planks",
+    "mossy_cobblestone":    "textures/blocks/cobblestone_mossy",
+    "mossy_stone_brick":    "textures/blocks/stonebrick_mossy",
+    "nether_brick":         "textures/blocks/nether_brick",
+    "oak":                  "textures/blocks/planks_oak",
+    "pale_oak":             "textures/blocks/pale_oak_planks",
+    "polished_andesite":    "textures/blocks/stone_andesite_smooth",
+    "polished_blackstone":  "textures/blocks/polished_blackstone",
+    "polished_diorite":     "textures/blocks/stone_diorite_smooth",
+    "polished_granite":     "textures/blocks/stone_granite_smooth",
+    "purpur":               "textures/blocks/purpur_block",
+    "quartz":               "textures/blocks/quartz_block_side",
+    "red_nether_brick":     "textures/blocks/red_nether_brick",
+    "red_sandstone":        "textures/blocks/red_sandstone_normal",
+    "sandstone":            "textures/blocks/sandstone_normal",
+    "smooth_quartz":        "textures/blocks/quartz_block_bottom",
+    "smooth_red_sandstone": "textures/blocks/red_sandstone_top",
+    "smooth_sandstone":     "textures/blocks/sandstone_top",
+    "smooth_stone":         "textures/blocks/stone_slab_top",
+    "spruce":               "textures/blocks/planks_spruce",
+    "stone_brick":          "textures/blocks/stonebrick",
+    "stone":                "textures/blocks/stone",
+    "warped":               "textures/blocks/huge_fungus/warped_planks",
+    # Mini block textures
+    "mini_dirt":            "textures/blocks/mini_dirt",
+    "mini_cobblestone":     "textures/blocks/miniblocks_cobblestone",
+    "mini_oak_planks":      "textures/blocks/planks_oak",
+    "mini_stone":           "textures/blocks/stone",
+    "mini_stone_bricks":    "textures/blocks/stonebrick",
+    "mini_brick":           "textures/blocks/brick",
+    "mini_sandstone":       "textures/blocks/sandstone_normal",
+    "mini_obsidian":        "textures/blocks/obsidian",
+    "mini_glass":           "textures/blocks/glass",
 }
 
 DIRECTIONS = ["north", "south", "east", "west"]
@@ -110,6 +142,18 @@ BOXES = {
     "west":  {"origin": [-8, 0, -8], "size": [8,  16, 16]},
 }
 
+# Mini block multi-surface attachment boxes
+# Attached to floor (up), ceiling (down), or four walls (north, south, east, west)
+MINI_FACES = ["up", "down", "north", "south", "west", "east"]
+MINI_BOXES = {
+    "up":    {"origin": [-4, 0, -4], "size": [8, 8, 8]},
+    "down":  {"origin": [-4, 8, -4], "size": [8, 8, 8]},
+    "north": {"origin": [-4, 4,  0], "size": [8, 8, 8]},
+    "south": {"origin": [-4, 4, -8], "size": [8, 8, 8]},
+    "west":  {"origin": [ 0, 4, -4], "size": [8, 8, 8]},
+    "east":  {"origin": [-8, 4, -4], "size": [8, 8, 8]},
+}
+
 
 def write_json(path, data):
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -119,7 +163,7 @@ def write_json(path, data):
     print(f"  wrote {os.path.relpath(path, REPO)}")
 
 
-# ── 1. Wall slab geometry ────────────────────────────────────────────────────
+# ── 1. Geometries ─────────────────────────────────────────────────────────────
 
 def uv(u, v, w, h):
     return {"uv": [u, v], "uv_size": [w, h]}
@@ -208,6 +252,7 @@ def make_geo():
     }
 
 def make_slab_geo():
+    """Floor slab geometry with per-face UV mapping for 16×16 tile textures."""
     return {
         "format_version": "1.21.0",
         "minecraft:geometry": [{
@@ -225,13 +270,61 @@ def make_slab_geo():
                 "cubes": [{
                     "origin": [-8, 0, -8],
                     "size": [16, 8, 16],
-                    "uv": [0, 0],
+                    "uv": {
+                        "north": uv(0, 8, 16, 8),
+                        "south": uv(0, 8, 16, 8),
+                        "east":  uv(0, 8, 16, 8),
+                        "west":  uv(0, 8, 16, 8),
+                        "up":    uv(0, 0, 16, 16),
+                        "down":  uv(0, 0, 16, 16),
+                    }
                 }],
             }],
         }],
     }
 
 def make_mini_block_geo():
+    """Multi-surface 8×8×8 mini block geometry supporting floor, ceiling, and 4 walls."""
+    uv_full = {
+        "north": uv(0, 0, 16, 16),
+        "south": uv(0, 0, 16, 16),
+        "east":  uv(0, 0, 16, 16),
+        "west":  uv(0, 0, 16, 16),
+        "up":    uv(0, 0, 16, 16),
+        "down":  uv(0, 0, 16, 16),
+    }
+    bones = [
+        {
+            "name": "bb_floor",
+            "pivot": [0, 0, 0],
+            "cubes": [{"origin": [-4, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_ceiling",
+            "pivot": [0, 16, 0],
+            "cubes": [{"origin": [-4, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_north",
+            "pivot": [0, 8, 8],
+            "cubes": [{"origin": [-4, 4, 0], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_south",
+            "pivot": [0, 8, -8],
+            "cubes": [{"origin": [-4, 4, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_west",
+            "pivot": [8, 8, 0],
+            "cubes": [{"origin": [0, 4, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_east",
+            "pivot": [-8, 8, 0],
+            "cubes": [{"origin": [-8, 4, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+    ]
     return {
         "format_version": "1.21.0",
         "minecraft:geometry": [{
@@ -243,15 +336,7 @@ def make_mini_block_geo():
                 "visible_bounds_height": 1,
                 "visible_bounds_offset": [0, 0, 0],
             },
-            "bones": [{
-                "name": "bb_main",
-                "pivot": [0, 0, 0],
-                "cubes": [{
-                    "origin": [-4, 0, -4],
-                    "size": [8, 8, 8],
-                    "uv": [0, 0],
-                }],
-            }],
+            "bones": bones,
         }],
     }
 
@@ -265,9 +350,14 @@ write_json(os.path.join(RP, "models/blocks/mini_block.geo.json"), make_mini_bloc
 def make_wall_slab_block(name, hardness, sound):
     identifier = f"addon:{name}_wall_slab"
 
-    # One geometry component; each bone shows only for its own facing state.
+    # Bone visibility with fallback for UI/hand rendering:
+    # In hand or inventory UI, q.block_state('minecraft:cardinal_direction') is unset.
+    # Evaluating != 'south' && != 'east' && != 'west' ensures 'north' renders as the default panel.
     bone_visibility = {
-        d: f"q.block_state('minecraft:cardinal_direction') == '{d}'" for d in DIRECTIONS
+        "north": "(q.block_state('minecraft:cardinal_direction') == 'north') || (q.block_state('minecraft:cardinal_direction') != 'south' && q.block_state('minecraft:cardinal_direction') != 'east' && q.block_state('minecraft:cardinal_direction') != 'west')",
+        "south": "q.block_state('minecraft:cardinal_direction') == 'south'",
+        "east":  "q.block_state('minecraft:cardinal_direction') == 'east'",
+        "west":  "q.block_state('minecraft:cardinal_direction') == 'west'",
     }
 
     permutations = []
@@ -281,11 +371,13 @@ def make_wall_slab_block(name, hardness, sound):
             }
         })
 
+    render_method = "alpha_test" if name == "glass" else "opaque"
+
     components = {
         "minecraft:material_instances": {
             "*": {
                 "texture": f"{TEX_PREFIX}{name}",
-                "render_method": "opaque",
+                "render_method": render_method,
             }
         },
         "minecraft:geometry": {
@@ -307,6 +399,12 @@ def make_wall_slab_block(name, hardness, sound):
             "catch_chance_modifier": 5,
             "destroy_chance_modifier": 20,
         }
+
+    # Destructibility tags for survival tool parity
+    if sound in ("wood", "nether_wood"):
+        components["minecraft:tags"] = ["minecraft:is_axe_item_destructible"]
+    elif sound in ("stone", "deepslate", "copper", "nether_brick"):
+        components["minecraft:tags"] = ["minecraft:is_pickaxe_item_destructible"]
 
     return {
         "format_version": BLOCK_FORMAT,
@@ -334,7 +432,7 @@ for name, source, hardness, stone_cut, sound in WALL_SLABS:
                make_wall_slab_block(name, hardness, sound))
 
 
-# ── 3. cobblestone_slab.json (floor slab, no rotation) ──────────────────────
+# ── 3. cobblestone_slab.json (floor slab) ───────────────────────────────────
 
 floor_slab = {
     "format_version": BLOCK_FORMAT,
@@ -354,6 +452,7 @@ floor_slab = {
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 2.0},
             "minecraft:destructible_by_explosion": {"explosion_resistance": 6.0},
             "minecraft:light_dampening": 0,
+            "minecraft:tags": ["minecraft:is_pickaxe_item_destructible"],
             "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
             "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
         }
@@ -362,31 +461,87 @@ floor_slab = {
 write_json(os.path.join(BP, "blocks/cobblestone_slab.json"), floor_slab)
 
 
-# ── 4. mini_dirt.json (8×8×8 cube) ──────────────────────────────────────────
+# ── 4. Mini Blocks (8×8×8 cube with multi-surface attachment) ───────────────
 
-mini_box = {"origin": [-4, 0, -4], "size": [8, 8, 8]}
-mini_dirt = {
-    "format_version": BLOCK_FORMAT,
-    "minecraft:block": {
-        "description": {
-            "identifier": "addon:mini_dirt",
-            "menu_category": {
-                "category": "nature",
-            },
+def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed, tool_type):
+    identifier = f"addon:mini_{slug}"
+    render_method = "alpha_test" if slug == "glass" else "opaque"
+
+    bone_visibility = {
+        "bb_floor": "(q.block_state('minecraft:block_face') == 'up') || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
+        "bb_ceiling": "q.block_state('minecraft:block_face') == 'down'",
+        "bb_north":   "q.block_state('minecraft:block_face') == 'north'",
+        "bb_south":   "q.block_state('minecraft:block_face') == 'south'",
+        "bb_west":    "q.block_state('minecraft:block_face') == 'west'",
+        "bb_east":    "q.block_state('minecraft:block_face') == 'east'",
+    }
+
+    permutations = []
+    for face in MINI_FACES:
+        box = MINI_BOXES[face]
+        permutations.append({
+            "condition": f"q.block_state('minecraft:block_face') == '{face}'",
+            "components": {
+                "minecraft:collision_box": box,
+                "minecraft:selection_box": box,
+            }
+        })
+
+    components = {
+        "minecraft:material_instances": {
+            "*": {
+                "texture": f"{TEX_PREFIX}mini_{slug}",
+                "render_method": render_method,
+            }
         },
-        "components": {
-            "minecraft:material_instances": {
-                "*": {"texture": f"{TEX_PREFIX}mini_dirt", "render_method": "opaque"}
+        "minecraft:geometry": {
+            "identifier": "geometry.mini_block",
+            "bone_visibility": bone_visibility,
+        },
+        "minecraft:destructible_by_mining": {
+            "seconds_to_destroy": hardness,
+        },
+        "minecraft:destructible_by_explosion": {
+            "explosion_resistance": hardness * 3,
+        },
+        "minecraft:light_dampening": 0,
+        "minecraft:collision_box": MINI_BOXES["up"],
+        "minecraft:selection_box": MINI_BOXES["up"],
+    }
+
+    if sound == "wood":
+        components["minecraft:flammable"] = {
+            "catch_chance_modifier": 5,
+            "destroy_chance_modifier": 20,
+        }
+
+    if tool_type == "axe":
+        components["minecraft:tags"] = ["minecraft:is_axe_item_destructible"]
+    elif tool_type == "pickaxe":
+        components["minecraft:tags"] = ["minecraft:is_pickaxe_item_destructible"]
+
+    return {
+        "format_version": BLOCK_FORMAT,
+        "minecraft:block": {
+            "description": {
+                "identifier": identifier,
+                "menu_category": {
+                    "category": category,
+                },
+                "traits": {
+                    "minecraft:placement_position": {
+                        "enabled_states": ["minecraft:block_face"],
+                    },
+                },
             },
-            "minecraft:geometry": "geometry.mini_block",
-            "minecraft:destructible_by_mining": {"seconds_to_destroy": 0.5},
-            "minecraft:light_dampening": 0,
-            "minecraft:collision_box": mini_box,
-            "minecraft:selection_box": mini_box,
+            "components": components,
+            "permutations": permutations,
         }
     }
-}
-write_json(os.path.join(BP, "blocks/mini_dirt.json"), mini_dirt)
+
+for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+    write_json(os.path.join(BP, f"blocks/mini_{slug}.json"),
+               make_mini_block(slug, source, hardness, sound, category, stone_cut, tool_type))
 
 
 # ── 5. Recipes ───────────────────────────────────────────────────────────────
@@ -405,7 +560,6 @@ def shaped(recipe_id, pattern, source, result, count):
     }
 
 def stonecutter(recipe_id, source, result, count):
-    # Vanilla stonecutter recipes are shapeless recipes tagged "stonecutter".
     return {
         "format_version": RECIPE_FORMAT,
         "minecraft:recipe_shapeless": {
@@ -429,13 +583,19 @@ for name, source, hardness, stone_cut, sound in WALL_SLABS:
         write_json(os.path.join(BP, f"recipes/{name}_wall_slab_stonecutting.json"),
                    stonecutter(f"addon:{name}_wall_slab_stonecutting", source, identifier, 2))
 
-# No crafting-table recipe for cobblestone_slab: "###" cobblestone is the
-# vanilla cobblestone slab recipe. The stonecutter lists both outputs.
+# Floor slab
 write_json(os.path.join(BP, "recipes/cobblestone_slab_stonecutting.json"),
            stonecutter("addon:cobblestone_slab_stonecutting", "minecraft:cobblestone",
                        "addon:cobblestone_slab", 2))
-write_json(os.path.join(BP, "recipes/mini_dirt_crafting.json"),
-           shaped("addon:mini_dirt_crafting", COLUMN, "minecraft:dirt", "addon:mini_dirt", 6))
+
+# Mini blocks
+for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+    identifier = f"addon:mini_{slug}"
+    write_json(os.path.join(BP, f"recipes/mini_{slug}_crafting.json"),
+               shaped(f"addon:mini_{slug}_crafting", COLUMN, source, identifier, 6))
+    if stone_cut:
+        write_json(os.path.join(BP, f"recipes/mini_{slug}_stonecutting.json"),
+                   stonecutter(f"addon:mini_{slug}_stonecutting", source, identifier, 2))
 
 
 # ── 6. terrain_texture.json ─────────────────────────────────────────────────
@@ -445,7 +605,6 @@ terrain_texture = {
     "texture_name": "atlas.terrain",
     "padding": 8,
     "num_mip_levels": 4,
-    # Prefixed so our keys never replace vanilla ones of the same name.
     "texture_data": {f"{TEX_PREFIX}{k}": {"textures": v} for k, v in TEXTURE_PATHS.items()},
 }
 write_json(os.path.join(RP, "textures/terrain_texture.json"), terrain_texture)
@@ -455,7 +614,8 @@ write_json(os.path.join(RP, "textures/terrain_texture.json"), terrain_texture)
 
 blocks_json = {"format_version": "1.21.40"}
 blocks_json["addon:cobblestone_slab"] = {"sound": "stone"}
-blocks_json["addon:mini_dirt"] = {"sound": "gravel"}
+for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+    blocks_json[f"addon:mini_{slug}"] = {"sound": sound}
 for name, source, hardness, stone_cut, sound in WALL_SLABS:
     blocks_json[f"addon:{name}_wall_slab"] = {"sound": sound}
 write_json(os.path.join(RP, "blocks.json"), blocks_json)
@@ -470,6 +630,7 @@ SOUND_EVENTS = {
     "deepslate": "use.deepslate",
     "copper": "use.copper",
     "nether_brick": "use.nether_brick",
+    "glass": "use.stone",
 }
 
 slab_map_path = os.path.join(BP, "scripts/slab_map.js")
@@ -489,23 +650,15 @@ with open(slab_map_path, "w") as f:
 print(f"  wrote {os.path.relpath(slab_map_path, REPO)}")
 
 
-# ── 9. Lang file ─────────────────────────────────────────────────────────────
-
-lang_entries = [
-    "## Comments can be added to any line in a .lang file by starting the line with the '#' character.",
-    "",
-    "pack.name=MiniBlocks Addon",
-    "pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.",
-    "",
-    "tile.addon:mini_dirt.name=Mini Dirt",
-    "tile.addon:cobblestone_slab.name=Cobblestone Slab",
-]
+# ── 9. Lang file & languages.json ───────────────────────────────────────────
 
 DISPLAY_NAMES = {
     "andesite":            "Andesite Wall Slab",
+    "bamboo":              "Bamboo Wall Slab",
     "birch":               "Birch Wall Slab",
     "blackstone":          "Blackstone Wall Slab",
     "brick":               "Brick Wall Slab",
+    "cherry":              "Cherry Wall Slab",
     "cobblestone":         "Cobblestone Wall Slab",
     "crimson":             "Crimson Wall Slab",
     "cut_copper":          "Cut Copper Wall Slab",
@@ -515,12 +668,15 @@ DISPLAY_NAMES = {
     "deepslate":           "Cobbled Deepslate Wall Slab",
     "diorite":             "Diorite Wall Slab",
     "end_stone_brick":     "End Stone Brick Wall Slab",
-    "granite":             "Granite Wall Slab",
+    "glass":               "Glass Wall Slab",
+    "granite":              "Granite Wall Slab",
     "jungle":              "Jungle Wall Slab",
+    "mangrove":            "Mangrove Wall Slab",
     "mossy_cobblestone":   "Mossy Cobblestone Wall Slab",
     "mossy_stone_brick":   "Mossy Stone Brick Wall Slab",
     "nether_brick":        "Nether Brick Wall Slab",
     "oak":                 "Oak Wall Slab",
+    "pale_oak":            "Pale Oak Wall Slab",
     "polished_andesite":   "Polished Andesite Wall Slab",
     "polished_blackstone": "Polished Blackstone Wall Slab",
     "polished_diorite":    "Polished Diorite Wall Slab",
@@ -540,14 +696,46 @@ DISPLAY_NAMES = {
     "warped":              "Warped Wall Slab",
 }
 
-for name, display in sorted(DISPLAY_NAMES.items()):
-    lang_entries.append(f"tile.addon:{name}_wall_slab.name={display}")
+MINI_DISPLAY_NAMES = {
+    "dirt":         "Mini Dirt",
+    "cobblestone":  "Mini Cobblestone",
+    "oak_planks":   "Mini Oak Planks",
+    "stone":        "Mini Stone",
+    "stone_bricks": "Mini Stone Bricks",
+    "brick":        "Mini Brick",
+    "sandstone":    "Mini Sandstone",
+    "obsidian":     "Mini Obsidian",
+    "glass":        "Mini Glass",
+}
+
+lang_entries = [
+    "## Comments can be added to any line in a .lang file by starting the line with the '#' character.",
+    "",
+    "pack.name=MiniBlocks Addon",
+    "pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.",
+    "",
+    "tile.addon:cobblestone_slab.name=Cobblestone Slab",
+    "",
+    "## Mini Blocks",
+]
+
+for slug in sorted(MINI_DISPLAY_NAMES.keys()):
+    lang_entries.append(f"tile.addon:mini_{slug}.name={MINI_DISPLAY_NAMES[slug]}")
+
+lang_entries.append("")
+lang_entries.append("## Wall Slabs")
+
+for name in sorted(DISPLAY_NAMES.keys()):
+    lang_entries.append(f"tile.addon:{name}_wall_slab.name={DISPLAY_NAMES[name]}")
 
 lang_path = os.path.join(RP, "texts/en_US.lang")
 os.makedirs(os.path.dirname(lang_path), exist_ok=True)
 with open(lang_path, "w") as f:
     f.write("\n".join(lang_entries) + "\n")
 print(f"  wrote resource_pack/texts/en_US.lang")
+
+languages_path = os.path.join(RP, "texts/languages.json")
+write_json(languages_path, ["en_US"])
 
 
 # ── 10. Packaging helper ────────────────────────────────────────────────────

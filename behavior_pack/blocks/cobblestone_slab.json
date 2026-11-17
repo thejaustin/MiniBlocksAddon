@@ -23,6 +23,9 @@
         "explosion_resistance": 6.0
       },
       "minecraft:light_dampening": 0,
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible"
+      ],
       "minecraft:collision_box": {
         "origin": [
           -8,

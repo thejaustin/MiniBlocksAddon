@@ -6,8 +6,35 @@
   "addon:mini_dirt": {
     "sound": "gravel"
   },
+  "addon:mini_cobblestone": {
+    "sound": "stone"
+  },
+  "addon:mini_oak_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_stone": {
+    "sound": "stone"
+  },
+  "addon:mini_stone_bricks": {
+    "sound": "stone"
+  },
+  "addon:mini_brick": {
+    "sound": "stone"
+  },
+  "addon:mini_sandstone": {
+    "sound": "stone"
+  },
+  "addon:mini_obsidian": {
+    "sound": "stone"
+  },
+  "addon:mini_glass": {
+    "sound": "glass"
+  },
   "addon:andesite_wall_slab": {
     "sound": "stone"
+  },
+  "addon:bamboo_wall_slab": {
+    "sound": "wood"
   },
   "addon:birch_wall_slab": {
     "sound": "wood"
@@ -17,6 +44,9 @@
   },
   "addon:brick_wall_slab": {
     "sound": "stone"
+  },
+  "addon:cherry_wall_slab": {
+    "sound": "wood"
   },
   "addon:cobblestone_wall_slab": {
     "sound": "stone"
@@ -45,10 +75,16 @@
   "addon:end_stone_brick_wall_slab": {
     "sound": "stone"
   },
+  "addon:glass_wall_slab": {
+    "sound": "glass"
+  },
   "addon:granite_wall_slab": {
     "sound": "stone"
   },
   "addon:jungle_wall_slab": {
+    "sound": "wood"
+  },
+  "addon:mangrove_wall_slab": {
     "sound": "wood"
   },
   "addon:mossy_cobblestone_wall_slab": {
@@ -61,6 +97,9 @@
     "sound": "nether_brick"
   },
   "addon:oak_wall_slab": {
+    "sound": "wood"
+  },
+  "addon:pale_oak_wall_slab": {
     "sound": "wood"
   },
   "addon:polished_andesite_wall_slab": {

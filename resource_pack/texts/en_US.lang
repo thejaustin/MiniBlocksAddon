@@ -3,12 +3,26 @@
 pack.name=MiniBlocks Addon
 pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.
 
-tile.addon:mini_dirt.name=Mini Dirt
 tile.addon:cobblestone_slab.name=Cobblestone Slab
+
+## Mini Blocks
+tile.addon:mini_brick.name=Mini Brick
+tile.addon:mini_cobblestone.name=Mini Cobblestone
+tile.addon:mini_dirt.name=Mini Dirt
+tile.addon:mini_glass.name=Mini Glass
+tile.addon:mini_oak_planks.name=Mini Oak Planks
+tile.addon:mini_obsidian.name=Mini Obsidian
+tile.addon:mini_sandstone.name=Mini Sandstone
+tile.addon:mini_stone.name=Mini Stone
+tile.addon:mini_stone_bricks.name=Mini Stone Bricks
+
+## Wall Slabs
 tile.addon:andesite_wall_slab.name=Andesite Wall Slab
+tile.addon:bamboo_wall_slab.name=Bamboo Wall Slab
 tile.addon:birch_wall_slab.name=Birch Wall Slab
 tile.addon:blackstone_wall_slab.name=Blackstone Wall Slab
 tile.addon:brick_wall_slab.name=Brick Wall Slab
+tile.addon:cherry_wall_slab.name=Cherry Wall Slab
 tile.addon:cobblestone_wall_slab.name=Cobblestone Wall Slab
 tile.addon:crimson_wall_slab.name=Crimson Wall Slab
 tile.addon:cut_copper_wall_slab.name=Cut Copper Wall Slab
@@ -18,12 +32,15 @@ tile.addon:dark_oak_wall_slab.name=Dark Oak Wall Slab
 tile.addon:deepslate_wall_slab.name=Cobbled Deepslate Wall Slab
 tile.addon:diorite_wall_slab.name=Diorite Wall Slab
 tile.addon:end_stone_brick_wall_slab.name=End Stone Brick Wall Slab
+tile.addon:glass_wall_slab.name=Glass Wall Slab
 tile.addon:granite_wall_slab.name=Granite Wall Slab
 tile.addon:jungle_wall_slab.name=Jungle Wall Slab
+tile.addon:mangrove_wall_slab.name=Mangrove Wall Slab
 tile.addon:mossy_cobblestone_wall_slab.name=Mossy Cobblestone Wall Slab
 tile.addon:mossy_stone_brick_wall_slab.name=Mossy Stone Brick Wall Slab
 tile.addon:nether_brick_wall_slab.name=Nether Brick Wall Slab
 tile.addon:oak_wall_slab.name=Oak Wall Slab
+tile.addon:pale_oak_wall_slab.name=Pale Oak Wall Slab
 tile.addon:polished_andesite_wall_slab.name=Polished Andesite Wall Slab
 tile.addon:polished_blackstone_wall_slab.name=Polished Blackstone Wall Slab
 tile.addon:polished_diorite_wall_slab.name=Polished Diorite Wall Slab

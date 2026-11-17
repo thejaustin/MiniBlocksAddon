@@ -1,10 +1,26 @@
 import { world, system, Direction, GameMode, PlayerPermissionLevel } from "@minecraft/server";
 import { SLAB_TO_FULL_BLOCK, SLAB_SOUNDS } from "./slab_map.js";
 
-// Mini Blocks Addon - Wall Slab Combining Mechanic
+// Mini Blocks Addon - Wall Slab Combining Mechanic & Session Greeting
 // Recreates the classic Mini Blocks Mod combining behavior.
 // Interacting with a wall slab while holding the matching slab type combines
 // both halves into the full vanilla block. Sneak while placing to build adjacent slabs.
+
+// Nostalgic session greeting echoing the classic 2015 ModPE script
+const welcomedPlayers = new Set();
+world.afterEvents.playerSpawn.subscribe((event) => {
+  const { player, initialSpawn } = event;
+  if (!initialSpawn || !player?.isValid) return;
+  if (welcomedPlayers.has(player.id)) return;
+  welcomedPlayers.add(player.id);
+
+  system.runTimeout(() => {
+    if (!player.isValid) return;
+    player.sendMessage(
+      "§eWelcome back to Minecraft PE! You are using the §aMini Blocks Add-on v1.3.0§e! Originally created by §bthejaustin§e."
+    );
+  }, 20); // 1-second delay so world and UI are fully loaded
+});
 
 const NON_BLOCKING_ENTITIES = new Set(["minecraft:item", "minecraft:xp_orb"]);
 
