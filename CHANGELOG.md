@@ -74,10 +74,10 @@ The project progressed through early experimental forum betas into GitHub releas
 
 Looking under the hood of `miniblocks_v1.9.bin` reveals an authentic snapshot of early MCPE modding culture: an enthusiastic patchwork of community-shared code snippets, reverse-engineered hacks, and creative workarounds stitched together in mobile text editors.
 
-### The Ironic Human Innovation Cycle (Borrow, Modify, Remix)
-In classic modding tradition, innovation rarely happens in a vacuum—it begins with seeing mechanics you admire, borrowing community snippets, modifying them to fit your vision, and assembling them into something genuinely new. 
+### The "Copy Paste Edit" Modding Tradition
+In true early modding tradition, development was defined by that classic **copy paste edit** workflow: discovering snippets and techniques across the forums, pasting them into a mobile code editor, tweaking and modifying them to fit what you wanted to build, and stitching them together into something brand new.
 
-Despite the iconic top disclaimer (`"//Don't steal this code! Do not take it as your own!"`), the script was a shining example of open community remixing. Tracing the source code reveals the various community building blocks that came together:
+Despite the iconic top disclaimer (`"//Don't steal this code! Do not take it as your own!"`), the script was an authentic product of that copy-paste-edit era. Tracing the source code reveals the community building blocks that came together:
 
 #### 1. Directional Facing & `findYaw()` — androidKaghon
 * **Original Attribution**: `"The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!"`
