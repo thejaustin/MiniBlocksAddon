@@ -57,11 +57,12 @@
 
 ## Project History: MCPE 0.10.x to Bedrock 1.26.x
 
-The **Mini Blocks Mod** was initially released during the Minecraft Pocket Edition 0.10.x and 0.11.x eras as a ModPE script for BlockLauncher. The primary focus of the mod was introducing vertical half-blocks (Wall Slabs) to overcome vanilla architectural limitations on mobile, accompanied by custom miniature decorative blocks.
+The **Mini Blocks Mod** was initially created during the Minecraft Pocket Edition 0.10.x and 0.11.x eras as a ModPE script for BlockLauncher. 
+
+### Java Edition PC Inspiration: The Little Blocks Mod
+The original inspiration for the project came from the legendary Minecraft Java Edition PC mod **Little Blocks Mod** (created by Gullibility / SlimeVoid and Vengeeur). The Little Blocks Mod captivated players by scaling block space down to 1:8, allowing 512 miniature blocks to fit inside a single standard block coordinate. Inspired by the creative freedom of micro-scale detailing, Austin set out to bring vertical half-meter blocks (Wall Slabs) and miniature decorative blocks to mobile players on Minecraft Pocket Edition.
 
 The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics. Following the v1.9 release, work began on a highly anticipated **v2.0 Beta**, announced and tested on the Minecraft Forums, aiming to overhaul collision boundaries, expand the mini block catalog, and rewrite the underlying script structure. As MCPE shifted away from ModPE scripting toward native C++ and modern add-ons, v2.0 Beta remained the unfinished frontier of the mod.
-
-This modern Bedrock release also represents a fundamental shift in development workflow: moving from manual, single-file JavaScript hacking in mobile text editors a decade ago to on-device AI-assisted engineering. Developed directly on an Android device using Termux and local ADB, the project paired human direction with AI agent assistance (Antigravity) to research current Bedrock engine schemas, generate hundreds of block permutations, handle coordinate geometry, and resolve obscure engine import and namespace quirks.
 
 ---
 
@@ -93,6 +94,20 @@ Despite the iconic opening warning (`"//Don't steal this code! Do not take it as
 
 ---
 
+## Tooling Archaeology: Modern Multi-Agent Git Lineage
+
+Tracing through the repository commit history reveals how the modern Bedrock revival was constructed across multiple AI coding harnesses and platforms:
+
+1. **Google Labs Jules (`google-labs-jules[bot]`) — March 2026**:
+   * Jules, Google Labs' autonomous repository agent, contributed commit `ebd0b68` (merged via PR #1 `358873d`), performing initial parity updates and repository alignment.
+2. **Claude (Sonnet 4.6 & Opus 5.5) in Laptop Terminal Harness / Warp — October 2026**:
+   * Commits `6e69987` through `72b7504` were authored in laptop terminal sessions utilizing AI coding agent harnesses (such as Warp / Claude Code).
+   * Migrated block definitions from 1.19 to 1.21 and 1.26 schema formats, replaced deprecated placement events with modern cardinal direction traits, built initial Python generator scripts, and implemented early `@minecraft/server` slab-combining scripting.
+3. **Antigravity on Termux (Android Mobile) — November 2026**:
+   * Finalized the release directly on-device using Termux over loopback ADB. Overhauled touch-control slab merging across all faces, generated custom pixel-art iconography, fixed terrain texture namespace collisions, resolved engine UUID duplicate import issues, and completed release packaging for mobile Bedrock.
+
+---
+
 ## v1.2.0 Release Notes (Bedrock Edition)
 
 ### Wall Slab Combining: FINALLY FIXED (again)
@@ -119,16 +134,13 @@ Despite the iconic opening warning (`"//Don't steal this code! Do not take it as
 * **Import Stability**: Generated fresh UUIDs and bumped versioning to `1.2.0`, resolving Bedrock's "Duplicate pack detected" import errors.
 * **Engine Requirements**: Pinned `@minecraft/server` to stable `1.14.0` / `1.26.20` with `min_engine_version` set to `[1, 21, 0]`.
 
-### Tooling & AI-Assisted Engineering
-* **Workflow Evolution**: Transitioned from 2015 manual ModPE text editing to modern on-device AI-assisted development. Pair-programming with Antigravity directly in Termux enabled automating multi-variant JSON schema generation, debugging touch-interaction event pipelines in `@minecraft/server`, and resolving low-level engine collision box and manifest issues.
-
 ---
 
 ## Historical Version Archive
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
-* [Development] Shifted from manual 2015 ModPE scripting to on-device AI-assisted engineering (pair-programmed with Antigravity via Termux) to automate schema generation, debug engine quirks, and modernize the codebase.
+* [Development] Rebuilt via modern AI-assisted engineering across Google Labs Jules, Claude (Warp/terminal), and Antigravity (Termux).
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.

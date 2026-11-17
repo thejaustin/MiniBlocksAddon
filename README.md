@@ -16,9 +16,16 @@
 
 Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition.
 
-The mod was originally created by **thejaustin** in 2014–2015 as a ModPE JavaScript mod for Minecraft Pocket Edition (running under BlockLauncher). Following the popular v1.9 release, development ventured into an experimental **v2.0 Beta** teased on Minecraft Forum before MCPE evolved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
+### PC Java Inspiration: The Little Blocks Mod
+The original mod was created by **thejaustin** in 2014–2015 for Minecraft Pocket Edition, directly inspired by the classic Minecraft Java Edition PC mod **Little Blocks Mod** (by Gullibility / SlimeVoid and Vengeeur). While Little Blocks introduced sub-block building at 1:8 scale on Java, Mini Blocks aimed to bring that micro-scale detailing experience to mobile touch devices.
 
-The modern Bedrock port also marks a shift in engineering workflow: moving from manual, single-file JavaScript hacking in mobile text editors to on-device AI-assisted development. Working in Termux on Android, human direction and AI pair-programming (with Antigravity) were used to automate JSON block permutations, navigate modern Bedrock schemas, and resolve low-level engine quirks.
+Following early releases through v1.9 and an experimental **v2.0 Beta** teased on Minecraft Forum, development paused as MCPE moved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
+
+### Multi-Agent Development Lineage
+The modern Bedrock port reflects a multi-agent engineering workflow traced across the repository history:
+* **Google Labs Jules (`google-labs-jules[bot]`)**: Performed initial repository parity fixes (PR #1).
+* **Claude (Sonnet 4.6 & Opus 5.5) in Laptop Terminal Harness / Warp**: Modernized block schemas from 1.19 to 1.21/1.26 format, created Python generation tooling, and drafted early server script slab merging.
+* **Antigravity on Termux (Android)**: Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
 
 ### Core Features
 * **36 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, and copper.
@@ -70,9 +77,6 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **UUID & Versioning**: Updated pack manifests to version `1.2.0` with fresh UUIDs, resolving engine "Duplicate pack detected" errors during import.
 * **API Pinning**: Pinned `@minecraft/server` dependency to stable `1.14.0` / `1.26.20` with `min_engine_version` set to `[1, 21, 0]`.
 
-#### Development & Tooling Evolution
-* **AI-Assisted Workflow**: Shifted from manual 2015 ModPE scripting to on-device AI pair-programming via Termux. Used AI assistance (Antigravity) to generate Python block schema toolchains, diagnose server script touch events, and eliminate namespace collisions.
-
 ---
 
 ## Version History & Archive
@@ -81,7 +85,7 @@ Detailed forum archive notes and historical context can be viewed in [CHANGELOG.
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
-* [Development] Shifted from manual 2015 ModPE scripting to on-device AI-assisted engineering (pair-programmed with Antigravity via Termux) to automate schema generation, debug engine quirks, and modernize the codebase.
+* [Development] Rebuilt via modern AI-assisted engineering across Google Labs Jules, Claude (Warp/terminal), and Antigravity (Termux).
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.
