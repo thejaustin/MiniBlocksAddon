@@ -65,6 +65,34 @@ This modern Bedrock release also represents a fundamental shift in development w
 
 ---
 
+## Code Archaeology: The 2014–2015 ModPE Heritage
+
+Looking under the hood of `miniblocks_v1.9.bin` reveals an authentic snapshot of early MCPE modding culture: an enthusiastic patchwork of community-shared code snippets, reverse-engineered hacks, and creative workarounds stitched together in mobile text editors.
+
+Despite the iconic opening warning (`"//Don't steal this code! Do not take it as your own!"`), the codebase was deeply rooted in the open-source sharing traditions of the MinecraftForum ModPE community. Tracing back the original implementations reveals key contributions from the modding pioneers of that era:
+
+### 1. Directional Facing & `findYaw()` — androidKaghon
+* **Original Attribution**: `"The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!"`
+* **Historical Origin**: **androidKaghon** was an active MCPE mod developer best known for creating the early *Ender Chest Mod* for MCPE 0.9.x–0.11.x. Because BlockLauncher lacked directional block states, androidKaghon developed a mathematical snippet that took player yaw (`getYaw(getPlayerEnt()) + 45`), normalized the angle within a 0°–360° range, and selected the appropriate directional block ID.
+* **The Recursive Quirk**: The original `findYaw()` implementation used recursion (`yaw = yaw - 360; findYaw();`) and included a line that played the `"step.stone"` sound effect on *every* recursive iteration—meaning placement calculations literally produced subtle stone clicking sounds while normalizing the angle!
+
+### 2. In-Game Auto-Updater — Desno365 & 500ISE Community Patterns
+* **Implementation**: The script ran an asynchronous Java thread via Rhino reflection (`java.lang.Thread`, `java.net.URL`, `ctx.runOnUiThread`), checked `raw.githubusercontent.com/.../MiniBlocksVersion`, and displayed a native Android `AlertDialog.Builder`. When accepted, it downloaded the updated script, overwrote `modscripts/Mini Blocks Mod.js`, and hot-reloaded the engine via:
+  ```javascript
+  net.zhuoweizhang.mcpelauncher.ScriptManager.setEnabled(modpeFile, false);
+  net.zhuoweizhang.mcpelauncher.ScriptManager.setEnabled(modpeFile, true);
+  ```
+* **Historical Lineage**: This pattern was popularized across MinecraftForum by **Desno365** (creator of Desno's ModPE Scripts and ModPE Script Manager) and **500 Internal Server Error (500ISE)**, relying on the internal APIs exposed by **Zhuowei Zhang**'s BlockLauncher (`mcpelauncher`).
+
+### 3. The 52-Block ID Multiplexing Workaround
+* **The Constraint**: In MCPE 0.10.x, blocks had no directional permutations or block states.
+* **The Solution**: Every single wall slab required **four separate global block IDs** from Minecraft's limited 0–255 ID range to represent its four cardinal rotations:
+  * Stone Wall Slab consumed IDs `249`, `248`, `242`, and `241` (plus ID `192` for combined full blocks).
+  * Across 13 slab variants, the mod consumed over 52 hardcoded block IDs!
+* **Combining Logic**: Full-block merging was achieved through massive chains of `if (blockId == X && itemId == Y && side == Z)` statements calling `setTile(x, y, z, fullBlockId)` and `setTile(x, y, z±1, 0)`.
+
+---
+
 ## v1.2.0 Release Notes (Bedrock Edition)
 
 ### Wall Slab Combining: FINALLY FIXED (again)
