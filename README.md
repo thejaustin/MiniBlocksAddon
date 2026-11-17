@@ -16,7 +16,7 @@
 
 Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition.
 
-The mod was originally created by **thejaustin** in 2014–2015 as a ModPE JavaScript mod for Minecraft Pocket Edition (running under BlockLauncher). This modern edition completely rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
+The mod was originally created by **thejaustin** in 2014–2015 as a ModPE JavaScript mod for Minecraft Pocket Edition (running under BlockLauncher). Following the popular v1.9 release, development ventured into an experimental **v2.0 Beta** teased on Minecraft Forum before MCPE evolved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
 
 ### Core Features
 * **36 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, and copper.
@@ -76,6 +76,12 @@ Detailed forum archive notes and historical context can be viewed in [CHANGELOG.
 * [Known Issue] Mini block directional placement is experiencing the classic 2015 directional placement bug (places and renders fine, but faces wherever it wants).
 * [Humor] Fixed raw.githubusercontent.com update check failing when airplane mode is on.
 * Removed Herobrine.
+
+=== v2.0 Beta (MCPE Forum Beta Era — 2015/2016) ===
+* Experimental 2.0 beta builds announced and shared on MinecraftForum.net.
+* Planned next-generation overhaul for MCPE: expanding beyond wall slabs with dedicated miniature block sets and revised boundary collision math.
+* Development paused as MCPE moved toward native C++ codebases and BlockLauncher ModPE APIs were deprecated.
+* Stood as the long-standing "unfinished business" of the original mod, now realized in native Bedrock form.
 
 === v1.9 (MCPE 0.11.1 - The Classic ModPE Peak — August 2015) ===
 * "Correct Lighting, & Wall Slabs can be combined!"

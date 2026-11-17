@@ -14,7 +14,7 @@
 
 ## Overview
 
-Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** in 2014–2015 as a ModPE script for Minecraft Pocket Edition, this release modernizes the project into a native Bedrock add-on.
+Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** in 2014–2015 as a ModPE script for Minecraft Pocket Edition, following the v1.9 release and subsequent **v2.0 Beta** teased on Minecraft Forum, this release modernizes the project into a native Bedrock add-on.
 
 ---
 
@@ -60,6 +60,12 @@ Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative b
 * [Known Issue] Mini block directional placement is experiencing the classic 2015 directional placement bug (places and renders fine, but faces wherever it wants).
 * [Humor] Fixed raw.githubusercontent.com update check failing when airplane mode is on.
 * Removed Herobrine.
+
+=== v2.0 Beta (MCPE Forum Beta Era — 2015/2016) ===
+* Experimental 2.0 beta builds announced and shared on MinecraftForum.net.
+* Planned next-generation overhaul for MCPE: expanding beyond wall slabs with dedicated miniature block sets and revised boundary collision math.
+* Development paused as MCPE moved toward native C++ codebases and BlockLauncher ModPE APIs were deprecated.
+* Stood as the long-standing "unfinished business" of the original mod, now realized in native Bedrock form.
 
 === v1.9 (MCPE 0.11.1 - The Classic ModPE Peak — August 2015) ===
 * "Correct Lighting, & Wall Slabs can be combined!"

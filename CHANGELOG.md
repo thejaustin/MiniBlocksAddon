@@ -45,7 +45,7 @@
 ├─────────────────────────────────────────────────────────────────┤
 │ thejaustin's Mini Blocks Mod has an update!                     │
 │ Do you want to update it now?                                   │
-│ Current version: v1.9 (MCPE 0.11.1)                             │
+│ Current version: v1.9 / v2.0 Beta (MCPE)                        │
 │ New version: v1.2.0 (Bedrock 1.26.x)                            │
 │                                                                 │
 │           [ Maybe Later ]         [ Update it! ]                │
@@ -59,9 +59,9 @@
 
 The **Mini Blocks Mod** was initially released during the Minecraft Pocket Edition 0.10.x and 0.11.x eras as a ModPE script for BlockLauncher. The primary focus of the mod was introducing vertical half-blocks (Wall Slabs) to overcome vanilla architectural limitations on mobile, accompanied by custom miniature decorative blocks.
 
-The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics.
+The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics. Following the v1.9 release, work began on a highly anticipated **v2.0 Beta**, announced and tested on the Minecraft Forums, aiming to overhaul collision boundaries, expand the mini block catalog, and rewrite the underlying script structure. As MCPE shifted away from ModPE scripting toward native C++ and modern add-ons, v2.0 Beta remained the unfinished frontier of the mod.
 
-This Bedrock release ports the mod's architecture from legacy ModPE JavaScript into native Bedrock components, using JSON block schemas, cardinal direction traits, and `@minecraft/server` scripting.
+This modern release completes that arc, porting the mod's architecture into native Bedrock components using JSON block schemas, cardinal direction traits, and `@minecraft/server` scripting.
 
 ---
 
@@ -108,6 +108,12 @@ This Bedrock release ports the mod's architecture from legacy ModPE JavaScript i
 * [Known Issue] Mini block directional placement is experiencing the classic 2015 directional placement bug (places and renders fine, but faces wherever it wants).
 * [Humor] Fixed raw.githubusercontent.com update check failing when airplane mode is on.
 * Removed Herobrine.
+
+=== v2.0 Beta (MCPE Forum Beta Era — 2015/2016) ===
+* Experimental 2.0 beta builds announced and shared on MinecraftForum.net.
+* Planned next-generation overhaul for MCPE: expanding beyond wall slabs with dedicated miniature block sets and revised boundary collision math.
+* Development paused as MCPE moved toward native C++ codebases and BlockLauncher ModPE APIs were deprecated.
+* Stood as the long-standing "unfinished business" of the original mod, now realized in native Bedrock form.
 
 === v1.9 (MCPE 0.11.1 - The Classic ModPE Peak — August 2015) ===
 * "Correct Lighting, & Wall Slabs can be combined!"
