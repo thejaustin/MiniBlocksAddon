@@ -1,5 +1,5 @@
-# [0.10.x - 1.26.x] [MOD] Mini Blocks Mod & Wall Slabs v1.2.0
-### *Created by @thejaustin — "Correct Lighting, & Wall Slabs can be combined!"*
+# Mini Blocks Mod & Wall Slabs — Changelog & Historical Archive
+*Originally created by thejaustin for MCPE; updated for Minecraft: Bedrock Edition.*
 
 ---
 
@@ -14,20 +14,21 @@
 
 > **MinecraftForum.net Archive: MCPE Mods Section**  
 > **Original Thread:** `[0.10.x - 0.11.1] [MOD] Mini Blocks Mod - Wall Slabs, Correct Lighting & Auto-Updates! [by thejaustin]`  
-> **Status:** Officially Reborn for Minecraft Bedrock 1.26.x! 🎉
+> **Bedrock Edition Target:** Minecraft 1.26.x
 
 ---
 
+### Historical Code Header (miniblocks_v1.9.bin)
 ```text
 // =========================================================================
 // Mini Blocks Mod v1.2.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
-// This was made for MCPE 0.10.x / 0.11.1 ... and now reborn for Bedrock 1.26.x!
-// The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!
+// Originally made for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
+// Directional placement logic originally credited to androidKaghon.
 // =========================================================================
 ```
 
-### 💬 On Entering World:
+### Historical Client Join Chat
 ```text
 [Chat] Welcome back to Minecraft PE!
 [Chat] You are using the Mini Blocks Mod v1.2.0!
@@ -37,7 +38,7 @@
 [Chat] Follow me on Twitter, @thejaustin!
 ```
 
-### 🔔 Update Available Dialog:
+### Historical Update Dialog (ModPE)
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
 │ thejaustin's Mini Blocks Mod has an update!                     │
@@ -54,51 +55,45 @@
 
 ---
 
-## 👋 Hey everyone! It's Austin (@thejaustin)
+## Project History: MCPE 0.10.x to Bedrock 1.26.x
 
-If you were playing Minecraft Pocket Edition on an Android phone back in 2014–2015, you probably remember the absolute golden age of **BlockLauncher** and ModPE `.js` scripts.
+The **Mini Blocks Mod** was initially released during the Minecraft Pocket Edition 0.10.x and 0.11.x eras as a ModPE script for BlockLauncher. The primary focus of the mod was introducing vertical half-blocks (Wall Slabs) to overcome vanilla architectural limitations on mobile, accompanied by custom miniature decorative blocks.
 
-I started the **Mini Blocks Mod** back on MCPE 0.10.x because I was obsessed with vertical half-blocks. Normal slabs existed, but vertical walls were always missing from vanilla. What started as super rough beta tests with glitchy lighting and hacked block IDs turned into a massive project that thousands of builders used to detail their worlds!
+The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics.
 
-Over a decade later, we are officially back. No BlockLauncher, no sketchy `.bin` file downloads, no Android memory crashes—just pure native Bedrock goodness. Let's get right into the history, the updates, and what's new!
+This Bedrock release ports the mod's architecture from legacy ModPE JavaScript into native Bedrock components, using JSON block schemas, cardinal direction traits, and `@minecraft/server` scripting.
 
 ---
 
-## 🛠️ What's New in v1.2.0 (Bedrock Edition)
+## v1.2.0 Release Notes (Bedrock Edition)
 
-### ✨ Wall Slabs Can Be Combined: FINALLY FIXED (again)!
-* In the original `miniblocks_v1.9.bin`, the changelog proudly declared:  
+### Wall Slab Combining: FINALLY FIXED (again)
+* **Background**: Version 1.9 of the ModPE script established the mechanic:  
   `"v1.9 Changelog: Correct Lighting, & Wall Slabs can be combined!"`  
-  Back then, it checked tile IDs and swapped them into full blocks when you clicked them.
-* Fast-forward a decade into Bedrock on mobile touch controls: wall slabs once again resisted combining because tapping the narrow 8px back face of a custom block on phone glass is near impossible!
-* **v1.2.0 Solution — FINALLY FIXED (again):**
-  * **Direct Face Merge**: Tap or right-click **any face** of a placed wall slab while holding the matching slab item to combine it into the full block!
-  * **Adjacent Placement Merge**: Placing a matching slab into the open half of an existing wall slab merges it seamlessly into the full block.
-  * **Build Mode**: Crouch / sneak while placing to build adjacent slabs without merging.
-  * **Survival Safe**: Fully respects Creative vs Survival mode, deducts from your active inventory slot, respects block protection, and checks collision boundaries so you don't suffocate yourself or mobs.
+  In the original implementation, placing or clicking matching slabs swapped tile IDs directly via ModPE hooks.
+* **Modern Touch Control Resolution**: In Bedrock Edition on mobile touch controls, interacting with the rear 8px boundary of a placed wall slab is unreliable. In v1.2.0:
+  * **Direct Merge**: Interacting with any face of an existing wall slab while holding a matching slab item combines it into the full block.
+  * **Adjacent Merge**: Placing a matching slab into the open half of an existing wall slab automatically combines them.
+  * **Build Mode**: Sneaking allows placing adjacent wall slabs without triggering combining.
+  * **Survival Parity**: Verifies build permissions, deducts the slab from the active inventory slot, and includes entity collision checks to avoid player or mob suffocation.
 
-### 🧭 Directional Placement: FINALLY FIXED (again)... Mostly!
-* Back in MCPE 0.11.1, getting blocks to face the direction you're looking was a notorious ordeal until the header famously recorded:  
+### Directional Placement: FINALLY FIXED (again)... Mostly
+* **Background**: Original block orientation logic was implemented using player coordinate calculations, preserved in the legacy comment:  
   `"The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!"`
-* In Bedrock 1.26, history repeats itself:
-  * **Wall Slabs**: **FINALLY FIXED (again)!** Using modern Bedrock cardinal placement direction traits (`minecraft:placement_direction`), wall slabs reliably orient to face the player upon placement.
-  * **Mini Blocks**: Reliving the classic 2015 directional placement struggles! Mini dirt places and renders as a crisp 8x8x8 centered cube with collision, but directional facing is still stubborn (mini blocks currently look wherever they feel like looking—we might need to call androidKaghon back).
+* **Current Status**:
+  * **Wall Slabs**: FINALLY FIXED (again). Wall slabs utilize native Bedrock cardinal placement direction traits (`minecraft:placement_direction`) to face the player upon placement.
+  * **Mini Blocks**: Mini dirt places and renders as an 8x8x8 centered cube, but directional facing traits remain in development.
 
-### 🎨 Custom Iconography & Clean In-Game Branding
-* **Custom Pack Icon**: Added custom 128x128 pixel-art `pack_icon.png` depicting classic Oak & Stone Brick Wall Slabs alongside the floating Mini Dirt block. No more generic placeholder textures in world settings.
-* **Manifest Polish**: Renamed packs to clear, readable titles:
-  * `Mini Blocks Add-on (Behaviors)`
-  * `Mini Blocks Add-on (Resources)`
-* **Texture Namespace Fix**: Resolved texture key conflicts with vanilla cobblestone and deepslate terrain entries.
-
-### 📦 Import & Engine Stability
-* **Fixed "Duplicate Pack Detected"**: Regenerated fresh UUIDs and bumped versioning to `1.2.0` so Minecraft Bedrock imports cleanly without corrupting existing worlds.
-* **Stable Script API**: Pinned `@minecraft/server` to `1.14.0` / `1.26.20` and set `min_engine_version` to `[1, 21, 0]` for broad compatibility across mobile, console, and desktop.
-* Fixed container packing so `.mcaddon` properly wraps behavior and resource `.mcpack` files.
+### Asset & System Polish
+* **Pack Icon**: Added a custom 128x128 pixel-art `pack_icon.png` illustrating oak and stone brick wall slabs alongside the mini dirt block.
+* **Manifests & Localization**: Formally branded manifests as `Mini Blocks Add-on (Behaviors)` and `Mini Blocks Add-on (Resources)`.
+* **Texture Namespace**: Resolved terrain texture collisions with vanilla cobblestone and deepslate definitions.
+* **Import Stability**: Generated fresh UUIDs and bumped versioning to `1.2.0`, resolving Bedrock's "Duplicate pack detected" import errors.
+* **Engine Requirements**: Pinned `@minecraft/server` to stable `1.14.0` / `1.26.20` with `min_engine_version` set to `[1, 21, 0]`.
 
 ---
 
-## 📜 Complete Version History & Throwback Archive
+## Historical Version Archive
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
@@ -132,42 +127,29 @@ Over a decade later, we are officially back. No BlockLauncher, no sketchy `.bin`
 * Added ACTUAL MINI BLOCKS!
 * Improved placement logic.
 * Removed glass wall slabs (too many render glitches).
-* Added a period. 😂 It was missing! :P
+* Added a period. It was missing! :P
 
 === v1.4 (GitHub Debut — January 19, 2015) ===
-* First public push to the thejaustin/ModPE repository!
+* First public push to the thejaustin/ModPE repository.
 * Implemented MiniBlocksVersion remote update checker.
 * Initial creative inventory hooks for all primary wood and stone types.
 
 === v1.0 — v1.3 (MCPE 0.10.x Release Era) ===
-* Transitioned out of beta into full release!
+* Transitioned out of beta into full release.
 * Added Sandstone, Quartz, and Brick Wall Slabs.
 * Basic collision boxes matching 8px wall boundaries.
 
-=== Early Betas: v0.1 — v0.9 (The Wild West of MCPE 0.10.0 Betas) ===
-* First experimental vertical wall slab tests on MinecraftForum.net!
-* Fighting crazy lighting glitches (black blocks everywhere).
-* Figuring out BlockLauncher's custom block API.
-* So many crashes, but the vision was born!
+=== Early Betas: v0.1 — v0.9 (MCPE 0.10.0 Betas) ===
+* Initial experimental vertical wall slab tests on MinecraftForum.net.
+* Addressed early lighting glitches and block bounds.
+* Established foundation for custom half-block positioning in ModPE.
 ```
 
 ---
 
-## 📥 Installation
-
-1. Download **`MiniBlocksAddon.mcaddon`** (or the individual `.mcpack` files).
-2. Open with **Minecraft** (Bedrock Edition).
-3. In your world settings:
-   * Activate **Mini Blocks Add-on (Resources)** under Resource Packs.
-   * Activate **Mini Blocks Add-on (Behaviors)** under Behavior Packs.
-   * Enable **Beta APIs** under the **Experiments** toggle.
-4. Jump in and start building!
-
----
-
-Follow me on Twitter / X: **[@thejaustin](https://twitter.com/thejaustin)**  
-GitHub: **[@thejaustin](https://github.com/thejaustin)**  
-*Don't steal this code! Do not take it as your own!*
+**Original Author:** [@thejaustin](https://github.com/thejaustin)  
+**Historical Social:** [@thejaustin on Twitter/X](https://twitter.com/thejaustin)  
+*Original ModPE Code Notice: Don't steal this code! Do not take it as your own!*
 
 ---
 [![Co-developed with Antigravity](https://img.shields.io/badge/Co--developed%20with-Antigravity-4285F4?style=flat-square&logo=google&logoColor=white)](https://deepmind.google)
