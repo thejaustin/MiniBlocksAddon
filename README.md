@@ -18,6 +18,8 @@ Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative b
 
 The mod was originally created by **thejaustin** in 2014–2015 as a ModPE JavaScript mod for Minecraft Pocket Edition (running under BlockLauncher). Following the popular v1.9 release, development ventured into an experimental **v2.0 Beta** teased on Minecraft Forum before MCPE evolved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
 
+The modern Bedrock port also marks a shift in engineering workflow: moving from manual, single-file JavaScript hacking in mobile text editors to on-device AI-assisted development. Working in Termux on Android, human direction and AI pair-programming (with Antigravity) were used to automate JSON block permutations, navigate modern Bedrock schemas, and resolve low-level engine quirks.
+
 ### Core Features
 * **36 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, and copper.
 * **Interactive Slab Combining**: Tap any face or place adjacent with a matching wall slab to merge into the full block. Sneaking allows building adjacent slabs without merging.
@@ -57,6 +59,9 @@ The mod was originally created by **thejaustin** in 2014–2015 as a ModPE JavaS
 * **UUID & Versioning**: Updated pack manifests to version `1.2.0` with fresh UUIDs, resolving engine "Duplicate pack detected" errors during import.
 * **API Pinning**: Pinned `@minecraft/server` dependency to stable `1.14.0` / `1.26.20` with `min_engine_version` set to `[1, 21, 0]`.
 
+#### Development & Tooling Evolution
+* **AI-Assisted Workflow**: Shifted from manual 2015 ModPE scripting to on-device AI pair-programming via Termux. Used AI assistance (Antigravity) to generate Python block schema toolchains, diagnose server script touch events, and eliminate namespace collisions.
+
 ---
 
 ## Version History & Archive
@@ -65,6 +70,7 @@ Detailed forum archive notes and historical context can be viewed in [CHANGELOG.
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
+* [Development] Shifted from manual 2015 ModPE scripting to on-device AI-assisted engineering (pair-programmed with Antigravity via Termux) to automate schema generation, debug engine quirks, and modernize the codebase.
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.
@@ -133,9 +139,9 @@ Detailed forum archive notes and historical context can be viewed in [CHANGELOG.
 
 ---
 
-## Development
+## Development & Tooling
 
-The addon uses Python generation scripts to maintain block schemas, geometry, recipes, and script mappings:
+The addon codebase is maintained on-device using Termux with Python generation scripts and AI-assisted pair-programming:
 
 ```bash
 python3 tools/generate_addon.py

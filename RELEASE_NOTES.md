@@ -16,6 +16,8 @@
 
 Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** in 2014–2015 as a ModPE script for Minecraft Pocket Edition, following the v1.9 release and subsequent **v2.0 Beta** teased on Minecraft Forum, this release modernizes the project into a native Bedrock add-on.
 
+This release also reflects a shift in development workflow: transitioning from manual ModPE JavaScript editing on mobile a decade ago to on-device AI-assisted engineering using Termux, Python generator toolchains, and Antigravity pair-programming.
+
 ---
 
 ## What's New in v1.2.0
@@ -43,12 +45,16 @@ Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative b
 * **Import Stability**: Generated fresh UUIDs and bumped versioning to `1.2.0`, resolving engine "Duplicate pack detected" errors.
 * **Engine Requirements**: Pinned `@minecraft/server` to stable `1.14.0` / `1.26.20` with `min_engine_version` set to `[1, 21, 0]`.
 
+### Tooling Evolution
+* **AI-Assisted Modernization**: Shifted from manual 2015 ModPE scripting to on-device AI pair-programming via Termux. Used AI assistance (Antigravity) to generate Python block schema toolchains, diagnose server script touch events, and eliminate namespace collisions.
+
 ---
 
 ## Full Version History
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
+* [Development] Shifted from manual 2015 ModPE scripting to on-device AI-assisted engineering (pair-programmed with Antigravity via Termux) to automate schema generation, debug engine quirks, and modernize the codebase.
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.
