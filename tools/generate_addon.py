@@ -262,7 +262,7 @@ write_json(os.path.join(RP, "models/blocks/mini_block.geo.json"), make_mini_bloc
 
 # ── 2. Wall slab block JSONs ─────────────────────────────────────────────────
 
-def make_wall_slab_block(name, hardness):
+def make_wall_slab_block(name, hardness, sound):
     identifier = f"addon:{name}_wall_slab"
 
     # One geometry component; each bone shows only for its own facing state.
@@ -281,6 +281,33 @@ def make_wall_slab_block(name, hardness):
             }
         })
 
+    components = {
+        "minecraft:material_instances": {
+            "*": {
+                "texture": f"{TEX_PREFIX}{name}",
+                "render_method": "opaque",
+            }
+        },
+        "minecraft:geometry": {
+            "identifier": "geometry.wall_slab",
+            "bone_visibility": bone_visibility,
+        },
+        "minecraft:destructible_by_mining": {
+            "seconds_to_destroy": hardness,
+        },
+        "minecraft:destructible_by_explosion": {
+            "explosion_resistance": hardness * 3,
+        },
+        "minecraft:light_dampening": 0,
+    }
+
+    # Wood wall slabs are flammable, matching vanilla plank fire physics
+    if sound == "wood":
+        components["minecraft:flammable"] = {
+            "catch_chance_modifier": 5,
+            "destroy_chance_modifier": 20,
+        }
+
     return {
         "format_version": BLOCK_FORMAT,
         "minecraft:block": {
@@ -297,31 +324,14 @@ def make_wall_slab_block(name, hardness):
                     },
                 },
             },
-            "components": {
-                "minecraft:material_instances": {
-                    "*": {
-                        "texture": f"{TEX_PREFIX}{name}",
-                        "render_method": "opaque",
-                    }
-                },
-                "minecraft:geometry": {
-                    "identifier": "geometry.wall_slab",
-                    "bone_visibility": bone_visibility,
-                },
-                "minecraft:destructible_by_mining": {
-                    "seconds_to_destroy": hardness,
-                },
-                "minecraft:destructible_by_explosion": {
-                    "explosion_resistance": hardness * 3,
-                },
-            },
+            "components": components,
             "permutations": permutations,
         }
     }
 
 for name, source, hardness, stone_cut, sound in WALL_SLABS:
     write_json(os.path.join(BP, f"blocks/{name}_wall_slab.json"),
-               make_wall_slab_block(name, hardness))
+               make_wall_slab_block(name, hardness, sound))
 
 
 # ── 3. cobblestone_slab.json (floor slab, no rotation) ──────────────────────
@@ -343,6 +353,7 @@ floor_slab = {
             "minecraft:geometry": "geometry.slab",
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 2.0},
             "minecraft:destructible_by_explosion": {"explosion_resistance": 6.0},
+            "minecraft:light_dampening": 0,
             "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
             "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
         }
@@ -369,6 +380,7 @@ mini_dirt = {
             },
             "minecraft:geometry": "geometry.mini_block",
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 0.5},
+            "minecraft:light_dampening": 0,
             "minecraft:collision_box": mini_box,
             "minecraft:selection_box": mini_box,
         }

@@ -37,7 +37,8 @@
       },
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 9.0
-      }
+      },
+      "minecraft:light_dampening": 0
     },
     "permutations": [
       {
