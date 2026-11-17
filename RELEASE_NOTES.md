@@ -20,11 +20,11 @@ Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative b
 * **Little Blocks Mod (Java PC)**: Inspired the dream of miniature block scaling and micro-detailing.
 * **Construction & Block-Cutting Mods**: Inspired the vertical **Wall Slab** concept. Since MCPE lacked sawbenches or cutting tools to bisect blocks vertically, Austin created craftable vertical half-blocks using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
 
-### Multi-Agent Development History
-This Bedrock release reflects a multi-agent engineering workflow traced across git history:
+### Multi-Agent On-Device Development History
+This Bedrock release reflects an on-device AI pair-programming workflow traced across git history:
 * **Google Labs Jules (`google-labs-jules[bot]`)**: Repository parity and structural alignment (PR #1).
-* **Claude (Sonnet 4.6 & Opus 5.5) in Laptop Terminal Harness / Warp**: Modernized block schemas from 1.19 to 1.21/1.26 format, created Python generation tooling, and drafted early server script slab merging.
-* **Antigravity on Termux (Android)**: Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
+* **Claude (Sonnet 4.6 & Opus 5.5) on Termux (Android Mobile)**: Authored October 2026 commits directly on-device in Termux using Claude Code. Modernized block schemas from 1.19 to 1.21/1.26 format, created Python generation tooling, and drafted early server script slab merging. (Any older Warp terminal sessions occurred ~a year prior on separate project work).
+* **Antigravity on Termux (Android Mobile)**: Continued the mobile Termux workflow over loopback ADB in November 2026. Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
 
 ---
 
@@ -71,7 +71,7 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
-* [Development] Rebuilt via modern AI-assisted engineering across Google Labs Jules, Claude (Warp/terminal), and Antigravity (Termux).
+* [Development] Rebuilt via on-device AI-assisted engineering across Google Labs Jules, Claude (Termux), and Antigravity (Termux).
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.

@@ -102,13 +102,14 @@ Despite the iconic top disclaimer (`"//Don't steal this code! Do not take it as 
 
 ## Tooling Archaeology: Modern Multi-Agent Git Lineage
 
-Tracing through the repository commit history reveals how the modern Bedrock revival was constructed across multiple AI coding harnesses and platforms:
+Tracing through the repository commit history reveals how the modern Bedrock revival was constructed across multiple AI coding harnesses—built predominantly on-device in Termux:
 
 1. **Google Labs Jules (`google-labs-jules[bot]`) — March 2026**:
    * Jules, Google Labs' autonomous repository agent, contributed commit `ebd0b68` (merged via PR #1 `358873d`), performing initial parity updates and repository alignment.
-2. **Claude (Sonnet 4.6 & Opus 5.5) in Laptop Terminal Harness / Warp — October 2026**:
-   * Commits `6e69987` through `72b7504` were authored in laptop terminal sessions utilizing AI coding agent harnesses (such as Warp / Claude Code).
-   * Migrated block definitions from 1.19 to 1.21 and 1.26 schema formats, replaced deprecated placement events with modern cardinal direction traits, built initial Python generator scripts, and implemented early `@minecraft/server` slab-combining scripting.
+2. **Claude (Sonnet 4.6 & Opus 5.5) on Termux (Android Mobile) — October 2026**:
+   * Commits `6e69987` through `72b7504` were developed directly on an Android device inside Termux using Claude Code.
+   * Migrated block definitions from 1.19 to 1.21 and 1.26 schema formats, replaced deprecated placement events with modern cardinal direction traits, built initial Python generator scripts in `tools/`, and implemented early `@minecraft/server` slab-combining scripting.
+   *(Any exploratory Warp terminal sessions occurred ~a year prior on older/separate project setups; the entire recent Bedrock development stack ran natively on Termux).*
 3. **Antigravity on Termux (Android Mobile) — November 2026**:
    * Finalized the release directly on-device using Termux over loopback ADB. Overhauled touch-control slab merging across all faces, generated custom pixel-art iconography, fixed terrain texture namespace collisions, resolved engine UUID duplicate import issues, and completed release packaging for mobile Bedrock.
 
@@ -146,7 +147,7 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 
 ```text
 === v1.2.0 (Bedrock Port — 2026) ===
-* [Development] Rebuilt via modern AI-assisted engineering across Google Labs Jules, Claude (Warp/terminal), and Antigravity (Termux).
+* [Development] Rebuilt via on-device AI-assisted engineering across Google Labs Jules, Claude (Termux), and Antigravity (Termux).
 * [Feature] Wall Slabs can be combined on touch controls: FINALLY FIXED (again)! Tap any face or place adjacent.
 * [Feature] Directional placement for wall slabs: FINALLY FIXED (again)!
 * [Feature] Added custom 128x128 pixel-art pack icon featuring Oak Wall Slab, Stone Brick Wall Slab & Mini Block.
