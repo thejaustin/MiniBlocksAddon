@@ -16,10 +16,11 @@
 
 Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition.
 
-### PC Java & Construction Mod Inspirations
-The original mod was created by **thejaustin** on **January 16, 2015** for Minecraft Pocket Edition, growing out of two distinct inspirations from that era:
-1. **The Little Blocks Mod (Java PC)**: Sparked the dream of micro-scale detailing (fitting 512 mini blocks in a single coordinate).
-2. **Construction & Block-Cutting Mods**: While Little Blocks inspired the miniature aesthetic, the mechanical idea for **Wall Slabs** was inspired by early construction and carpentry mods (like *Carpenter's Blocks* and PC microblocks) that allowed cutting blocks into halves and panels. Because mobile MCPE had no sawbenches or cutting tools, Austin introduced craftable vertical half-blocks (**Wall Slabs**), crafted with 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+### Inspirations: Carpenter's Blocks, Chisels & Bits, and Little Blocks
+The original mod was created by **thejaustin** on **January 16, 2015** for Minecraft Pocket Edition, growing out of three landmark Java modding inspirations from that era:
+1. **Carpenter's Blocks (Mineshopper)**: The direct inspiration for **Wall Slabs**. Carpenter's Blocks introduced customizable architectural shapes and vertical panels. Since mobile MCPE had no carpenter's hammer or frame tools, Austin introduced dedicated craftable vertical half-blocks (**Wall Slabs**), crafted with 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+2. **The Little Blocks Mod (SlimeVoid / Gullibility & Vengeeur)**: Sparked the dream of micro-scale detailing (fitting 512 mini blocks in a single coordinate).
+3. **Chisels & Bits (AlgorithmX2)**: Further popularized sub-block sculpting and micro-detailing, showing the massive builder demand for decorative precision beyond standard 1x1 meter blocks.
 
 Following early releases through v1.9 and an experimental **v2.0 Beta** teased on Minecraft Forum, development paused as MCPE moved away from ModPE scripting. This modern edition rebuilds the mod as a native Bedrock add-on utilizing custom block geometry, cardinal placement direction traits, and Bedrock Script API (`@minecraft/server`) runtime behavior.
 

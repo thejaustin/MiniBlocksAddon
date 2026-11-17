@@ -16,9 +16,10 @@
 
 Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** on **January 16, 2015** as a ModPE script for Minecraft Pocket Edition, following the v1.9 release and subsequent **v2.0 Beta** teased on Minecraft Forum, this release modernizes the project into a native Bedrock add-on.
 
-### PC Java & Construction Mod Inspirations
-* **Little Blocks Mod (Java PC)**: Inspired the dream of miniature block scaling and micro-detailing.
-* **Construction & Block-Cutting Mods**: Inspired the vertical **Wall Slab** concept. Since MCPE lacked sawbenches or cutting tools to bisect blocks vertically, Austin created craftable vertical half-blocks using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+### Inspirations: Carpenter's Blocks, Chisels & Bits, and Little Blocks
+* **Carpenter's Blocks (Mineshopper)**: Directly inspired the **Wall Slab** concept. Carpenter's Blocks pioneered customizable geometric shapes and vertical panels in Minecraft. Since MCPE lacked specialized carpenter's tools or frame mechanics, Austin translated that idea into dedicated craftable vertical half-blocks using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+* **Little Blocks Mod (SlimeVoid / Gullibility & Vengeeur)**: Inspired the dream of miniature block scaling and micro-detailing on mobile.
+* **Chisels & Bits (AlgorithmX2)**: Popularized voxel sub-block carving and proved the enduring desire among Minecraft builders for precision micro-scale detailing.
 
 ### Multi-Agent On-Device Development History
 This Bedrock release reflects an on-device AI pair-programming workflow traced across git history:

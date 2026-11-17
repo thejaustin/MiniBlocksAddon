@@ -60,10 +60,11 @@
 
 The **Mini Blocks Mod** was first released to the world on **January 16, 2015** via MinecraftForum, built as a ModPE script for BlockLauncher on MCPE 0.10.x.
 
-### Inspirations: Little Blocks Mod & Construction Block-Cutting
-The project grew out of two distinct modding inspirations from that era:
-1. **The Little Blocks Mod (Java Edition PC)**: Created by Gullibility / SlimeVoid and Vengeeur, Little Blocks introduced 1:8 scale sub-blocks (512 mini blocks in a single block space), sparking the widespread desire for micro-scale detailing in Minecraft.
-2. **Construction & Block-Cutting Mods**: While Little Blocks inspired the miniature aesthetic, the concept of **Wall Slabs** was inspired by early construction and carpentry mods (such as *Carpenter's Blocks* and PC microblock mods) that allowed players to cut full blocks in half. Vanilla Minecraft only supported horizontal slabs (bisecting blocks across the Y axis). Since mobile MCPE had no sawbench or carving tools, Austin conceived standalone craftable vertical half-blocks: **Wall Slabs**, crafted using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+### Inspirations: Carpenter's Blocks, Chisels & Bits, and Little Blocks
+The project grew out of three landmark modding inspirations from that era:
+1. **Carpenter's Blocks (Java Edition PC by Mineshopper)**: The direct mechanical inspiration for **Wall Slabs**. Carpenter's Blocks revolutionized Minecraft building by introducing customizable architectural geometry, slopes, and vertical panels/slabs. Because mobile MCPE in 2015 had no carpenter's hammer or frame tools, Austin translated the desire for vertical half-blocks into dedicated, craftable blocks: **Wall Slabs**, crafted using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
+2. **The Little Blocks Mod (Java Edition PC by SlimeVoid / Gullibility & Vengeeur)**: Sparked the widespread dream of micro-scale detailing by fitting 512 sub-blocks in a single coordinate, inspiring the miniature decorative block scale in MCPE.
+3. **Chisels & Bits (Java Edition PC by AlgorithmX2)**: Further fueled the passion for micro-voxel detailing and sub-block sculpting, proving that Minecraft builders craved precision decoration beyond full 1x1 meter cubes.
 
 The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics. Following the v1.9 release, work began on a highly anticipated **v2.0 Beta**, announced and tested on the Minecraft Forums, aiming to overhaul collision boundaries, expand the mini block catalog, and rewrite the underlying script structure. As MCPE shifted away from ModPE scripting toward native C++ and modern add-ons, v2.0 Beta remained the unfinished frontier of the mod.
 
