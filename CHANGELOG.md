@@ -13,6 +13,7 @@
 ```
 
 > **MinecraftForum.net Archive: MCPE Mods Section**  
+> **Original Release Date:** January 16, 2015  
 > **Original Thread:** `[0.10.x - 0.11.1] [MOD] Mini Blocks Mod - Wall Slabs, Correct Lighting & Auto-Updates! [by thejaustin]`  
 > **Bedrock Edition Target:** Minecraft 1.26.x
 
@@ -57,10 +58,12 @@
 
 ## Project History: MCPE 0.10.x to Bedrock 1.26.x
 
-The **Mini Blocks Mod** was initially created during the Minecraft Pocket Edition 0.10.x and 0.11.x eras as a ModPE script for BlockLauncher. 
+The **Mini Blocks Mod** was first released to the world on **January 16, 2015** via MinecraftForum, built as a ModPE script for BlockLauncher on MCPE 0.10.x.
 
-### Java Edition PC Inspiration: The Little Blocks Mod
-The original inspiration for the project came from the legendary Minecraft Java Edition PC mod **Little Blocks Mod** (created by Gullibility / SlimeVoid and Vengeeur). The Little Blocks Mod captivated players by scaling block space down to 1:8, allowing 512 miniature blocks to fit inside a single standard block coordinate. Inspired by the creative freedom of micro-scale detailing, Austin set out to bring vertical half-meter blocks (Wall Slabs) and miniature decorative blocks to mobile players on Minecraft Pocket Edition.
+### Inspirations: Little Blocks Mod & Construction Block-Cutting
+The project grew out of two distinct modding inspirations from that era:
+1. **The Little Blocks Mod (Java Edition PC)**: Created by Gullibility / SlimeVoid and Vengeeur, Little Blocks introduced 1:8 scale sub-blocks (512 mini blocks in a single block space), sparking the widespread desire for micro-scale detailing in Minecraft.
+2. **Construction & Block-Cutting Mods**: While Little Blocks inspired the miniature aesthetic, the concept of **Wall Slabs** was inspired by early construction and carpentry mods (such as *Carpenter's Blocks* and PC microblock mods) that allowed players to cut full blocks in half. Vanilla Minecraft only supported horizontal slabs (bisecting blocks across the Y axis). Since mobile MCPE had no sawbench or carving tools, Austin conceived standalone craftable vertical half-blocks: **Wall Slabs**, crafted using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
 
 The project progressed through early experimental forum betas into GitHub releases under `thejaustin/ModPE`, introducing automatic in-game update verification, directional orientation math, and wall slab combining mechanics. Following the v1.9 release, work began on a highly anticipated **v2.0 Beta**, announced and tested on the Minecraft Forums, aiming to overhaul collision boundaries, expand the mini block catalog, and rewrite the underlying script structure. As MCPE shifted away from ModPE scripting toward native C++ and modern add-ons, v2.0 Beta remained the unfinished frontier of the mod.
 
@@ -70,14 +73,17 @@ The project progressed through early experimental forum betas into GitHub releas
 
 Looking under the hood of `miniblocks_v1.9.bin` reveals an authentic snapshot of early MCPE modding culture: an enthusiastic patchwork of community-shared code snippets, reverse-engineered hacks, and creative workarounds stitched together in mobile text editors.
 
-Despite the iconic opening warning (`"//Don't steal this code! Do not take it as your own!"`), the codebase was deeply rooted in the open-source sharing traditions of the MinecraftForum ModPE community. Tracing back the original implementations reveals key contributions from the modding pioneers of that era:
+### The Ironic Human Innovation Cycle (Borrow, Modify, Remix)
+In classic modding tradition, innovation rarely happens in a vacuum—it begins with seeing mechanics you admire, borrowing community snippets, modifying them to fit your vision, and assembling them into something genuinely new. 
 
-### 1. Directional Facing & `findYaw()` — androidKaghon
+Despite the iconic top disclaimer (`"//Don't steal this code! Do not take it as your own!"`), the script was a shining example of open community remixing. Tracing the source code reveals the various community building blocks that came together:
+
+#### 1. Directional Facing & `findYaw()` — androidKaghon
 * **Original Attribution**: `"The 'Blocks turn in the direction you're facing' code was made by androidKaghon, so thanks!"`
 * **Historical Origin**: **androidKaghon** was an active MCPE mod developer best known for creating the early *Ender Chest Mod* for MCPE 0.9.x–0.11.x. Because BlockLauncher lacked directional block states, androidKaghon developed a mathematical snippet that took player yaw (`getYaw(getPlayerEnt()) + 45`), normalized the angle within a 0°–360° range, and selected the appropriate directional block ID.
 * **The Recursive Quirk**: The original `findYaw()` implementation used recursion (`yaw = yaw - 360; findYaw();`) and included a line that played the `"step.stone"` sound effect on *every* recursive iteration—meaning placement calculations literally produced subtle stone clicking sounds while normalizing the angle!
 
-### 2. In-Game Auto-Updater — Desno365 & 500ISE Community Patterns
+#### 2. In-Game Auto-Updater — Desno365 & 500ISE Community Patterns
 * **Implementation**: The script ran an asynchronous Java thread via Rhino reflection (`java.lang.Thread`, `java.net.URL`, `ctx.runOnUiThread`), checked `raw.githubusercontent.com/.../MiniBlocksVersion`, and displayed a native Android `AlertDialog.Builder`. When accepted, it downloaded the updated script, overwrote `modscripts/Mini Blocks Mod.js`, and hot-reloaded the engine via:
   ```javascript
   net.zhuoweizhang.mcpelauncher.ScriptManager.setEnabled(modpeFile, false);
@@ -85,7 +91,7 @@ Despite the iconic opening warning (`"//Don't steal this code! Do not take it as
   ```
 * **Historical Lineage**: This pattern was popularized across MinecraftForum by **Desno365** (creator of Desno's ModPE Scripts and ModPE Script Manager) and **500 Internal Server Error (500ISE)**, relying on the internal APIs exposed by **Zhuowei Zhang**'s BlockLauncher (`mcpelauncher`).
 
-### 3. The 52-Block ID Multiplexing Workaround
+#### 3. The 52-Block ID Multiplexing Workaround
 * **The Constraint**: In MCPE 0.10.x, blocks had no directional permutations or block states.
 * **The Solution**: Every single wall slab required **four separate global block IDs** from Minecraft's limited 0–255 ID range to represent its four cardinal rotations:
   * Stone Wall Slab consumed IDs `249`, `248`, `242`, and `241` (plus ID `192` for combined full blocks).
@@ -185,6 +191,7 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 * Initial creative inventory hooks for all primary wood and stone types.
 
 === v1.0 — v1.3 (MCPE 0.10.x Release Era) ===
+* Initial public release on MinecraftForum on January 16, 2015.
 * Transitioned out of beta into full release.
 * Added Sandstone, Quartz, and Brick Wall Slabs.
 * Basic collision boxes matching 8px wall boundaries.
@@ -198,7 +205,7 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ---
 
 **Original Author:** [@thejaustin](https://github.com/thejaustin)  
-**Historical Social:** [@thejaustin on Twitter/X](https://twitter.com/thejaustin)  
+**Historical Social:** [@thejaustin on Twitter/X](https://twitter.com/thejaustin) (archived: `@thejaustin_old`)  
 *Original ModPE Code Notice: Don't steal this code! Do not take it as your own!*
 
 ---

@@ -14,10 +14,11 @@
 
 ## Overview
 
-Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** in 2014–2015 as a ModPE script for Minecraft Pocket Edition, following the v1.9 release and subsequent **v2.0 Beta** teased on Minecraft Forum, this release modernizes the project into a native Bedrock add-on.
+Mini Blocks brings vertical half-blocks (**Wall Slabs**) and scaled decorative blocks (**Mini Blocks**) to Minecraft: Bedrock Edition. Originally developed by **thejaustin** on **January 16, 2015** as a ModPE script for Minecraft Pocket Edition, following the v1.9 release and subsequent **v2.0 Beta** teased on Minecraft Forum, this release modernizes the project into a native Bedrock add-on.
 
-### Java Edition PC Inspiration
-The original project was inspired by the classic Minecraft Java Edition PC mod **Little Blocks Mod** (by Gullibility / SlimeVoid and Vengeeur), which introduced 1:8 scaled micro-block building. Mini Blocks was created to bring that detailed architectural experience to mobile players.
+### PC Java & Construction Mod Inspirations
+* **Little Blocks Mod (Java PC)**: Inspired the dream of miniature block scaling and micro-detailing.
+* **Construction & Block-Cutting Mods**: Inspired the vertical **Wall Slab** concept. Since MCPE lacked sawbenches or cutting tools to bisect blocks vertically, Austin created craftable vertical half-blocks using 3 blocks in a vertical column (`["aba", "aba", "aba"]`), directly mirroring vanilla's horizontal slab recipe.
 
 ### Multi-Agent Development History
 This Bedrock release reflects a multi-agent engineering workflow traced across git history:
@@ -31,7 +32,8 @@ This Bedrock release reflects a multi-agent engineering workflow traced across g
 
 Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snapshot of early MCPE modding culture—an enthusiastic patchwork of community-shared code snippets, reverse-engineered hacks, and creative workarounds:
 
-* **Directional Placement (`findYaw()`) & androidKaghon**: Directional math was adopted from **androidKaghon** (known for the MCPE 0.9.x–0.11.x *Ender Chest Mod*). To simulate directional facing without block states, `findYaw()` calculated player yaw (`getYaw() + 45`), normalized the angle recursively, and placed one of four discrete block IDs.
+* **The Ironic Innovation Tradition**: Despite the iconic header warning (`"//Don't steal this code! Do not take it as your own!"`), the codebase was an open community remix of shared ModPE patterns modified to achieve new mechanics.
+* **Directional Placement (`findYaw()`) & androidKaghon**: Directional math was adopted from **androidKaghon** (known for the MCPE 0.9.x–0.11.x *Ender Chest Mod*). To simulate directional facing without block states, `findYaw()` calculated player yaw (`getYaw() + 45`), normalized the angle recursively, and placed one of four discrete block IDs (with stone click sounds playing during recursion).
 * **In-Game Auto-Updater**: The background Java thread and `AlertDialog.Builder` popup (`MiniBlocksVersion`) were adapted from community templates popularized by **Desno365** and **500ISE**, leveraging **Zhuowei Zhang**'s `net.zhuoweizhang.mcpelauncher.ScriptManager` to hot-reload scripts live.
 * **The 52-Block ID Workaround**: Because MCPE 0.10.x lacked rotation permutations, every wall slab required four separate global block IDs (e.g. Stone Wall Slabs consumed IDs 249, 248, 242, and 241, plus 192 for the full block), consuming over 52 IDs across the mod.
 * **Modern Bedrock Resolution**: All 52 legacy block IDs and recursive yaw calculations have been replaced with single unified identifiers using Bedrock cardinal placement direction traits and `@minecraft/server` scripting.
@@ -114,6 +116,7 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * Initial creative inventory hooks for all primary wood and stone types.
 
 === v1.0 — v1.3 (MCPE 0.10.x Release Era) ===
+* Initial public release on MinecraftForum on January 16, 2015.
 * Transitioned out of beta into full release.
 * Added Sandstone, Quartz, and Brick Wall Slabs.
 * Basic collision boxes matching 8px wall boundaries.
@@ -139,7 +142,7 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 ---
 
 **Original Author:** [@thejaustin](https://github.com/thejaustin)  
-**Historical Social:** [@thejaustin on Twitter/X](https://twitter.com/thejaustin)  
+**Historical Social:** [@thejaustin on Twitter/X](https://twitter.com/thejaustin) (archived: `@thejaustin_old`)  
 *Original ModPE Code Notice: Don't steal this code! Do not take it as your own!*
 
 ---
