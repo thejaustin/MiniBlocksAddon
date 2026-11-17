@@ -1,0 +1,12 @@
+# Build and packaging outputs
+dist/
+*.mcpack
+*.mcaddon
+
+# Python
+__pycache__/
+*.py[cod]
+
+# OS artifacts
+.DS_Store
+Thumbs.db

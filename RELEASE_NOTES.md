@@ -61,6 +61,10 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
   * **Mini Blocks**: Mini dirt places and renders as an 8x8x8 centered cube, but directional facing states remain work-in-progress.
 
 ### Asset & System Polish
+* **Audio Feedback**: Added dynamic placement sound effects (`dimension.playSound`) upon slab combining, matching the block material (`use.wood`, `use.stone`, `use.deepslate`, `use.copper`, etc.) for authentic game feel.
+* **Script Hardening**: Added entity validity and AABB checks to `isObstructed`, and runtime active hotbar slot re-verification inside `system.run` to safeguard survival item deduction against slot-scrolling desyncs.
+* **Geometry Modernization**: Aligned `mini_block.geo.json` and `slab.geo.json` to modern Bedrock `format_version: "1.21.0"` with standardized visible bounds.
+* **Packaging Tooling**: Added `tools/package.py` and `--package` flag in `tools/generate_addon.py` for automated `.mcpack` and `.mcaddon` bundle creation, shared storage deployment, and media scanner triggering.
 * **Pack Icon**: Added a custom 128x128 pixel-art `pack_icon.png` illustrating oak and stone brick wall slabs alongside the mini dirt block.
 * **Manifests & Localization**: Branded manifests cleanly as `Mini Blocks Add-on (Behaviors)` and `Mini Blocks Add-on (Resources)`.
 * **Texture Namespace**: Resolved terrain texture collisions with vanilla cobblestone and deepslate definitions.

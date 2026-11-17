@@ -207,7 +207,57 @@ def make_geo():
         }]
     }
 
+def make_slab_geo():
+    return {
+        "format_version": "1.21.0",
+        "minecraft:geometry": [{
+            "description": {
+                "identifier": "geometry.slab",
+                "texture_width": 16,
+                "texture_height": 16,
+                "visible_bounds_width": 2,
+                "visible_bounds_height": 1.5,
+                "visible_bounds_offset": [0, 0.25, 0],
+            },
+            "bones": [{
+                "name": "slab",
+                "pivot": [0, 0, 0],
+                "cubes": [{
+                    "origin": [-8, 0, -8],
+                    "size": [16, 8, 16],
+                    "uv": [0, 0],
+                }],
+            }],
+        }],
+    }
+
+def make_mini_block_geo():
+    return {
+        "format_version": "1.21.0",
+        "minecraft:geometry": [{
+            "description": {
+                "identifier": "geometry.mini_block",
+                "texture_width": 16,
+                "texture_height": 16,
+                "visible_bounds_width": 1,
+                "visible_bounds_height": 1,
+                "visible_bounds_offset": [0, 0, 0],
+            },
+            "bones": [{
+                "name": "bb_main",
+                "pivot": [0, 0, 0],
+                "cubes": [{
+                    "origin": [-4, 0, -4],
+                    "size": [8, 8, 8],
+                    "uv": [0, 0],
+                }],
+            }],
+        }],
+    }
+
 write_json(os.path.join(RP, "models/blocks/wall_slab.geo.json"), make_geo())
+write_json(os.path.join(RP, "models/blocks/slab.geo.json"), make_slab_geo())
+write_json(os.path.join(RP, "models/blocks/mini_block.geo.json"), make_mini_block_geo())
 
 
 # ── 2. Wall slab block JSONs ─────────────────────────────────────────────────
@@ -399,7 +449,16 @@ for name, source, hardness, stone_cut, sound in WALL_SLABS:
 write_json(os.path.join(RP, "blocks.json"), blocks_json)
 
 
-# ── 8. Slab → full block map for the merge script ───────────────────────────
+# ── 8. Slab → full block map & sound map for the merge script ───────────────
+
+SOUND_EVENTS = {
+    "stone": "use.stone",
+    "wood": "use.wood",
+    "nether_wood": "use.wood",
+    "deepslate": "use.deepslate",
+    "copper": "use.copper",
+    "nether_brick": "use.nether_brick",
+}
 
 slab_map_path = os.path.join(BP, "scripts/slab_map.js")
 with open(slab_map_path, "w") as f:
@@ -407,6 +466,13 @@ with open(slab_map_path, "w") as f:
     f.write("export const SLAB_TO_FULL_BLOCK = {\n")
     for name, source, hardness, stone_cut, sound in WALL_SLABS:
         f.write(f'  "addon:{name}_wall_slab": "{source}",\n')
+    f.write('  "addon:cobblestone_slab": "minecraft:cobblestone",\n')
+    f.write("};\n\n")
+    f.write("export const SLAB_SOUNDS = {\n")
+    for name, source, hardness, stone_cut, sound in WALL_SLABS:
+        sound_event = SOUND_EVENTS.get(sound, "use.stone")
+        f.write(f'  "addon:{name}_wall_slab": "{sound_event}",\n')
+    f.write('  "addon:cobblestone_slab": "use.stone",\n')
     f.write("};\n")
 print(f"  wrote {os.path.relpath(slab_map_path, REPO)}")
 
@@ -470,3 +536,58 @@ os.makedirs(os.path.dirname(lang_path), exist_ok=True)
 with open(lang_path, "w") as f:
     f.write("\n".join(lang_entries) + "\n")
 print(f"  wrote resource_pack/texts/en_US.lang")
+
+
+# ── 10. Packaging helper ────────────────────────────────────────────────────
+
+def package_addon(dist_dir=None, download_dir="/storage/emulated/0/Download"):
+    import shutil, subprocess, zipfile
+    if not dist_dir:
+        dist_dir = os.path.join(REPO, "dist")
+    os.makedirs(dist_dir, exist_ok=True)
+
+    bp_pack = os.path.join(dist_dir, "MiniBlocks_Behavior.mcpack")
+    rp_pack = os.path.join(dist_dir, "MiniBlocks_Resource.mcpack")
+    addon_file = os.path.join(dist_dir, "MiniBlocksAddon.mcaddon")
+
+    def zip_folder(folder_path, output_path):
+        with zipfile.ZipFile(output_path, "w", zipfile.ZIP_DEFLATED) as z:
+            for root, dirs, files in os.walk(folder_path):
+                for file in files:
+                    full_path = os.path.join(root, file)
+                    rel_path = os.path.relpath(full_path, folder_path)
+                    z.write(full_path, rel_path)
+
+    print("Packaging behavior pack (.mcpack)...")
+    zip_folder(BP, bp_pack)
+    print("Packaging resource pack (.mcpack)...")
+    zip_folder(RP, rp_pack)
+
+    print("Packaging combined .mcaddon bundle...")
+    with zipfile.ZipFile(addon_file, "w", zipfile.ZIP_DEFLATED) as z:
+        z.write(bp_pack, os.path.basename(bp_pack))
+        z.write(rp_pack, os.path.basename(rp_pack))
+
+    print(f"  ✓ Built {os.path.relpath(addon_file, REPO)}")
+
+    if os.path.exists(download_dir) and os.access(download_dir, os.W_OK):
+        print(f"Syncing to Android shared storage ({download_dir})...")
+        for src in [bp_pack, rp_pack, addon_file]:
+            dst = os.path.join(download_dir, os.path.basename(src))
+            shutil.copy2(src, dst)
+            print(f"  ✓ Copied {os.path.basename(src)} -> {download_dir}/")
+
+        try:
+            subprocess.run([
+                "am", "broadcast", "-a", "android.intent.action.MEDIA_SCANNER_SCAN_FILE",
+                "-d", f"file://{os.path.join(download_dir, 'MiniBlocksAddon.mcaddon')}"
+            ], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            print("  ✓ Triggered Android media scanner broadcast")
+        except Exception:
+            pass
+
+
+if __name__ == "__main__":
+    import sys
+    if "--package" in sys.argv or "-p" in sys.argv:
+        package_addon()

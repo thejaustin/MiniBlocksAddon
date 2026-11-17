@@ -1,5 +1,5 @@
 import { world, system, Direction, GameMode, PlayerPermissionLevel } from "@minecraft/server";
-import { SLAB_TO_FULL_BLOCK } from "./slab_map.js";
+import { SLAB_TO_FULL_BLOCK, SLAB_SOUNDS } from "./slab_map.js";
 
 // Mini Blocks Addon - Wall Slab Combining Mechanic
 // Recreates the classic Mini Blocks Mod combining behavior.
@@ -16,14 +16,22 @@ function canBuild(player) {
 
 function isObstructed(dimension, { x, y, z }) {
   const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
-  for (const entity of dimension.getEntities({ location: center, maxDistance: 3 })) {
-    if (NON_BLOCKING_ENTITIES.has(entity.typeId)) continue;
-    const { center: c, extent: e } = entity.getAABB();
-    if (c.x - e.x < x + 1 && c.x + e.x > x &&
-        c.y - e.y < y + 1 && c.y + e.y > y &&
-        c.z - e.z < z + 1 && c.z + e.z > z) {
-      return true;
+  try {
+    for (const entity of dimension.getEntities({ location: center, maxDistance: 3 })) {
+      if (!entity?.isValid) continue;
+      if (NON_BLOCKING_ENTITIES.has(entity.typeId)) continue;
+      if (typeof entity.getAABB !== "function") continue;
+      const aabb = entity.getAABB();
+      if (!aabb?.center || !aabb?.extent) continue;
+      const { center: c, extent: e } = aabb;
+      if (c.x - e.x < x + 1 && c.x + e.x > x &&
+          c.y - e.y < y + 1 && c.y + e.y > y &&
+          c.z - e.z < z + 1 && c.z + e.z > z) {
+        return true;
+      }
     }
+  } catch {
+    // If entity query or AABB computation fails, fail-safe (do not block placement)
   }
   return false;
 }
@@ -55,17 +63,34 @@ function tryMerge(player, targetBlock, slabTypeId) {
 
     if (player.getGameMode() !== GameMode.Creative) {
       const container = player.getComponent("minecraft:inventory")?.container;
-      const item = container?.getItem(selectedSlot);
+      if (!container) return;
+      const activeSlot = player.selectedSlotIndex;
+      const slot = (activeSlot !== undefined && container.getItem(activeSlot)?.typeId === slabTypeId)
+        ? activeSlot
+        : selectedSlot;
+      const item = container.getItem(slot);
       if (item?.typeId !== slabTypeId) return;
       if (item.amount > 1) {
         item.amount -= 1;
-        container.setItem(selectedSlot, item);
+        container.setItem(slot, item);
       } else {
-        container.setItem(selectedSlot, undefined);
+        container.setItem(slot, undefined);
       }
     }
 
     current.setType(fullBlockId);
+
+    // Audio feedback: play the corresponding placement sound at block center
+    const sound = SLAB_SOUNDS?.[slabTypeId] || "use.stone";
+    try {
+      dimension.playSound(sound, {
+        x: location.x + 0.5,
+        y: location.y + 0.5,
+        z: location.z + 0.5,
+      });
+    } catch {
+      // Sound playback fail-safe
+    }
   });
 
   return true;
