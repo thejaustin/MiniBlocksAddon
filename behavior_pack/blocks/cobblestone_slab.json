@@ -12,7 +12,9 @@
       "minecraft:material_instances": {
         "*": {
           "texture": "miniblocks_cobblestone",
-          "render_method": "opaque"
+          "render_method": "opaque",
+          "ambient_occlusion": 1.0,
+          "face_dimming": true
         }
       },
       "minecraft:geometry": "geometry.slab",

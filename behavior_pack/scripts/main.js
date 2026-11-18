@@ -32,6 +32,7 @@ function canBuild(player) {
 
 function isObstructed(dimension, { x, y, z }) {
   const center = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
+  const EPSILON = 0.05; // 5cm tolerance so grazing adjacent entities don't block combining
   try {
     for (const entity of dimension.getEntities({ location: center, maxDistance: 3 })) {
       if (!entity?.isValid) continue;
@@ -40,9 +41,9 @@ function isObstructed(dimension, { x, y, z }) {
       const aabb = entity.getAABB();
       if (!aabb?.center || !aabb?.extent) continue;
       const { center: c, extent: e } = aabb;
-      if (c.x - e.x < x + 1 && c.x + e.x > x &&
-          c.y - e.y < y + 1 && c.y + e.y > y &&
-          c.z - e.z < z + 1 && c.z + e.z > z) {
+      if (c.x - e.x < x + 1 - EPSILON && c.x + e.x > x + EPSILON &&
+          c.y - e.y < y + 1 - EPSILON && c.y + e.y > y + EPSILON &&
+          c.z - e.z < z + 1 - EPSILON && c.z + e.z > z + EPSILON) {
         return true;
       }
     }
@@ -96,16 +97,28 @@ function tryMerge(player, targetBlock, slabTypeId) {
 
     current.setType(fullBlockId);
 
-    // Audio feedback: play the corresponding placement sound at block center
+    const soundLoc = {
+      x: location.x + 0.5,
+      y: location.y + 0.5,
+      z: location.z + 0.5,
+    };
+
+    // Audio feedback: organic pitch-modulated placement audio
     const sound = SLAB_SOUNDS?.[slabTypeId] || "use.stone";
     try {
-      dimension.playSound(sound, {
-        x: location.x + 0.5,
-        y: location.y + 0.5,
-        z: location.z + 0.5,
+      dimension.playSound(sound, soundLoc, {
+        volume: 1.0,
+        pitch: 0.9 + Math.random() * 0.2, // Subtle organic pitch variation
       });
     } catch {
       // Sound playback fail-safe
+    }
+
+    // Reactive visual feedback: sparkle burst upon successful combine
+    try {
+      dimension.spawnParticle("minecraft:villager_happy", soundLoc);
+    } catch {
+      // Particle playback fail-safe
     }
   });
 

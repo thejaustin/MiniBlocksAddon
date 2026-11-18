@@ -64,7 +64,7 @@ WALL_SLABS = [
 
 # (name_slug, source_item, hardness, sound, category, stonecutter_allowed, tool_type)
 MINI_BLOCKS = [
-    ("dirt",         "minecraft:dirt",         0.5,  "gravel", "construction", False, None),
+    ("dirt",         "minecraft:dirt",         0.5,  "dirt",   "construction", False, None),
     ("cobblestone",  "minecraft:cobblestone",  2.0,  "stone",  "construction", True,  "pickaxe"),
     ("oak_planks",   "minecraft:oak_planks",   1.5,  "wood",   "construction", False, "axe"),
     ("stone",        "minecraft:stone",        1.5,  "stone",  "construction", True,  "pickaxe"),
@@ -401,6 +401,8 @@ def make_wall_slab_block(name, hardness, sound):
             "*": {
                 "texture": f"{TEX_PREFIX}{name}",
                 "render_method": render_method,
+                "ambient_occlusion": 1.0 if name != "glass" else 0.0,
+                "face_dimming": name != "glass",
             }
         },
         "minecraft:geometry": {
@@ -469,7 +471,12 @@ floor_slab = {
         },
         "components": {
             "minecraft:material_instances": {
-                "*": {"texture": f"{TEX_PREFIX}cobblestone", "render_method": "opaque"}
+                "*": {
+                    "texture": f"{TEX_PREFIX}cobblestone",
+                    "render_method": "opaque",
+                    "ambient_occlusion": 1.0,
+                    "face_dimming": True,
+                }
             },
             "minecraft:geometry": "geometry.slab",
             "minecraft:destructible_by_mining": {"seconds_to_destroy": 2.0},
@@ -582,6 +589,8 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
             "*": {
                 "texture": f"{TEX_PREFIX}mini_{slug}",
                 "render_method": render_method,
+                "ambient_occlusion": 1.0 if slug != "glass" else 0.0,
+                "face_dimming": slug != "glass",
             }
         },
         "minecraft:geometry": {
@@ -725,7 +734,8 @@ SOUND_EVENTS = {
     "deepslate": "use.deepslate",
     "copper": "use.copper",
     "nether_brick": "use.nether_brick",
-    "glass": "use.stone",
+    "glass": "random.glass",
+    "dirt": "use.gravel",
     "gravel": "use.gravel",
 }
 

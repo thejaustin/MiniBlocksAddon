@@ -69,7 +69,7 @@ export const SLAB_SOUNDS = {
   "addon:deepslate_wall_slab": "use.deepslate",
   "addon:diorite_wall_slab": "use.stone",
   "addon:end_stone_brick_wall_slab": "use.stone",
-  "addon:glass_wall_slab": "use.stone",
+  "addon:glass_wall_slab": "random.glass",
   "addon:granite_wall_slab": "use.stone",
   "addon:jungle_wall_slab": "use.wood",
   "addon:mangrove_wall_slab": "use.wood",
@@ -104,5 +104,5 @@ export const SLAB_SOUNDS = {
   "addon:mini_brick": "use.stone",
   "addon:mini_sandstone": "use.stone",
   "addon:mini_obsidian": "use.stone",
-  "addon:mini_glass": "use.stone",
+  "addon:mini_glass": "random.glass",
 };

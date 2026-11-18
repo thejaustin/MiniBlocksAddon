@@ -20,7 +20,9 @@
       "minecraft:material_instances": {
         "*": {
           "texture": "miniblocks_cut_copper",
-          "render_method": "opaque"
+          "render_method": "opaque",
+          "ambient_occlusion": 1.0,
+          "face_dimming": true
         }
       },
       "minecraft:geometry": {

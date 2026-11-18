@@ -61,6 +61,13 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **Ground-Level Placement Fix**: Added `minecraft:vertical_half` support to `minecraft:placement_position`. Clicking the lower half of an adjacent block keeps the mini block grounded on the floor (Y: 0..8) instead of forcing mid-air positioning (Y: 4..12). Clicking the upper half mounts it at Y: 8..16.
 * **10-Bone Multi-Surface Geometry**: Expanded `geometry.mini_block` and block permutations to handle floors, ceilings, and top/bottom halves of all four cardinal walls with exact collision and selection boxes.
 
+### Reactivity, Lighting & Sound Polish
+* **Visual Reactivity & Particles**: Successful combining triggers emerald sparkle particles (`minecraft:villager_happy`) bursting at block center for instant visual feedback.
+* **Organic Sound Variation**: Added natural pitch modulation (`pitch: 0.9..1.1`) so placement and merging sound dynamic rather than monotonous.
+* **Audio Fixes**: Mapped glass merging to glass shattering audio (`random.glass`), mapped Mini Dirt to vanilla `dirt` sounds.
+* **Smooth Contact Lighting**: Enabled `ambient_occlusion: 1.0` and `face_dimming: true` on opaque blocks to render soft contact shadows and directional sunlight shading, while preserving transparent glass clarity.
+* **Obstruction Tolerance**: Added a 5cm epsilon margin to `isObstructed`, ensuring players standing near adjacent block edges don't accidentally block combining.
+
 ---
 
 ## What's New in v1.3.0
@@ -109,15 +116,17 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 ## Full Version History
 
 ```text
-=== v1.4.0 (Bedrock Port — Creative Catalogs & Placement Overhaul — 2026) ===
+=== v1.4.0 (Bedrock Port — Creative Catalogs, Placement & Reactivity Overhaul — 2026) ===
 * [Feature] Creative Inventory (+) Expandable Groups: Native integration with Bedrock Crafting Item Catalog (`crafting_item_catalog.json`). Wall Slabs, Mini Blocks, and Slabs now collapse into clean expandable (+) drawers within the Construction tab instead of cluttering the top-level menu.
 * [Feature] Mini Block Combining Parity: Tapping any placed mini block with a matching mini block in hand combines them into the full vanilla block (with authentic sound and inventory deduction), matching the 2:1 craft-combining mechanic. Sneaking allows placing adjacent mini blocks without combining.
 * [Feature] Improved Mini Block Placement Logic:
   - Added native `minecraft:placement_direction` (`minecraft:cardinal_direction`) traits so directional facing is tracked.
   - Added `minecraft:vertical_half` support to `minecraft:placement_position`: clicking the lower half of an adjacent block keeps the mini block grounded on the floor (Y: 0..8) instead of forcing mid-air positioning (Y: 4..12). Clicking the upper half mounts it at Y: 8..16.
   - Multi-surface attachment geometry expanded to 10 distinct bone states with accurate collision and selection boxes across floors, ceilings, and wall top/bottom halves.
+* [Feature] Visual Reactivity & Particle Feedback: Bursting happy emerald sparkles (`minecraft:villager_happy`) trigger at the block center on successful combining.
+* [Audio] Organic Sound Design: Added natural random pitch modulation (`pitch: 0.9..1.1`) to combining sound effects, mapped glass combining to authentic shattering audio (`random.glass`), and set Mini Dirt block sound to `dirt`.
+* [Lighting] Shading & Contact Shadows: Enabled `ambient_occlusion: 1.0` and `face_dimming: true` on opaque blocks to render natural contact shadows and directional sunlight shading, while keeping glass alpha clean.
 * [Feature] Creative Group Localization: Added `itemGroup.name.wall_slab` ("Wall Slabs") and `itemGroup.name.mini_block` ("Mini Blocks") to `en_US.lang`.
-* [Audio] Added authentic gravel placement sound (`use.gravel`) when combining or interacting with Mini Dirt.
 * [Session] Updated welcome greeting to v1.4.0.
 
 === v1.3.0 (Bedrock Port — The Return of Mini Blocks — 2026) ===

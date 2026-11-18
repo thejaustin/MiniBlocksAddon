@@ -4,7 +4,7 @@
     "sound": "stone"
   },
   "addon:mini_dirt": {
-    "sound": "gravel"
+    "sound": "dirt"
   },
   "addon:mini_cobblestone": {
     "sound": "stone"

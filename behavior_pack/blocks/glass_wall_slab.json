@@ -20,7 +20,9 @@
       "minecraft:material_instances": {
         "*": {
           "texture": "miniblocks_glass",
-          "render_method": "alpha_test"
+          "render_method": "alpha_test",
+          "ambient_occlusion": 0.0,
+          "face_dimming": false
         }
       },
       "minecraft:geometry": {
