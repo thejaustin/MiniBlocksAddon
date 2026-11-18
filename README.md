@@ -3,7 +3,7 @@
 
 ```text
 // =========================================================================
-// Mini Blocks Mod v1.9 -> v1.3.0 by thejaustin
+// Mini Blocks Mod v1.9 -> v1.4.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
 // Originally created for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
 // Directional placement logic originally credited to androidKaghon.
@@ -57,6 +57,30 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **In-Game Auto-Updater**: The background Java thread and `AlertDialog.Builder` popup (`MiniBlocksVersion`) were adapted from community templates popularized by **Desno365** and **500ISE**, leveraging **Zhuowei Zhang**'s `net.zhuoweizhang.mcpelauncher.ScriptManager` to hot-reload scripts live.
 * **The 52-Block ID Workaround**: Because MCPE 0.10.x lacked rotation permutations, every wall slab required four separate global block IDs (e.g. Stone Wall Slabs consumed IDs 249, 248, 242, and 241, plus 192 for the full block), consuming over 52 IDs across the mod.
 * **Modern Bedrock Resolution**: All 52 legacy block IDs and recursive yaw calculations have been replaced with single unified identifiers using Bedrock cardinal placement direction traits and `@minecraft/server` scripting.
+
+---
+
+## Release Notes — v1.4.0 (Bedrock Edition)
+
+### Key Improvements
+
+#### Creative Inventory (+) Expandable Groups
+* **Crafting Item Catalog**: Implemented official Bedrock `crafting_item_catalog.json` (`behavior_pack/item_catalog/crafting_item_catalog.json`). Custom blocks are now organized into collapsible drawers within the Construction tab instead of flooding the top-level creative inventory.
+* **Expandable Folders**:
+  * **Wall Slabs (+)**: Collapsed under the Oak Wall Slab icon; expands to show all 41 wall slab variants.
+  * **Mini Blocks (+)**: Collapsed under the Mini Dirt icon; expands to show all 9 miniature blocks.
+  * **Slabs (+)**: Places `addon:cobblestone_slab` into the vanilla Stone Slab drawer.
+* **Localization Keys**: Added `itemGroup.name.wall_slab=Wall Slabs` and `itemGroup.name.mini_block=Mini Blocks` in `en_US.lang`.
+
+#### Mini Block Combining Parity (2:1 Craft-Combining)
+* **Classic ModPE Mechanic**: Tapping any placed mini block with a matching mini block in hand combines them into the full vanilla block.
+* **Survival Audio & Item Deduction**: Consumes 1 item from hand in Survival mode and plays matching block placement sounds (`use.stone`, `use.wood`, `use.gravel`).
+* **Sneak Placing**: Sneaking/crouching bypasses combining, allowing players to build adjacent mini blocks cleanly.
+
+#### Improved Mini Block Placement Logic
+* **Directional Placement Traits**: Added native `minecraft:placement_direction` (`minecraft:cardinal_direction`) traits to track player facing.
+* **Ground-Level Placement Fix**: Enabled `minecraft:vertical_half` on `minecraft:placement_position`. Clicking the lower half of an adjacent block keeps the mini block grounded on the floor (Y: 0..8) rather than forcing awkward mid-air positioning (Y: 4..12). Clicking the upper half mounts it at Y: 8..16.
+* **10-Bone Multi-Surface Geometry**: Expanded `geometry.mini_block` and block permutations to support floors, ceilings, and bottom/top halves of all four walls with matching hitboxes.
 
 ---
 

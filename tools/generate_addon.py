@@ -64,7 +64,7 @@ WALL_SLABS = [
 
 # (name_slug, source_item, hardness, sound, category, stonecutter_allowed, tool_type)
 MINI_BLOCKS = [
-    ("dirt",         "minecraft:dirt",         0.5,  "gravel", "nature",       False, None),
+    ("dirt",         "minecraft:dirt",         0.5,  "gravel", "construction", False, None),
     ("cobblestone",  "minecraft:cobblestone",  2.0,  "stone",  "construction", True,  "pickaxe"),
     ("oak_planks",   "minecraft:oak_planks",   1.5,  "wood",   "construction", False, "axe"),
     ("stone",        "minecraft:stone",        1.5,  "stone",  "construction", True,  "pickaxe"),
@@ -144,14 +144,17 @@ BOXES = {
 
 # Mini block multi-surface attachment boxes
 # Attached to floor (up), ceiling (down), or four walls (north, south, east, west)
-MINI_FACES = ["up", "down", "north", "south", "west", "east"]
 MINI_BOXES = {
-    "up":    {"origin": [-4, 0, -4], "size": [8, 8, 8]},
-    "down":  {"origin": [-4, 8, -4], "size": [8, 8, 8]},
-    "north": {"origin": [-4, 4,  0], "size": [8, 8, 8]},
-    "south": {"origin": [-4, 4, -8], "size": [8, 8, 8]},
-    "west":  {"origin": [ 0, 4, -4], "size": [8, 8, 8]},
-    "east":  {"origin": [-8, 4, -4], "size": [8, 8, 8]},
+    "floor":        {"origin": [-4, 0, -4], "size": [8, 8, 8]},
+    "ceiling":      {"origin": [-4, 8, -4], "size": [8, 8, 8]},
+    "north_bottom": {"origin": [-4, 0,  0], "size": [8, 8, 8]},
+    "north_top":    {"origin": [-4, 8,  0], "size": [8, 8, 8]},
+    "south_bottom": {"origin": [-4, 0, -8], "size": [8, 8, 8]},
+    "south_top":    {"origin": [-4, 8, -8], "size": [8, 8, 8]},
+    "west_bottom":  {"origin": [ 0, 0, -4], "size": [8, 8, 8]},
+    "west_top":     {"origin": [ 0, 8, -4], "size": [8, 8, 8]},
+    "east_bottom":  {"origin": [-8, 0, -4], "size": [8, 8, 8]},
+    "east_top":     {"origin": [-8, 8, -4], "size": [8, 8, 8]},
 }
 
 
@@ -284,7 +287,7 @@ def make_slab_geo():
     }
 
 def make_mini_block_geo():
-    """Multi-surface 8×8×8 mini block geometry supporting floor, ceiling, and 4 walls."""
+    """Multi-surface 8×8×8 mini block geometry supporting floor, ceiling, and 4 walls (grounded bottom & top half)."""
     uv_full = {
         "north": uv(0, 0, 16, 16),
         "south": uv(0, 0, 16, 16),
@@ -305,24 +308,44 @@ def make_mini_block_geo():
             "cubes": [{"origin": [-4, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
         },
         {
-            "name": "bb_north",
-            "pivot": [0, 8, 8],
-            "cubes": [{"origin": [-4, 4, 0], "size": [8, 8, 8], "uv": uv_full}],
+            "name": "bb_north_bottom",
+            "pivot": [0, 4, 4],
+            "cubes": [{"origin": [-4, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
         },
         {
-            "name": "bb_south",
-            "pivot": [0, 8, -8],
-            "cubes": [{"origin": [-4, 4, -8], "size": [8, 8, 8], "uv": uv_full}],
+            "name": "bb_north_top",
+            "pivot": [0, 12, 4],
+            "cubes": [{"origin": [-4, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
         },
         {
-            "name": "bb_west",
-            "pivot": [8, 8, 0],
-            "cubes": [{"origin": [0, 4, -4], "size": [8, 8, 8], "uv": uv_full}],
+            "name": "bb_south_bottom",
+            "pivot": [0, 4, -4],
+            "cubes": [{"origin": [-4, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
         },
         {
-            "name": "bb_east",
-            "pivot": [-8, 8, 0],
-            "cubes": [{"origin": [-8, 4, -4], "size": [8, 8, 8], "uv": uv_full}],
+            "name": "bb_south_top",
+            "pivot": [0, 12, -4],
+            "cubes": [{"origin": [-4, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_west_bottom",
+            "pivot": [4, 4, 0],
+            "cubes": [{"origin": [0, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_west_top",
+            "pivot": [4, 12, 0],
+            "cubes": [{"origin": [0, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_east_bottom",
+            "pivot": [-4, 4, 0],
+            "cubes": [{"origin": [-8, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        {
+            "name": "bb_east_top",
+            "pivot": [-4, 12, 0],
+            "cubes": [{"origin": [-8, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
         },
     ]
     return {
@@ -413,7 +436,7 @@ def make_wall_slab_block(name, hardness, sound):
                 "identifier": identifier,
                 "menu_category": {
                     "category": "construction",
-                    "group": "minecraft:itemGroup.name.slab",
+                    "group": "itemGroup.name.wall_slab",
                 },
                 "traits": {
                     "minecraft:placement_direction": {
@@ -468,24 +491,91 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
     render_method = "alpha_test" if slug == "glass" else "opaque"
 
     bone_visibility = {
-        "bb_floor": "(q.block_state('minecraft:block_face') == 'up') || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
-        "bb_ceiling": "q.block_state('minecraft:block_face') == 'down'",
-        "bb_north":   "q.block_state('minecraft:block_face') == 'north'",
-        "bb_south":   "q.block_state('minecraft:block_face') == 'south'",
-        "bb_west":    "q.block_state('minecraft:block_face') == 'west'",
-        "bb_east":    "q.block_state('minecraft:block_face') == 'east'",
+        # Default / fallback: floor bone is shown in hand, inventory GUI, or when block_face is up
+        "bb_floor":        "(q.block_state('minecraft:block_face') == 'up') || (!q.block_state('minecraft:block_face')) || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
+        "bb_ceiling":      "q.block_state('minecraft:block_face') == 'down'",
+        "bb_north_bottom": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
+        "bb_north_top":    "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
+        "bb_south_bottom": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
+        "bb_south_top":    "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
+        "bb_west_bottom":  "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
+        "bb_west_top":     "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
+        "bb_east_bottom":  "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
+        "bb_east_top":     "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
     }
 
-    permutations = []
-    for face in MINI_FACES:
-        box = MINI_BOXES[face]
-        permutations.append({
-            "condition": f"q.block_state('minecraft:block_face') == '{face}'",
+    permutations = [
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'up'",
             "components": {
-                "minecraft:collision_box": box,
-                "minecraft:selection_box": box,
+                "minecraft:collision_box": MINI_BOXES["floor"],
+                "minecraft:selection_box": MINI_BOXES["floor"],
             }
-        })
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'down'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["ceiling"],
+                "minecraft:selection_box": MINI_BOXES["ceiling"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["north_bottom"],
+                "minecraft:selection_box": MINI_BOXES["north_bottom"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["north_top"],
+                "minecraft:selection_box": MINI_BOXES["north_top"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["south_bottom"],
+                "minecraft:selection_box": MINI_BOXES["south_bottom"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["south_top"],
+                "minecraft:selection_box": MINI_BOXES["south_top"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["west_bottom"],
+                "minecraft:selection_box": MINI_BOXES["west_bottom"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["west_top"],
+                "minecraft:selection_box": MINI_BOXES["west_top"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["east_bottom"],
+                "minecraft:selection_box": MINI_BOXES["east_bottom"],
+            }
+        },
+        {
+            "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
+            "components": {
+                "minecraft:collision_box": MINI_BOXES["east_top"],
+                "minecraft:selection_box": MINI_BOXES["east_top"],
+            }
+        },
+    ]
 
     components = {
         "minecraft:material_instances": {
@@ -505,8 +595,8 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
             "explosion_resistance": hardness * 3,
         },
         "minecraft:light_dampening": 0,
-        "minecraft:collision_box": MINI_BOXES["up"],
-        "minecraft:selection_box": MINI_BOXES["up"],
+        "minecraft:collision_box": MINI_BOXES["floor"],
+        "minecraft:selection_box": MINI_BOXES["floor"],
     }
 
     if sound == "wood":
@@ -526,11 +616,16 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
             "description": {
                 "identifier": identifier,
                 "menu_category": {
-                    "category": category,
+                    "category": "construction",
+                    "group": "itemGroup.name.mini_block",
                 },
                 "traits": {
+                    "minecraft:placement_direction": {
+                        "enabled_states": ["minecraft:cardinal_direction"],
+                        "y_rotation_offset": 0,
+                    },
                     "minecraft:placement_position": {
-                        "enabled_states": ["minecraft:block_face"],
+                        "enabled_states": ["minecraft:block_face", "minecraft:vertical_half"],
                     },
                 },
             },
@@ -621,7 +716,7 @@ for name, source, hardness, stone_cut, sound in WALL_SLABS:
 write_json(os.path.join(RP, "blocks.json"), blocks_json)
 
 
-# ── 8. Slab → full block map & sound map for the merge script ───────────────
+# ── 8. Slab & Mini Block → full block map & sound map for the merge script ───
 
 SOUND_EVENTS = {
     "stone": "use.stone",
@@ -631,6 +726,7 @@ SOUND_EVENTS = {
     "copper": "use.copper",
     "nether_brick": "use.nether_brick",
     "glass": "use.stone",
+    "gravel": "use.gravel",
 }
 
 slab_map_path = os.path.join(BP, "scripts/slab_map.js")
@@ -640,17 +736,65 @@ with open(slab_map_path, "w") as f:
     for name, source, hardness, stone_cut, sound in WALL_SLABS:
         f.write(f'  "addon:{name}_wall_slab": "{source}",\n')
     f.write('  "addon:cobblestone_slab": "minecraft:cobblestone",\n')
+    for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+        f.write(f'  "addon:mini_{slug}": "{source}",\n')
     f.write("};\n\n")
     f.write("export const SLAB_SOUNDS = {\n")
     for name, source, hardness, stone_cut, sound in WALL_SLABS:
         sound_event = SOUND_EVENTS.get(sound, "use.stone")
         f.write(f'  "addon:{name}_wall_slab": "{sound_event}",\n')
     f.write('  "addon:cobblestone_slab": "use.stone",\n')
+    for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+        sound_event = SOUND_EVENTS.get(sound, "use.stone")
+        f.write(f'  "addon:mini_{slug}": "{sound_event}",\n')
     f.write("};\n")
 print(f"  wrote {os.path.relpath(slab_map_path, REPO)}")
 
 
-# ── 9. Lang file & languages.json ───────────────────────────────────────────
+# ── 9. Crafting Item Catalog (Creative Menu (+) Grouping) ───────────────────
+
+wall_slab_ids = [f"addon:{name}_wall_slab" for name, source, hardness, stone_cut, sound in WALL_SLABS]
+mini_block_ids = [f"addon:mini_{slug}" for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS]
+
+catalog_data = {
+    "format_version": "1.21.60",
+    "minecraft:crafting_items_catalog": {
+        "categories": [
+            {
+                "category_name": "construction",
+                "groups": [
+                    {
+                        "group_identifier": {
+                            "icon": "addon:oak_wall_slab",
+                            "name": "itemGroup.name.wall_slab",
+                        },
+                        "items": wall_slab_ids,
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "addon:mini_dirt",
+                            "name": "itemGroup.name.mini_block",
+                        },
+                        "items": mini_block_ids,
+                    },
+                    {
+                        "group_identifier": {
+                            "icon": "minecraft:stone_slab",
+                            "name": "minecraft:itemGroup.name.slab",
+                        },
+                        "items": [
+                            "addon:cobblestone_slab",
+                        ],
+                    },
+                ],
+            },
+        ],
+    },
+}
+write_json(os.path.join(BP, "item_catalog/crafting_item_catalog.json"), catalog_data)
+
+
+# ── 10. Lang file & languages.json ──────────────────────────────────────────
 
 DISPLAY_NAMES = {
     "andesite":            "Andesite Wall Slab",
@@ -713,6 +857,10 @@ lang_entries = [
     "",
     "pack.name=MiniBlocks Addon",
     "pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.",
+    "",
+    "## Creative Item Groups",
+    "itemGroup.name.wall_slab=Wall Slabs",
+    "itemGroup.name.mini_block=Mini Blocks",
     "",
     "tile.addon:cobblestone_slab.name=Cobblestone Slab",
     "",

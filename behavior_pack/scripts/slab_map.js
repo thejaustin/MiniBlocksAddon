@@ -42,6 +42,15 @@ export const SLAB_TO_FULL_BLOCK = {
   "addon:stone_wall_slab": "minecraft:stone",
   "addon:warped_wall_slab": "minecraft:warped_planks",
   "addon:cobblestone_slab": "minecraft:cobblestone",
+  "addon:mini_dirt": "minecraft:dirt",
+  "addon:mini_cobblestone": "minecraft:cobblestone",
+  "addon:mini_oak_planks": "minecraft:oak_planks",
+  "addon:mini_stone": "minecraft:stone",
+  "addon:mini_stone_bricks": "minecraft:stone_bricks",
+  "addon:mini_brick": "minecraft:brick_block",
+  "addon:mini_sandstone": "minecraft:sandstone",
+  "addon:mini_obsidian": "minecraft:obsidian",
+  "addon:mini_glass": "minecraft:glass",
 };
 
 export const SLAB_SOUNDS = {
@@ -87,4 +96,13 @@ export const SLAB_SOUNDS = {
   "addon:stone_wall_slab": "use.stone",
   "addon:warped_wall_slab": "use.wood",
   "addon:cobblestone_slab": "use.stone",
+  "addon:mini_dirt": "use.gravel",
+  "addon:mini_cobblestone": "use.stone",
+  "addon:mini_oak_planks": "use.wood",
+  "addon:mini_stone": "use.stone",
+  "addon:mini_stone_bricks": "use.stone",
+  "addon:mini_brick": "use.stone",
+  "addon:mini_sandstone": "use.stone",
+  "addon:mini_obsidian": "use.stone",
+  "addon:mini_glass": "use.stone",
 };

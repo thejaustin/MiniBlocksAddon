@@ -4,12 +4,20 @@
     "description": {
       "identifier": "addon:mini_sandstone",
       "menu_category": {
-        "category": "construction"
+        "category": "construction",
+        "group": "itemGroup.name.mini_block"
       },
       "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 0
+        },
         "minecraft:placement_position": {
           "enabled_states": [
-            "minecraft:block_face"
+            "minecraft:block_face",
+            "minecraft:vertical_half"
           ]
         }
       }
@@ -24,12 +32,16 @@
       "minecraft:geometry": {
         "identifier": "geometry.mini_block",
         "bone_visibility": {
-          "bb_floor": "(q.block_state('minecraft:block_face') == 'up') || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
+          "bb_floor": "(q.block_state('minecraft:block_face') == 'up') || (!q.block_state('minecraft:block_face')) || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
           "bb_ceiling": "q.block_state('minecraft:block_face') == 'down'",
-          "bb_north": "q.block_state('minecraft:block_face') == 'north'",
-          "bb_south": "q.block_state('minecraft:block_face') == 'south'",
-          "bb_west": "q.block_state('minecraft:block_face') == 'west'",
-          "bb_east": "q.block_state('minecraft:block_face') == 'east'"
+          "bb_north_bottom": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
+          "bb_north_top": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
+          "bb_south_bottom": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
+          "bb_south_top": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
+          "bb_west_bottom": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
+          "bb_west_top": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
+          "bb_east_bottom": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
+          "bb_east_top": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'"
         }
       },
       "minecraft:destructible_by_mining": {
@@ -127,12 +139,12 @@
         }
       },
       {
-        "condition": "q.block_state('minecraft:block_face') == 'north'",
+        "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               -4,
-              4,
+              0,
               0
             ],
             "size": [
@@ -144,7 +156,7 @@
           "minecraft:selection_box": {
             "origin": [
               -4,
-              4,
+              0,
               0
             ],
             "size": [
@@ -156,12 +168,41 @@
         }
       },
       {
-        "condition": "q.block_state('minecraft:block_face') == 'south'",
+        "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               -4,
-              4,
+              8,
+              0
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              8,
+              0
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -4,
+              0,
               -8
             ],
             "size": [
@@ -173,7 +214,7 @@
           "minecraft:selection_box": {
             "origin": [
               -4,
-              4,
+              0,
               -8
             ],
             "size": [
@@ -185,12 +226,41 @@
         }
       },
       {
-        "condition": "q.block_state('minecraft:block_face') == 'west'",
+        "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -4,
+              8,
+              -8
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              8,
+              -8
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               0,
-              4,
+              0,
               -4
             ],
             "size": [
@@ -202,7 +272,7 @@
           "minecraft:selection_box": {
             "origin": [
               0,
-              4,
+              0,
               -4
             ],
             "size": [
@@ -214,12 +284,41 @@
         }
       },
       {
-        "condition": "q.block_state('minecraft:block_face') == 'east'",
+        "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              0,
+              8,
+              -4
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              0,
+              8,
+              -4
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               -8,
-              4,
+              0,
               -4
             ],
             "size": [
@@ -231,7 +330,36 @@
           "minecraft:selection_box": {
             "origin": [
               -8,
-              4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
+        "components": {
+          "minecraft:collision_box": {
+            "origin": [
+              -8,
+              8,
+              -4
+            ],
+            "size": [
+              8,
+              8,
+              8
+            ]
+          },
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              8,
               -4
             ],
             "size": [
