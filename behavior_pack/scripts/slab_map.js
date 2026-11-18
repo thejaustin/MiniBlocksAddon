@@ -106,3 +106,15 @@ export const SLAB_SOUNDS = {
   "addon:mini_obsidian": "use.stone",
   "addon:mini_glass": "random.glass",
 };
+
+export const MINI_BLOCK_IDS = new Set([
+  "addon:mini_dirt",
+  "addon:mini_cobblestone",
+  "addon:mini_oak_planks",
+  "addon:mini_stone",
+  "addon:mini_stone_bricks",
+  "addon:mini_brick",
+  "addon:mini_sandstone",
+  "addon:mini_obsidian",
+  "addon:mini_glass",
+]);

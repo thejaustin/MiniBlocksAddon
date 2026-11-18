@@ -287,7 +287,7 @@ def make_slab_geo():
     }
 
 def make_mini_block_geo():
-    """Multi-surface 8×8×8 mini block geometry supporting floor, ceiling, and 4 walls (grounded bottom & top half)."""
+    """8-sub-cube (2×2×2 octant) mini block geometry + centered UI/hand preview bone."""
     uv_full = {
         "north": uv(0, 0, 16, 16),
         "south": uv(0, 0, 16, 16),
@@ -297,55 +297,59 @@ def make_mini_block_geo():
         "down":  uv(0, 0, 16, 16),
     }
     bones = [
+        # Slot 0: Bottom North-West (-X, -Y, -Z)
         {
-            "name": "bb_floor",
+            "name": "slot_0",
+            "pivot": [-4, 4, -4],
+            "cubes": [{"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 1: Bottom North-East (+X, -Y, -Z)
+        {
+            "name": "slot_1",
+            "pivot": [4, 4, -4],
+            "cubes": [{"origin": [0, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 2: Bottom South-West (-X, -Y, +Z)
+        {
+            "name": "slot_2",
+            "pivot": [-4, 4, 4],
+            "cubes": [{"origin": [-8, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 3: Bottom South-East (+X, -Y, +Z)
+        {
+            "name": "slot_3",
+            "pivot": [4, 4, 4],
+            "cubes": [{"origin": [0, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 4: Top North-West (-X, +Y, -Z)
+        {
+            "name": "slot_4",
+            "pivot": [-4, 12, -4],
+            "cubes": [{"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 5: Top North-East (+X, +Y, -Z)
+        {
+            "name": "slot_5",
+            "pivot": [4, 12, -4],
+            "cubes": [{"origin": [0, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 6: Top South-West (-X, +Y, +Z)
+        {
+            "name": "slot_6",
+            "pivot": [-4, 12, 4],
+            "cubes": [{"origin": [-8, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Slot 7: Top South-East (+X, +Y, +Z)
+        {
+            "name": "slot_7",
+            "pivot": [4, 12, 4],
+            "cubes": [{"origin": [0, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
+        },
+        # Fallback centered preview for UI / hand
+        {
+            "name": "bb_ui",
             "pivot": [0, 0, 0],
             "cubes": [{"origin": [-4, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_ceiling",
-            "pivot": [0, 16, 0],
-            "cubes": [{"origin": [-4, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_north_bottom",
-            "pivot": [0, 4, 4],
-            "cubes": [{"origin": [-4, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_north_top",
-            "pivot": [0, 12, 4],
-            "cubes": [{"origin": [-4, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_south_bottom",
-            "pivot": [0, 4, -4],
-            "cubes": [{"origin": [-4, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_south_top",
-            "pivot": [0, 12, -4],
-            "cubes": [{"origin": [-4, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_west_bottom",
-            "pivot": [4, 4, 0],
-            "cubes": [{"origin": [0, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_west_top",
-            "pivot": [4, 12, 0],
-            "cubes": [{"origin": [0, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_east_bottom",
-            "pivot": [-4, 4, 0],
-            "cubes": [{"origin": [-8, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        {
-            "name": "bb_east_top",
-            "pivot": [-4, 12, 0],
-            "cubes": [{"origin": [-8, 8, -4], "size": [8, 8, 8], "uv": uv_full}],
         },
     ]
     return {
@@ -498,88 +502,33 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
     render_method = "alpha_test" if slug == "glass" else "opaque"
 
     bone_visibility = {
-        # Default / fallback: floor bone is shown in hand, inventory GUI, or when block_face is up
-        "bb_floor":        "(q.block_state('minecraft:block_face') == 'up') || (!q.block_state('minecraft:block_face')) || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
-        "bb_ceiling":      "q.block_state('minecraft:block_face') == 'down'",
-        "bb_north_bottom": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
-        "bb_north_top":    "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
-        "bb_south_bottom": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
-        "bb_south_top":    "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
-        "bb_west_bottom":  "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
-        "bb_west_top":     "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
-        "bb_east_bottom":  "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
-        "bb_east_top":     "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
+        "slot_0": "q.block_state('addon:slot_0') == 1",
+        "slot_1": "q.block_state('addon:slot_1') == 1",
+        "slot_2": "q.block_state('addon:slot_2') == 1",
+        "slot_3": "q.block_state('addon:slot_3') == 1",
+        "slot_4": "q.block_state('addon:slot_4') == 1",
+        "slot_5": "q.block_state('addon:slot_5') == 1",
+        "slot_6": "q.block_state('addon:slot_6') == 1",
+        "slot_7": "q.block_state('addon:slot_7') == 1",
+        "bb_ui":  "!q.block_state('addon:slot_0') && !q.block_state('addon:slot_1') && !q.block_state('addon:slot_2') && !q.block_state('addon:slot_3') && !q.block_state('addon:slot_4') && !q.block_state('addon:slot_5') && !q.block_state('addon:slot_6') && !q.block_state('addon:slot_7')",
     }
+
+    has_bottom = "q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3')"
+    has_top    = "q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')"
 
     permutations = [
         {
-            "condition": "q.block_state('minecraft:block_face') == 'up'",
+            "condition": f"({has_top}) && ({has_bottom})",
             "components": {
-                "minecraft:collision_box": MINI_BOXES["floor"],
-                "minecraft:selection_box": MINI_BOXES["floor"],
+                "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
             }
         },
         {
-            "condition": "q.block_state('minecraft:block_face') == 'down'",
+            "condition": f"({has_top}) && !({has_bottom})",
             "components": {
-                "minecraft:collision_box": MINI_BOXES["ceiling"],
-                "minecraft:selection_box": MINI_BOXES["ceiling"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["north_bottom"],
-                "minecraft:selection_box": MINI_BOXES["north_bottom"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["north_top"],
-                "minecraft:selection_box": MINI_BOXES["north_top"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["south_bottom"],
-                "minecraft:selection_box": MINI_BOXES["south_bottom"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["south_top"],
-                "minecraft:selection_box": MINI_BOXES["south_top"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["west_bottom"],
-                "minecraft:selection_box": MINI_BOXES["west_bottom"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["west_top"],
-                "minecraft:selection_box": MINI_BOXES["west_top"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["east_bottom"],
-                "minecraft:selection_box": MINI_BOXES["east_bottom"],
-            }
-        },
-        {
-            "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
-            "components": {
-                "minecraft:collision_box": MINI_BOXES["east_top"],
-                "minecraft:selection_box": MINI_BOXES["east_top"],
+                "minecraft:collision_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+                "minecraft:selection_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
             }
         },
     ]
@@ -604,8 +553,8 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
             "explosion_resistance": hardness * 3,
         },
         "minecraft:light_dampening": 0,
-        "minecraft:collision_box": MINI_BOXES["floor"],
-        "minecraft:selection_box": MINI_BOXES["floor"],
+        "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+        "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
     }
 
     if sound == "wood":
@@ -619,6 +568,10 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
     elif tool_type == "pickaxe":
         components["minecraft:tags"] = ["minecraft:is_pickaxe_item_destructible"]
 
+    states = {
+        f"addon:slot_{i}": [False, True] for i in range(8)
+    }
+
     return {
         "format_version": BLOCK_FORMAT,
         "minecraft:block": {
@@ -628,15 +581,7 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
                     "category": "construction",
                     "group": "itemGroup.name.mini_block",
                 },
-                "traits": {
-                    "minecraft:placement_direction": {
-                        "enabled_states": ["minecraft:cardinal_direction"],
-                        "y_rotation_offset": 0,
-                    },
-                    "minecraft:placement_position": {
-                        "enabled_states": ["minecraft:block_face", "minecraft:vertical_half"],
-                    },
-                },
+                "states": states,
             },
             "components": components,
             "permutations": permutations,
@@ -757,7 +702,11 @@ with open(slab_map_path, "w") as f:
     for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
         sound_event = SOUND_EVENTS.get(sound, "use.stone")
         f.write(f'  "addon:mini_{slug}": "{sound_event}",\n')
-    f.write("};\n")
+    f.write("};\n\n")
+    f.write("export const MINI_BLOCK_IDS = new Set([\n")
+    for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS:
+        f.write(f'  "addon:mini_{slug}",\n')
+    f.write("]);\n")
 print(f"  wrote {os.path.relpath(slab_map_path, REPO)}")
 
 

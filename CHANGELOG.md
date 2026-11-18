@@ -166,6 +166,15 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v1.5.0 (Bedrock Port — Multi-Slot Sub-Block Placement & Touch Combining — 2026) ===
+* [Feature] 8-Octant Sub-Slot Geometry: Divided each mini block into an 8-sub-cube (2×2×2) octant grid filling the 16×16×16 coordinate space, with dedicated `slot_0` through `slot_7` bone definitions and fallback UI preview bone.
+* [Feature] Natural Touch Tap Placement: Integrated `faceLocation` tap coordinates from Bedrock `@minecraft/server`. Tapping any block surface on mobile touch controls or mouse directly places the mini block into the exact sub-slot targeted by the player's touch.
+* [Feature] Multi-Mini-Blocks in Single Space: Up to 8 mini blocks can now inhabit the same 1×1×1 block coordinate simultaneously. Tapping an open sub-slot adds to the cluster.
+* [Feature] 8-to-1 Full Vanilla Block Synthesis: Filling all 8 sub-slots of the same material automatically transforms into the full vanilla block (e.g. 8 Mini Dirt -> Vanilla Dirt).
+* [Feature] Survival Multi-Drop Conservation: Mining a multi-mini-block cluster in Survival mode drops all constituent mini blocks (refunding remaining N - 1 items via script).
+* [Feature] Adaptive Collision & Selection Boxes: Permutations dynamically adapt hitboxes based on whether bottom, top, or both layers are occupied.
+* [Session] Updated welcome greeting to v1.5.0.
+
 === v1.4.0 (Bedrock Port — Creative Catalogs, Placement & Reactivity Overhaul — 2026) ===
 * [Feature] Creative Inventory (+) Expandable Groups: Native integration with Bedrock Crafting Item Catalog (`crafting_item_catalog.json`). Wall Slabs, Mini Blocks, and Slabs now collapse into clean expandable (+) drawers within the Construction tab instead of cluttering the top-level menu.
 * [Feature] Mini Block Combining Parity: Tapping any placed mini block with a matching mini block in hand combines them into the full vanilla block (with authentic sound and inventory deduction), matching the 2:1 craft-combining mechanic. Sneaking allows placing adjacent mini blocks without combining.

@@ -3,7 +3,7 @@
 
 ```text
 // =========================================================================
-// Mini Blocks Mod v1.9 -> v1.4.0 by thejaustin
+// Mini Blocks Mod v1.9 -> v1.5.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
 // Originally created for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
 // Directional placement logic originally credited to androidKaghon.
@@ -57,6 +57,29 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **In-Game Auto-Updater**: The background Java thread and `AlertDialog.Builder` popup (`MiniBlocksVersion`) were adapted from community templates popularized by **Desno365** and **500ISE**, leveraging **Zhuowei Zhang**'s `net.zhuoweizhang.mcpelauncher.ScriptManager` to hot-reload scripts live.
 * **The 52-Block ID Workaround**: Because MCPE 0.10.x lacked rotation permutations, every wall slab required four separate global block IDs (e.g. Stone Wall Slabs consumed IDs 249, 248, 242, and 241, plus 192 for the full block), consuming over 52 IDs across the mod.
 * **Modern Bedrock Resolution**: All 52 legacy block IDs and recursive yaw calculations have been replaced with single unified identifiers using Bedrock cardinal placement direction traits and `@minecraft/server` scripting.
+
+---
+
+## Release Notes — v1.5.0 (Bedrock Edition)
+
+### Key Improvements
+
+#### Multi-Slot 8-Octant Sub-Block Tap Placement
+* **True Multi-Mini-Block Grid ($2 \times 2 \times 2$)**: A single 1×1×1 coordinate space can now contain up to **8 mini blocks** simultaneously, occupying distinct 8×8×8 octants:
+  * Slots 0..3: Bottom North-West, North-East, South-West, South-East.
+  * Slots 4..7: Top North-West, North-East, South-West, South-East.
+* **Natural Touch-Screen Tap Placement**:
+  * Utilizes Bedrock `@minecraft/server` `faceLocation` tap coordinates (`x, y, z` normalized from $0.0$ to $1.0$).
+  * Tapping any surface on mobile touch controls or mouse directly places the mini block into the specific quadrant/octant your finger tapped.
+  * When tapping an existing mini block space, tapping an open sub-slot fills that specific quadrant immediately.
+  * When tapping against an already-occupied sub-block face, it naturally steps into the adjacent sub-slot or neighbor block space along the tapped surface direction.
+* **8-to-1 Full Vanilla Block Synthesis**:
+  * As you place matching mini blocks into the same space, each sub-slot fills dynamically.
+  * When all 8 sub-slots of the same material are filled, the block automatically transforms into the full vanilla block (e.g. 8 Mini Dirt $\rightarrow$ 1 Vanilla Dirt, 8 Mini Cobblestone $\rightarrow$ 1 Vanilla Cobblestone).
+* **Survival Item Conservation & Multi-Drop**:
+  * When mining a cluster with $N$ mini blocks ($1 < N \le 8$) in Survival mode, the script refunds the remaining $N - 1$ mini blocks so all placed resources are fully conserved!
+* **Sub-Slot Obstruction Precision**:
+  * Collision obstruction checks operate at exact 8×8×8 sub-cube bounds with epsilon tolerances, allowing players to build mini block layers beneath their feet without being falsely blocked.
 
 ---
 

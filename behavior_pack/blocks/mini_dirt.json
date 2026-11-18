@@ -7,19 +7,39 @@
         "category": "construction",
         "group": "itemGroup.name.mini_block"
       },
-      "traits": {
-        "minecraft:placement_direction": {
-          "enabled_states": [
-            "minecraft:cardinal_direction"
-          ],
-          "y_rotation_offset": 0
-        },
-        "minecraft:placement_position": {
-          "enabled_states": [
-            "minecraft:block_face",
-            "minecraft:vertical_half"
-          ]
-        }
+      "states": {
+        "addon:slot_0": [
+          false,
+          true
+        ],
+        "addon:slot_1": [
+          false,
+          true
+        ],
+        "addon:slot_2": [
+          false,
+          true
+        ],
+        "addon:slot_3": [
+          false,
+          true
+        ],
+        "addon:slot_4": [
+          false,
+          true
+        ],
+        "addon:slot_5": [
+          false,
+          true
+        ],
+        "addon:slot_6": [
+          false,
+          true
+        ],
+        "addon:slot_7": [
+          false,
+          true
+        ]
       }
     },
     "components": {
@@ -34,16 +54,15 @@
       "minecraft:geometry": {
         "identifier": "geometry.mini_block",
         "bone_visibility": {
-          "bb_floor": "(q.block_state('minecraft:block_face') == 'up') || (!q.block_state('minecraft:block_face')) || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:block_face') != 'north' && q.block_state('minecraft:block_face') != 'south' && q.block_state('minecraft:block_face') != 'west' && q.block_state('minecraft:block_face') != 'east')",
-          "bb_ceiling": "q.block_state('minecraft:block_face') == 'down'",
-          "bb_north_bottom": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
-          "bb_north_top": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
-          "bb_south_bottom": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
-          "bb_south_top": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
-          "bb_west_bottom": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
-          "bb_west_top": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
-          "bb_east_bottom": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
-          "bb_east_top": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'"
+          "slot_0": "q.block_state('addon:slot_0') == 1",
+          "slot_1": "q.block_state('addon:slot_1') == 1",
+          "slot_2": "q.block_state('addon:slot_2') == 1",
+          "slot_3": "q.block_state('addon:slot_3') == 1",
+          "slot_4": "q.block_state('addon:slot_4') == 1",
+          "slot_5": "q.block_state('addon:slot_5') == 1",
+          "slot_6": "q.block_state('addon:slot_6') == 1",
+          "slot_7": "q.block_state('addon:slot_7') == 1",
+          "bb_ui": "!q.block_state('addon:slot_0') && !q.block_state('addon:slot_1') && !q.block_state('addon:slot_2') && !q.block_state('addon:slot_3') && !q.block_state('addon:slot_4') && !q.block_state('addon:slot_5') && !q.block_state('addon:slot_6') && !q.block_state('addon:slot_7')"
         }
       },
       "minecraft:destructible_by_mining": {
@@ -55,316 +74,84 @@
       "minecraft:light_dampening": 0,
       "minecraft:collision_box": {
         "origin": [
-          -4,
+          -8,
           0,
-          -4
+          -8
         ],
         "size": [
+          16,
           8,
-          8,
-          8
+          16
         ]
       },
       "minecraft:selection_box": {
         "origin": [
-          -4,
+          -8,
           0,
-          -4
+          -8
         ],
         "size": [
+          16,
           8,
-          8,
-          8
+          16
         ]
       }
     },
     "permutations": [
       {
-        "condition": "q.block_state('minecraft:block_face') == 'up'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              0,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              0,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'down'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              8,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              8,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') != 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              0,
-              0
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              0,
-              0
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              8,
-              0
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              8,
-              0
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') != 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              0,
-              -8
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              0,
-              -8
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -4,
-              8,
-              -8
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -4,
-              8,
-              -8
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') != 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              0,
-              0,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              0,
-              0,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              0,
-              8,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              0,
-              8,
-              -4
-            ],
-            "size": [
-              8,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') != 'top'",
+        "condition": "(q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')) && (q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3'))",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               -8,
               0,
-              -4
+              -8
             ],
             "size": [
-              8,
-              8,
-              8
+              16,
+              16,
+              16
             ]
           },
           "minecraft:selection_box": {
             "origin": [
               -8,
               0,
-              -4
+              -8
             ],
             "size": [
-              8,
-              8,
-              8
+              16,
+              16,
+              16
             ]
           }
         }
       },
       {
-        "condition": "q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "(q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')) && !(q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3'))",
         "components": {
           "minecraft:collision_box": {
             "origin": [
               -8,
               8,
-              -4
+              -8
             ],
             "size": [
+              16,
               8,
-              8,
-              8
+              16
             ]
           },
           "minecraft:selection_box": {
             "origin": [
               -8,
               8,
-              -4
+              -8
             ],
             "size": [
+              16,
               8,
-              8,
-              8
+              16
             ]
           }
         }
