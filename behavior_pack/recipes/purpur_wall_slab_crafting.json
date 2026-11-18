@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "addon:purpur_wall_slab_crafting"
@@ -8,15 +8,20 @@
       "crafting_table"
     ],
     "pattern": [
-      " # ",
-      " # ",
-      " # "
+      "#",
+      "#",
+      "#"
     ],
     "key": {
       "#": {
         "item": "minecraft:purpur_block"
       }
     },
+    "unlock": [
+      {
+        "item": "minecraft:purpur_block"
+      }
+    ],
     "result": {
       "item": "addon:purpur_wall_slab",
       "count": 6

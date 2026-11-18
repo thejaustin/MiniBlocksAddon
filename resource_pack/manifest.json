@@ -1,18 +1,30 @@
 {
     "format_version": 2,
     "header": {
-        "description": "MiniBlocks Addon Resources",
-        "name": "MiniBlocksAddon Resources",
-        "uuid": "dcb30d8d-9ac8-4c34-bf67-49f3419aceb3",
-        "version": [1, 0, 0],
-        "min_engine_version": [ 1, 21, 111 ]
+        "description": "Textures, models, and audio for wall slabs and mini blocks! The official Bedrock successor to the classic MCPE Mini Blocks Mod.",
+        "name": "Mini Blocks Add-on (Resources)",
+        "uuid": "6bebf210-8216-4843-ba96-48427670f091",
+        "version": [
+            1,
+            5,
+            1
+        ],
+        "min_engine_version": [
+            1,
+            21,
+            0
+        ]
     },
     "modules": [
         {
             "description": "MiniBlocks Addon Resources",
             "type": "resources",
-            "uuid": "ae0492e9-b3f2-47db-b611-0cec4be4f801",
-            "version": [1, 0, 0]
+            "uuid": "7d3de432-34e2-4296-89a8-8e8387bf9aa0",
+            "version": [
+                1,
+                5,
+                1
+            ]
         }
     ]
 }

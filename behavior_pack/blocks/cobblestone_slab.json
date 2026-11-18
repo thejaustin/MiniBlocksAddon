@@ -5,24 +5,29 @@
       "identifier": "addon:cobblestone_slab",
       "menu_category": {
         "category": "construction",
-        "group": "itemGroup.name.construction"
+        "group": "minecraft:itemGroup.name.slab"
       }
     },
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "cobblestone",
-          "render_method": "opaque"
+          "texture": "miniblocks_cobblestone",
+          "render_method": "opaque",
+          "ambient_occlusion": 1.0,
+          "face_dimming": true
         }
       },
       "minecraft:geometry": "geometry.slab",
-      "minecraft:loot": "self",
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 2.0
       },
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 6.0
       },
+      "minecraft:light_dampening": 0,
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible"
+      ],
       "minecraft:collision_box": {
         "origin": [
           -8,

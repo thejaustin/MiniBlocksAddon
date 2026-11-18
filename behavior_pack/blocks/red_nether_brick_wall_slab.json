@@ -5,52 +5,50 @@
       "identifier": "addon:red_nether_brick_wall_slab",
       "menu_category": {
         "category": "construction",
-        "group": "itemGroup.name.construction"
+        "group": "minecraft:itemGroup.name.slab"
+      },
+      "traits": {
+        "minecraft:placement_direction": {
+          "enabled_states": [
+            "minecraft:cardinal_direction"
+          ],
+          "y_rotation_offset": 0
+        }
       }
     },
     "components": {
-      "minecraft:placement_direction": {
-        "enabled_states": [
-          "minecraft:cardinal_direction"
-        ],
-        "y_rotation_offset": 0
-      },
       "minecraft:material_instances": {
         "*": {
-          "texture": "red_nether_brick",
-          "render_method": "opaque"
+          "texture": "miniblocks_red_nether_brick",
+          "render_method": "opaque",
+          "ambient_occlusion": 1.0,
+          "face_dimming": true
         }
       },
       "minecraft:geometry": {
         "identifier": "geometry.wall_slab",
         "bone_visibility": {
-          "north": true,
-          "south": false,
-          "east": false,
-          "west": false
+          "north": "(q.block_state('minecraft:cardinal_direction') == 'north') || (q.block_state('minecraft:cardinal_direction') != 'south' && q.block_state('minecraft:cardinal_direction') != 'east' && q.block_state('minecraft:cardinal_direction') != 'west')",
+          "south": "q.block_state('minecraft:cardinal_direction') == 'south'",
+          "east": "q.block_state('minecraft:cardinal_direction') == 'east'",
+          "west": "q.block_state('minecraft:cardinal_direction') == 'west'"
         }
       },
-      "minecraft:loot": "self",
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 2.0
       },
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 6.0
-      }
+      },
+      "minecraft:light_dampening": 0,
+      "minecraft:tags": [
+        "minecraft:is_pickaxe_item_destructible"
+      ]
     },
     "permutations": [
       {
         "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
         "components": {
-          "minecraft:geometry": {
-            "identifier": "geometry.wall_slab",
-            "bone_visibility": {
-              "north": true,
-              "south": false,
-              "east": false,
-              "west": false
-            }
-          },
           "minecraft:collision_box": {
             "origin": [
               -8,
@@ -80,15 +78,6 @@
       {
         "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
         "components": {
-          "minecraft:geometry": {
-            "identifier": "geometry.wall_slab",
-            "bone_visibility": {
-              "north": false,
-              "south": true,
-              "east": false,
-              "west": false
-            }
-          },
           "minecraft:collision_box": {
             "origin": [
               -8,
@@ -118,15 +107,6 @@
       {
         "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
         "components": {
-          "minecraft:geometry": {
-            "identifier": "geometry.wall_slab",
-            "bone_visibility": {
-              "north": false,
-              "south": false,
-              "east": true,
-              "west": false
-            }
-          },
           "minecraft:collision_box": {
             "origin": [
               0,
@@ -156,15 +136,6 @@
       {
         "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
         "components": {
-          "minecraft:geometry": {
-            "identifier": "geometry.wall_slab",
-            "bone_visibility": {
-              "north": false,
-              "south": false,
-              "east": false,
-              "west": true
-            }
-          },
           "minecraft:collision_box": {
             "origin": [
               -8,

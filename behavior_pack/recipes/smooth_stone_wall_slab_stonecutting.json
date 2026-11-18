@@ -1,15 +1,23 @@
 {
-  "format_version": "1.21.0",
-  "minecraft:recipe_stonecutting": {
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
     "description": {
       "identifier": "addon:smooth_stone_wall_slab_stonecutting"
     },
     "tags": [
       "stonecutter"
     ],
-    "input": {
-      "item": "minecraft:smooth_stone"
-    },
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:smooth_stone"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:smooth_stone"
+      }
+    ],
     "result": {
       "item": "addon:smooth_stone_wall_slab",
       "count": 2

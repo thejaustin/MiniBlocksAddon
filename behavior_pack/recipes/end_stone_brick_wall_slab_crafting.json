@@ -1,5 +1,5 @@
 {
-  "format_version": "1.21.0",
+  "format_version": "1.20.10",
   "minecraft:recipe_shaped": {
     "description": {
       "identifier": "addon:end_stone_brick_wall_slab_crafting"
@@ -8,15 +8,20 @@
       "crafting_table"
     ],
     "pattern": [
-      " # ",
-      " # ",
-      " # "
+      "#",
+      "#",
+      "#"
     ],
     "key": {
       "#": {
         "item": "minecraft:end_bricks"
       }
     },
+    "unlock": [
+      {
+        "item": "minecraft:end_bricks"
+      }
+    ],
     "result": {
       "item": "addon:end_stone_brick_wall_slab",
       "count": 6
