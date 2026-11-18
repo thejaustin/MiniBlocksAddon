@@ -166,6 +166,13 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v1.5.1 (Bedrock Port — Launch Crash Fix & Bulletproof Schema Parity — 2026) ===
+* [Fix] Launch Crash Resolution: Fixed startup crash on Minecraft Bedrock by strictly adhering to valid vanilla creative item groups (minecraft:itemGroup.name.slab for wall slabs; top-level category registration without custom item groups for mini blocks).
+* [Fix] Custom States & Permutations: Removed unmapped block states without permutations from block definitions to guarantee 100% schema compliance across all Bedrock engine releases.
+* [Fix] Standardized Geometry Schemas: Realigned block model geometry format versions to stable 1.12.0 format.
+* [Feature] Bulletproof Touch Combining: Direct tap combining for both wall slabs and mini blocks into full vanilla blocks via robust Script API event handling.
+* [Session] Fresh UUIDs across manifests and updated in-game welcome message to v1.5.1.
+
 === v1.5.0 (Bedrock Port — Multi-Slot Sub-Block Placement & Touch Combining — 2026) ===
 * [Fix] Launch Crash Resolution: Fixed unhandled startup crash on stable Bedrock by normalizing block schema format_version from experimental "1.26.20" to stable "1.21.0", restoring min_engine_version to [1, 21, 0], removing experimental crafting_item_catalog.json (unsupported in <1.21.60), and issuing fresh pack UUIDs to bust corrupted engine cache.
 * [Fix] Canonical Molang State Queries: Standardized bone visibility queries to strict `query.block_state('...') == true / false`, eliminating parser faults.

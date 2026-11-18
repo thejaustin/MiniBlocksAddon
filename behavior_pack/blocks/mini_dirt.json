@@ -4,42 +4,7 @@
     "description": {
       "identifier": "addon:mini_dirt",
       "menu_category": {
-        "category": "construction",
-        "group": "itemGroup.name.mini_block"
-      },
-      "states": {
-        "addon:slot_0": [
-          false,
-          true
-        ],
-        "addon:slot_1": [
-          false,
-          true
-        ],
-        "addon:slot_2": [
-          false,
-          true
-        ],
-        "addon:slot_3": [
-          false,
-          true
-        ],
-        "addon:slot_4": [
-          false,
-          true
-        ],
-        "addon:slot_5": [
-          false,
-          true
-        ],
-        "addon:slot_6": [
-          false,
-          true
-        ],
-        "addon:slot_7": [
-          false,
-          true
-        ]
+        "category": "construction"
       }
     },
     "components": {
@@ -51,20 +16,7 @@
           "face_dimming": true
         }
       },
-      "minecraft:geometry": {
-        "identifier": "geometry.mini_block",
-        "bone_visibility": {
-          "slot_0": "query.block_state('addon:slot_0') == true",
-          "slot_1": "query.block_state('addon:slot_1') == true",
-          "slot_2": "query.block_state('addon:slot_2') == true",
-          "slot_3": "query.block_state('addon:slot_3') == true",
-          "slot_4": "query.block_state('addon:slot_4') == true",
-          "slot_5": "query.block_state('addon:slot_5') == true",
-          "slot_6": "query.block_state('addon:slot_6') == true",
-          "slot_7": "query.block_state('addon:slot_7') == true",
-          "bb_ui": "query.block_state('addon:slot_0') == false && query.block_state('addon:slot_1') == false && query.block_state('addon:slot_2') == false && query.block_state('addon:slot_3') == false && query.block_state('addon:slot_4') == false && query.block_state('addon:slot_5') == false && query.block_state('addon:slot_6') == false && query.block_state('addon:slot_7') == false"
-        }
-      },
+      "minecraft:geometry": "geometry.mini_block",
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 0.5
       },
@@ -74,26 +26,26 @@
       "minecraft:light_dampening": 0,
       "minecraft:collision_box": {
         "origin": [
-          -8,
+          -4,
           0,
-          -8
+          -4
         ],
         "size": [
-          16,
           8,
-          16
+          8,
+          8
         ]
       },
       "minecraft:selection_box": {
         "origin": [
-          -8,
+          -4,
           0,
-          -8
+          -4
         ],
         "size": [
-          16,
-          16,
-          16
+          8,
+          8,
+          8
         ]
       }
     }

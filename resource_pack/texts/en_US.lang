@@ -3,10 +3,6 @@
 pack.name=MiniBlocks Addon
 pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.
 
-## Creative Item Groups
-itemGroup.name.wall_slab=Wall Slabs
-itemGroup.name.mini_block=Mini Blocks
-
 tile.addon:cobblestone_slab.name=Cobblestone Slab
 
 ## Mini Blocks

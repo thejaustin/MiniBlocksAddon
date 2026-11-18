@@ -5,7 +5,7 @@
       "identifier": "addon:mossy_cobblestone_wall_slab",
       "menu_category": {
         "category": "construction",
-        "group": "itemGroup.name.wall_slab"
+        "group": "minecraft:itemGroup.name.slab"
       },
       "traits": {
         "minecraft:placement_direction": {

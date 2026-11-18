@@ -257,7 +257,7 @@ def make_geo():
 def make_slab_geo():
     """Floor slab geometry with per-face UV mapping for 16×16 tile textures."""
     return {
-        "format_version": "1.21.0",
+        "format_version": "1.12.0",
         "minecraft:geometry": [{
             "description": {
                 "identifier": "geometry.slab",
@@ -287,73 +287,9 @@ def make_slab_geo():
     }
 
 def make_mini_block_geo():
-    """8-sub-cube (2×2×2 octant) mini block geometry + centered UI/hand preview bone."""
-    uv_full = {
-        "north": uv(0, 0, 16, 16),
-        "south": uv(0, 0, 16, 16),
-        "east":  uv(0, 0, 16, 16),
-        "west":  uv(0, 0, 16, 16),
-        "up":    uv(0, 0, 16, 16),
-        "down":  uv(0, 0, 16, 16),
-    }
-    bones = [
-        # Slot 0: Bottom North-West (-X, -Y, -Z)
-        {
-            "name": "slot_0",
-            "pivot": [-4, 4, -4],
-            "cubes": [{"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 1: Bottom North-East (+X, -Y, -Z)
-        {
-            "name": "slot_1",
-            "pivot": [4, 4, -4],
-            "cubes": [{"origin": [0, 0, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 2: Bottom South-West (-X, -Y, +Z)
-        {
-            "name": "slot_2",
-            "pivot": [-4, 4, 4],
-            "cubes": [{"origin": [-8, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 3: Bottom South-East (+X, -Y, +Z)
-        {
-            "name": "slot_3",
-            "pivot": [4, 4, 4],
-            "cubes": [{"origin": [0, 0, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 4: Top North-West (-X, +Y, -Z)
-        {
-            "name": "slot_4",
-            "pivot": [-4, 12, -4],
-            "cubes": [{"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 5: Top North-East (+X, +Y, -Z)
-        {
-            "name": "slot_5",
-            "pivot": [4, 12, -4],
-            "cubes": [{"origin": [0, 8, -8], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 6: Top South-West (-X, +Y, +Z)
-        {
-            "name": "slot_6",
-            "pivot": [-4, 12, 4],
-            "cubes": [{"origin": [-8, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Slot 7: Top South-East (+X, +Y, +Z)
-        {
-            "name": "slot_7",
-            "pivot": [4, 12, 4],
-            "cubes": [{"origin": [0, 8, 0], "size": [8, 8, 8], "uv": uv_full}],
-        },
-        # Fallback centered preview for UI / hand
-        {
-            "name": "bb_ui",
-            "pivot": [0, 0, 0],
-            "cubes": [{"origin": [-4, 0, -4], "size": [8, 8, 8], "uv": uv_full}],
-        },
-    ]
+    """Clean 8×8×8 mini block geometry centered on the floor."""
     return {
-        "format_version": "1.21.0",
+        "format_version": "1.12.0",
         "minecraft:geometry": [{
             "description": {
                 "identifier": "geometry.mini_block",
@@ -363,7 +299,13 @@ def make_mini_block_geo():
                 "visible_bounds_height": 1,
                 "visible_bounds_offset": [0, 0, 0],
             },
-            "bones": bones,
+            "bones": [{
+                "name": "bb_main",
+                "pivot": [0, 0, 0],
+                "cubes": [
+                    {"origin": [-4, 0, -4], "size": [8, 8, 8], "uv": [0, 0]}
+                ],
+            }],
         }],
     }
 
@@ -442,7 +384,7 @@ def make_wall_slab_block(name, hardness, sound):
                 "identifier": identifier,
                 "menu_category": {
                     "category": "construction",
-                    "group": "itemGroup.name.wall_slab",
+                    "group": "minecraft:itemGroup.name.slab",
                 },
                 "traits": {
                     "minecraft:placement_direction": {
@@ -495,23 +437,11 @@ floor_slab = {
 write_json(os.path.join(BP, "blocks/cobblestone_slab.json"), floor_slab)
 
 
-# ── 4. Mini Blocks (8×8×8 cube with multi-surface attachment) ───────────────
+# ── 4. Mini Blocks (8×8×8 standalone cube) ───────────────────────────────────
 
 def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed, tool_type):
     identifier = f"addon:mini_{slug}"
     render_method = "alpha_test" if slug == "glass" else "opaque"
-
-    bone_visibility = {
-        "slot_0": "query.block_state('addon:slot_0') == true",
-        "slot_1": "query.block_state('addon:slot_1') == true",
-        "slot_2": "query.block_state('addon:slot_2') == true",
-        "slot_3": "query.block_state('addon:slot_3') == true",
-        "slot_4": "query.block_state('addon:slot_4') == true",
-        "slot_5": "query.block_state('addon:slot_5') == true",
-        "slot_6": "query.block_state('addon:slot_6') == true",
-        "slot_7": "query.block_state('addon:slot_7') == true",
-        "bb_ui":  "query.block_state('addon:slot_0') == false && query.block_state('addon:slot_1') == false && query.block_state('addon:slot_2') == false && query.block_state('addon:slot_3') == false && query.block_state('addon:slot_4') == false && query.block_state('addon:slot_5') == false && query.block_state('addon:slot_6') == false && query.block_state('addon:slot_7') == false",
-    }
 
     components = {
         "minecraft:material_instances": {
@@ -522,10 +452,7 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
                 "face_dimming": slug != "glass",
             }
         },
-        "minecraft:geometry": {
-            "identifier": "geometry.mini_block",
-            "bone_visibility": bone_visibility,
-        },
+        "minecraft:geometry": "geometry.mini_block",
         "minecraft:destructible_by_mining": {
             "seconds_to_destroy": hardness,
         },
@@ -533,8 +460,8 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
             "explosion_resistance": hardness * 3,
         },
         "minecraft:light_dampening": 0,
-        "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
-        "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+        "minecraft:collision_box": {"origin": [-4, 0, -4], "size": [8, 8, 8]},
+        "minecraft:selection_box": {"origin": [-4, 0, -4], "size": [8, 8, 8]},
     }
 
     if sound == "wood":
@@ -548,20 +475,14 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
     elif tool_type == "pickaxe":
         components["minecraft:tags"] = ["minecraft:is_pickaxe_item_destructible"]
 
-    states = {
-        f"addon:slot_{i}": [False, True] for i in range(8)
-    }
-
     return {
         "format_version": BLOCK_FORMAT,
         "minecraft:block": {
             "description": {
                 "identifier": identifier,
                 "menu_category": {
-                    "category": "construction",
-                    "group": "itemGroup.name.mini_block",
+                    "category": category,
                 },
-                "states": states,
             },
             "components": components,
         }
@@ -752,10 +673,6 @@ lang_entries = [
     "",
     "pack.name=MiniBlocks Addon",
     "pack.description=Adds wall slabs and mini blocks to Bedrock Edition. Successor to the classic MCPE Mini Blocks Mod.",
-    "",
-    "## Creative Item Groups",
-    "itemGroup.name.wall_slab=Wall Slabs",
-    "itemGroup.name.mini_block=Mini Blocks",
     "",
     "tile.addon:cobblestone_slab.name=Cobblestone Slab",
     "",
