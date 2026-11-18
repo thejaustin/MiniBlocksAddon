@@ -167,12 +167,13 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 
 ```text
 === v1.5.0 (Bedrock Port — Multi-Slot Sub-Block Placement & Touch Combining — 2026) ===
+* [Fix] Launch Crash Resolution: Fixed unhandled startup crash on stable Bedrock by normalizing block schema format_version from experimental "1.26.20" to stable "1.21.0", restoring min_engine_version to [1, 21, 0], removing experimental crafting_item_catalog.json (unsupported in <1.21.60), and issuing fresh pack UUIDs to bust corrupted engine cache.
+* [Fix] Canonical Molang State Queries: Standardized bone visibility queries to strict `query.block_state('...') == true / false`, eliminating parser faults.
 * [Feature] 8-Octant Sub-Slot Geometry: Divided each mini block into an 8-sub-cube (2×2×2) octant grid filling the 16×16×16 coordinate space, with dedicated `slot_0` through `slot_7` bone definitions and fallback UI preview bone.
 * [Feature] Natural Touch Tap Placement: Integrated `faceLocation` tap coordinates from Bedrock `@minecraft/server`. Tapping any block surface on mobile touch controls or mouse directly places the mini block into the exact sub-slot targeted by the player's touch.
 * [Feature] Multi-Mini-Blocks in Single Space: Up to 8 mini blocks can now inhabit the same 1×1×1 block coordinate simultaneously. Tapping an open sub-slot adds to the cluster.
 * [Feature] 8-to-1 Full Vanilla Block Synthesis: Filling all 8 sub-slots of the same material automatically transforms into the full vanilla block (e.g. 8 Mini Dirt -> Vanilla Dirt).
 * [Feature] Survival Multi-Drop Conservation: Mining a multi-mini-block cluster in Survival mode drops all constituent mini blocks (refunding remaining N - 1 items via script).
-* [Feature] Adaptive Collision & Selection Boxes: Permutations dynamically adapt hitboxes based on whether bottom, top, or both layers are occupied.
 * [Session] Updated welcome greeting to v1.5.0.
 
 === v1.4.0 (Bedrock Port — Creative Catalogs, Placement & Reactivity Overhaul — 2026) ===

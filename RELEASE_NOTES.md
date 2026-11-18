@@ -44,6 +44,13 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 
 ## What's New in v1.5.0
 
+### Launch Crash Resolution & Engine Compatibility
+* **Stable Format Version (`1.21.0`)**: Normalized all block schema definitions from experimental `"1.26.20"` down to stable `"1.21.0"`, eliminating startup schema parser crashes on Bedrock 1.21 releases.
+* **Engine Version Realignment**: Restored `min_engine_version` to `[1, 21, 0]` in both behavior and resource manifests to match stable Bedrock app installations.
+* **Experimental Catalog Removal**: Removed preview-only `crafting_item_catalog.json` (format `1.21.60`) that caused startup crashes on stable releases, relying on native, proven `menu_category` block definitions.
+* **Fresh UUID Cache-Busting**: Generated fresh UUIDs across all pack headers and modules to ensure Minecraft cleanly reloads the add-on without stale or corrupted cache data.
+* **Canonical Molang Syntax**: Standardized Molang bone visibility conditions to strict `query.block_state('...') == true / false`, avoiding parser faults.
+
 ### Multi-Slot 8-Octant Sub-Block Tap Placement
 * **True Multi-Mini-Block Grid ($2 \times 2 \times 2$)**: A single coordinate space now holds up to 8 independent mini blocks across distinct 8×8×8 octants (slots 0..7).
 * **Natural Touch-Screen Tap Placement**:

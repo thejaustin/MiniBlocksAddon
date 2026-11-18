@@ -64,6 +64,12 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 
 ### Key Improvements
 
+#### Launch Crash Fix & Engine Realignment
+* **Stable Block Schema (`1.21.0`)**: Normalized all block schema definitions from experimental `"1.26.20"` down to stable `"1.21.0"`, eliminating startup schema parser crashes on Bedrock 1.21 releases.
+* **Engine Version Realignment**: Restored `min_engine_version` to `[1, 21, 0]` across behavior and resource manifests.
+* **Experimental Catalog Removal**: Removed preview-only `crafting_item_catalog.json` (format `1.21.60`) that caused startup crashes on stable releases, relying on native, proven `menu_category` block definitions.
+* **Fresh UUID Cache-Busting**: Generated fresh UUIDs across all pack headers and modules to ensure Minecraft cleanly reloads the add-on without stale or corrupted cache data.
+
 #### Multi-Slot 8-Octant Sub-Block Tap Placement
 * **True Multi-Mini-Block Grid ($2 \times 2 \times 2$)**: A single 1×1×1 coordinate space can now contain up to **8 mini blocks** simultaneously, occupying distinct 8×8×8 octants:
   * Slots 0..3: Bottom North-West, North-East, South-West, South-East.

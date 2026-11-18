@@ -3,7 +3,7 @@
     "header": {
         "description": "Wall slabs, mini blocks, and combining mechanics! The official Bedrock successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Behaviors)",
-        "uuid": "4358b8ea-bcf8-4970-a14e-831a737a0f45",
+        "uuid": "43e1791a-4ad9-478f-a966-7dd98b723b79",
         "version": [
             1,
             5,
@@ -11,15 +11,15 @@
         ],
         "min_engine_version": [
             1,
-            26,
-            20
+            21,
+            0
         ]
     },
     "modules": [
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
-            "uuid": "d9c02015-c6aa-4641-a5c6-5c1c2767babc",
+            "uuid": "6cac1bf7-743f-4df3-8c1c-7e516a716a13",
             "version": [
                 1,
                 5,
@@ -30,7 +30,7 @@
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "6cf058f8-115c-41af-9d49-7ccadb991cde",
+            "uuid": "1fedb301-9687-4423-93ce-ba477361e061",
             "version": [
                 1,
                 5,
@@ -41,7 +41,7 @@
     ],
     "dependencies": [
         {
-            "uuid": "c3a90400-927a-4de9-804a-a15cd467e9b5",
+            "uuid": "ee8fc131-d989-4c0b-b724-f102bbd6a988",
             "version": [
                 1,
                 5,

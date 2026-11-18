@@ -1,5 +1,5 @@
 {
-  "format_version": "1.26.20",
+  "format_version": "1.21.0",
   "minecraft:block": {
     "description": {
       "identifier": "addon:mini_cobblestone",
@@ -54,15 +54,15 @@
       "minecraft:geometry": {
         "identifier": "geometry.mini_block",
         "bone_visibility": {
-          "slot_0": "q.block_state('addon:slot_0') == 1",
-          "slot_1": "q.block_state('addon:slot_1') == 1",
-          "slot_2": "q.block_state('addon:slot_2') == 1",
-          "slot_3": "q.block_state('addon:slot_3') == 1",
-          "slot_4": "q.block_state('addon:slot_4') == 1",
-          "slot_5": "q.block_state('addon:slot_5') == 1",
-          "slot_6": "q.block_state('addon:slot_6') == 1",
-          "slot_7": "q.block_state('addon:slot_7') == 1",
-          "bb_ui": "!q.block_state('addon:slot_0') && !q.block_state('addon:slot_1') && !q.block_state('addon:slot_2') && !q.block_state('addon:slot_3') && !q.block_state('addon:slot_4') && !q.block_state('addon:slot_5') && !q.block_state('addon:slot_6') && !q.block_state('addon:slot_7')"
+          "slot_0": "query.block_state('addon:slot_0') == true",
+          "slot_1": "query.block_state('addon:slot_1') == true",
+          "slot_2": "query.block_state('addon:slot_2') == true",
+          "slot_3": "query.block_state('addon:slot_3') == true",
+          "slot_4": "query.block_state('addon:slot_4') == true",
+          "slot_5": "query.block_state('addon:slot_5') == true",
+          "slot_6": "query.block_state('addon:slot_6') == true",
+          "slot_7": "query.block_state('addon:slot_7') == true",
+          "bb_ui": "query.block_state('addon:slot_0') == false && query.block_state('addon:slot_1') == false && query.block_state('addon:slot_2') == false && query.block_state('addon:slot_3') == false && query.block_state('addon:slot_4') == false && query.block_state('addon:slot_5') == false && query.block_state('addon:slot_6') == false && query.block_state('addon:slot_7') == false"
         }
       },
       "minecraft:destructible_by_mining": {
@@ -92,73 +92,13 @@
         ],
         "size": [
           16,
-          8,
+          16,
           16
         ]
       },
       "minecraft:tags": [
         "minecraft:is_pickaxe_item_destructible"
       ]
-    },
-    "permutations": [
-      {
-        "condition": "(q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')) && (q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3'))",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -8,
-              0,
-              -8
-            ],
-            "size": [
-              16,
-              16,
-              16
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -8,
-              0,
-              -8
-            ],
-            "size": [
-              16,
-              16,
-              16
-            ]
-          }
-        }
-      },
-      {
-        "condition": "(q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')) && !(q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3'))",
-        "components": {
-          "minecraft:collision_box": {
-            "origin": [
-              -8,
-              8,
-              -8
-            ],
-            "size": [
-              16,
-              8,
-              16
-            ]
-          },
-          "minecraft:selection_box": {
-            "origin": [
-              -8,
-              8,
-              -8
-            ],
-            "size": [
-              16,
-              8,
-              16
-            ]
-          }
-        }
-      }
-    ]
+    }
   }
 }

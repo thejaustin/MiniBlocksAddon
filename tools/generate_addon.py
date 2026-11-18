@@ -12,8 +12,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BP = os.path.join(REPO, "behavior_pack")
 RP = os.path.join(REPO, "resource_pack")
 
-BLOCK_FORMAT = "1.26.20"   # latest block schema in bedrock-samples v1.26.50
-RECIPE_FORMAT = "1.20.10"  # matches vanilla recipes in 26.50
+BLOCK_FORMAT = "1.21.0"   # standard stable 1.21 block schema
+RECIPE_FORMAT = "1.20.10"  # matches vanilla recipes in 1.21
 TEX_PREFIX = "miniblocks_" # terrain_texture keys share a namespace with vanilla
 
 # (name_slug, source_item, hardness, stone_cutter, sound)
@@ -502,36 +502,16 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
     render_method = "alpha_test" if slug == "glass" else "opaque"
 
     bone_visibility = {
-        "slot_0": "q.block_state('addon:slot_0') == 1",
-        "slot_1": "q.block_state('addon:slot_1') == 1",
-        "slot_2": "q.block_state('addon:slot_2') == 1",
-        "slot_3": "q.block_state('addon:slot_3') == 1",
-        "slot_4": "q.block_state('addon:slot_4') == 1",
-        "slot_5": "q.block_state('addon:slot_5') == 1",
-        "slot_6": "q.block_state('addon:slot_6') == 1",
-        "slot_7": "q.block_state('addon:slot_7') == 1",
-        "bb_ui":  "!q.block_state('addon:slot_0') && !q.block_state('addon:slot_1') && !q.block_state('addon:slot_2') && !q.block_state('addon:slot_3') && !q.block_state('addon:slot_4') && !q.block_state('addon:slot_5') && !q.block_state('addon:slot_6') && !q.block_state('addon:slot_7')",
+        "slot_0": "query.block_state('addon:slot_0') == true",
+        "slot_1": "query.block_state('addon:slot_1') == true",
+        "slot_2": "query.block_state('addon:slot_2') == true",
+        "slot_3": "query.block_state('addon:slot_3') == true",
+        "slot_4": "query.block_state('addon:slot_4') == true",
+        "slot_5": "query.block_state('addon:slot_5') == true",
+        "slot_6": "query.block_state('addon:slot_6') == true",
+        "slot_7": "query.block_state('addon:slot_7') == true",
+        "bb_ui":  "query.block_state('addon:slot_0') == false && query.block_state('addon:slot_1') == false && query.block_state('addon:slot_2') == false && query.block_state('addon:slot_3') == false && query.block_state('addon:slot_4') == false && query.block_state('addon:slot_5') == false && query.block_state('addon:slot_6') == false && query.block_state('addon:slot_7') == false",
     }
-
-    has_bottom = "q.block_state('addon:slot_0') || q.block_state('addon:slot_1') || q.block_state('addon:slot_2') || q.block_state('addon:slot_3')"
-    has_top    = "q.block_state('addon:slot_4') || q.block_state('addon:slot_5') || q.block_state('addon:slot_6') || q.block_state('addon:slot_7')"
-
-    permutations = [
-        {
-            "condition": f"({has_top}) && ({has_bottom})",
-            "components": {
-                "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
-                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
-            }
-        },
-        {
-            "condition": f"({has_top}) && !({has_bottom})",
-            "components": {
-                "minecraft:collision_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
-                "minecraft:selection_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
-            }
-        },
-    ]
 
     components = {
         "minecraft:material_instances": {
@@ -554,7 +534,7 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
         },
         "minecraft:light_dampening": 0,
         "minecraft:collision_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
-        "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+        "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
     }
 
     if sound == "wood":
@@ -584,7 +564,6 @@ def make_mini_block(slug, source, hardness, sound, category, stonecutter_allowed
                 "states": states,
             },
             "components": components,
-            "permutations": permutations,
         }
     }
 
@@ -710,50 +689,7 @@ with open(slab_map_path, "w") as f:
 print(f"  wrote {os.path.relpath(slab_map_path, REPO)}")
 
 
-# ── 9. Crafting Item Catalog (Creative Menu (+) Grouping) ───────────────────
-
-wall_slab_ids = [f"addon:{name}_wall_slab" for name, source, hardness, stone_cut, sound in WALL_SLABS]
-mini_block_ids = [f"addon:mini_{slug}" for slug, source, hardness, sound, category, stone_cut, tool_type in MINI_BLOCKS]
-
-catalog_data = {
-    "format_version": "1.21.60",
-    "minecraft:crafting_items_catalog": {
-        "categories": [
-            {
-                "category_name": "construction",
-                "groups": [
-                    {
-                        "group_identifier": {
-                            "icon": "addon:oak_wall_slab",
-                            "name": "itemGroup.name.wall_slab",
-                        },
-                        "items": wall_slab_ids,
-                    },
-                    {
-                        "group_identifier": {
-                            "icon": "addon:mini_dirt",
-                            "name": "itemGroup.name.mini_block",
-                        },
-                        "items": mini_block_ids,
-                    },
-                    {
-                        "group_identifier": {
-                            "icon": "minecraft:stone_slab",
-                            "name": "minecraft:itemGroup.name.slab",
-                        },
-                        "items": [
-                            "addon:cobblestone_slab",
-                        ],
-                    },
-                ],
-            },
-        ],
-    },
-}
-write_json(os.path.join(BP, "item_catalog/crafting_item_catalog.json"), catalog_data)
-
-
-# ── 10. Lang file & languages.json ──────────────────────────────────────────
+# ── 9. Lang file & languages.json ──────────────────────────────────────────
 
 DISPLAY_NAMES = {
     "andesite":            "Andesite Wall Slab",
