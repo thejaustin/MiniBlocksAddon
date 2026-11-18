@@ -113,13 +113,6 @@ function tryMerge(player, targetBlock, slabTypeId) {
     } catch {
       // Sound playback fail-safe
     }
-
-    // Reactive visual feedback: sparkle burst upon successful combine
-    try {
-      dimension.spawnParticle("minecraft:villager_happy", soundLoc);
-    } catch {
-      // Particle playback fail-safe
-    }
   });
 
   return true;

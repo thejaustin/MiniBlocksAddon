@@ -82,8 +82,7 @@ Looking at the original `miniblocks_v1.9.bin` script reflects an authentic snaps
 * **Ground-Level Placement Fix**: Enabled `minecraft:vertical_half` on `minecraft:placement_position`. Clicking the lower half of an adjacent block keeps the mini block grounded on the floor (Y: 0..8) rather than forcing awkward mid-air positioning (Y: 4..12). Clicking the upper half mounts it at Y: 8..16.
 * **10-Bone Multi-Surface Geometry**: Expanded `geometry.mini_block` and block permutations to support floors, ceilings, and bottom/top halves of all four walls with matching hitboxes.
 
-#### Reactivity, Lighting & Sound Polish
-* **Visual Reactivity & Particles**: Successful combining triggers emerald sparkle particles (`minecraft:villager_happy`) bursting at block center for instant visual feedback.
+#### Lighting, Sound & Combining Polish
 * **Organic Sound Variation**: Added natural pitch modulation (`pitch: 0.9..1.1`) so placement and merging sound dynamic rather than monotonous.
 * **Audio Fixes**: Mapped glass merging to glass shattering audio (`random.glass`), mapped Mini Dirt to vanilla `dirt` sounds.
 * **Smooth Contact Lighting**: Enabled `ambient_occlusion: 1.0` and `face_dimming: true` on opaque blocks to render soft contact shadows and directional sunlight shading, while preserving transparent glass clarity.
