@@ -28,3 +28,12 @@ The project is organized into two main parts: a resource pack and a behavior pac
 3.  **Activate:** In your Minecraft world settings, activate both the "MiniBlocksAddon Resources" and "MiniBlocksAddon Behaviors" packs. The behavior pack should be applied to the world, and the resource pack should be active for players.
 
 Enjoy your mini blocks!
+
+## Credits and License
+
+This add-on is a Bedrock version of the Mini Blocks mod, originally built for Minecraft PE with ModPE.
+
+The original Mini Blocks mod by [thejaustin](https://github.com/thejaustin) is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).
+The original work is available at [thejaustin/ModPE](https://github.com/thejaustin/ModPE/blob/master/Mini%20Blocks%20Mod).
+
+The files in this repository are covered by the [LICENSE](LICENSE) in the repository root.
