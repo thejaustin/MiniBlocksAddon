@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_dark_prismarine_to_stair_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#  ",
+      "## ",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_dark_prismarine"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_dark_prismarine"
+      }
+    ],
+    "result": {
+      "item": "minecraft:dark_prismarine_stairs",
+      "count": 1
+    }
+  }
+}

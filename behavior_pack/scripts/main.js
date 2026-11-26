@@ -13,6 +13,9 @@ import {
   SLAB_TO_FULL_BLOCK,
   WALL_SLAB_TO_MINI_BLOCK,
   MINI_BLOCK_TO_WALL_SLAB,
+  MINI_BLOCK_TO_STAIR,
+  STAIR_TO_MINI_BLOCK,
+  STAIR_TO_FULL_BLOCK,
   SLAB_SOUNDS,
 } from "./slab_map.js";
 
@@ -47,7 +50,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   system.runTimeout(() => {
     if (!player?.isValid) return;
     player.sendMessage(
-      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.4.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
+      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.5.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
     );
   }, 20);
 });
@@ -157,6 +160,13 @@ const STAIR_WEIRDO_TO_DIR = {
   3: "north",
 };
 
+const DIR_TO_STAIR_WEIRDO = {
+  east:  0,
+  west:  1,
+  south: 2,
+  north: 3,
+};
+
 // Vanilla Bedrock trapdoor `direction` -> wall side when `open_bit == true`:
 const TRAPDOOR_DIR_TO_SLAB_DIR = {
   0: "west",
@@ -191,6 +201,7 @@ const SHAPE_LABELS = {
   wall_slab: "Wall Slab (4/8)",
   slab_half: "Half Block (4/8)",
   five:      "5/8 Block",
+  stair:     "Stairs (6/8)",
   six:       "Mini Stair (6/8)",
   seven:     "7/8 Block",
   full:      "Combined -> Full Block (8/8)",
@@ -206,6 +217,7 @@ const SHAPE_PITCH = {
   wall_slab: 1.00,
   slab_half: 1.00,
   five:      1.04,
+  stair:     1.08,
   six:       1.08,
   seven:     1.12,
   full:      1.18,
@@ -530,7 +542,7 @@ function isWallSlabCombineFace(dir, shape, blockFace) {
 // ── Placement & Combining Actions ───────────────────────────────────────────
 
 function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = blockTypeId, consumeCount = 1, refundTypeId = null, refundCount = 0) {
-  const fullBlockId = SLAB_TO_FULL_BLOCK[blockTypeId];
+  const fullBlockId = SLAB_TO_FULL_BLOCK[blockTypeId] || STAIR_TO_FULL_BLOCK[blockTypeId];
   if (!fullBlockId || !canBuild(player)) return false;
 
   const location = targetBlock.location;
@@ -541,12 +553,13 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = bloc
   if (!hasEnoughItems(player, itemTypeId, selectedSlot, consumeCount)) {
     if (consumeCount > 1) {
       const have = getItemCount(player, itemTypeId, selectedSlot);
-      showHint(player, `§eNeed ${consumeCount} Mini Blocks to fill Wall Slab §7(have ${have}/${consumeCount})`);
+      const targetName = STAIR_TO_FULL_BLOCK[blockTypeId] ? "Stairs" : "Wall Slab";
+      showHint(player, `§eNeed ${consumeCount} Mini Blocks to fill ${targetName} §7(have ${have}/${consumeCount})`);
     }
     return false;
   }
 
-  const shouldRefreshNeighbors = WALL_SLAB_IDS.has(blockTypeId) || MINI_BLOCK_IDS.has(blockTypeId);
+  const shouldRefreshNeighbors = WALL_SLAB_IDS.has(blockTypeId) || MINI_BLOCK_IDS.has(blockTypeId) || isStairBlock(targetBlock);
 
   system.run(() => {
     const current = dimension.getBlock(location);
@@ -569,7 +582,46 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = bloc
         // Ignore
       }
     }
-    playSound(dimension, location, blockTypeId, 1.0);
+    playSound(dimension, location, itemTypeId, 1.15);
+  });
+
+  return true;
+}
+
+function tryUpgradeWallSlabToStair(player, wallSlabBlock, slabDir, faceLocation, miniTypeId, stairId) {
+  if (!canBuild(player)) return false;
+  const location = wallSlabBlock.location;
+  const dimension = wallSlabBlock.dimension;
+  const selectedSlot = player.selectedSlotIndex;
+
+  if (!hasEnoughItems(player, miniTypeId, selectedSlot, 2)) {
+    const have = getItemCount(player, miniTypeId, selectedSlot);
+    showHint(player, `§eNeed 2 Mini Blocks to form Stairs §7(have ${have}/2)`);
+    return false;
+  }
+
+  const weirdo = DIR_TO_STAIR_WEIRDO[slabDir] ?? 3;
+  const upsideDown = (faceLocation?.y ?? 0.4) >= 0.5;
+  const slabTypeId = wallSlabBlock.typeId;
+
+  system.run(() => {
+    const current = dimension.getBlock(location);
+    if (current?.typeId !== slabTypeId) return;
+    if (!player?.isValid || !canBuild(player)) return;
+    if (!consumeItem(player, miniTypeId, selectedSlot, 2)) return;
+
+    try {
+      const perm = BlockPermutation.resolve(stairId, {
+        weirdo_direction: weirdo,
+        upside_down_bit: upsideDown,
+      });
+      current.setPermutation(perm);
+    } catch {
+      current.setType(stairId);
+    }
+    refreshAdjacentWallSlabs(dimension, location);
+    showHint(player, "§bWall Slab + 2 Mini: §fStairs (6/8) §8(Tap w/ 2 more -> Full Block)");
+    playSound(dimension, location, miniTypeId, SHAPE_PITCH.stair);
   });
 
   return true;
@@ -759,9 +811,12 @@ function resolveNextMiniShape(currentShape, blockFace, faceLocation, player, min
   }
   if (currentShape === "corner") return "slab_half";
 
-  // 4/8 -> 5/8 -> 6/8 -> 7/8 -> 8/8 (Full Vanilla Block!)
+  // 4/8 -> 5/8 -> 6/8 (Real Vanilla Stair if available, else Mini Stair!) -> 7/8 -> 8/8 Full Block!
   if (currentShape === "slab_half") return "five";
-  if (currentShape === "five") return "six";
+  if (currentShape === "five") {
+    if (MINI_BLOCK_TO_STAIR[miniTypeId]) return "stair";
+    return "six";
+  }
   if (currentShape === "six") return "seven";
   if (currentShape === "seven") return "full";
 
@@ -799,6 +854,24 @@ function tryStackMiniBlock(player, targetBlock, blockFace, faceLocation, miniTyp
       const fullBlockId = SLAB_TO_FULL_BLOCK[miniTypeId];
       if (fullBlockId) {
         current.setType(fullBlockId);
+      }
+      refreshAdjacentWallSlabs(dimension, location);
+    } else if (liveNext === "stair") {
+      // 6/8 Mini Blocks -> real Vanilla Stair facing player direction + matching floor/ceiling half!
+      const stairId = MINI_BLOCK_TO_STAIR[miniTypeId];
+      const mf = current.permutation.getState("minecraft:block_face");
+      const vh = current.permutation.getState("minecraft:vertical_half");
+      const upsideDown = mf === "down" || (mf !== "up" && vh === "top");
+      const pDir = getPlayerCardinalDir(player);
+      const weirdo = DIR_TO_STAIR_WEIRDO[pDir] ?? 3;
+      try {
+        const perm = BlockPermutation.resolve(stairId, {
+          weirdo_direction: weirdo,
+          upside_down_bit: upsideDown,
+        });
+        current.setPermutation(perm);
+      } catch {
+        current.setType(stairId);
       }
       refreshAdjacentWallSlabs(dimension, location);
     } else if (liveNext === "wall_slab") {
@@ -871,12 +944,20 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         const slabShape = block.permutation.getState("addon:shape") || "straight";
         const basis = SLAB_BASIS[slabDir];
 
-        // Matching Mini Block tapped onto the Wall Slab's open inner face -> 4 Mini Blocks fill it to Full Block (4 + 4 = 8)!
+        // Matching Mini Block tapped onto the Wall Slab's open inner face:
+        //   - If a Vanilla Stair exists: Wall Slab (4/8) + 2 Mini Blocks -> Stairs (6/8)!
+        //   - Otherwise (glass, smooth_stone, cut_sandstone): Wall Slab (4/8) + 4 Mini Blocks -> Full Block (8/8)!
         if (
           MINI_BLOCK_TO_WALL_SLAB[itemTypeId] === block.typeId &&
           isWallSlabCombineFace(slabDir, slabShape, blockFace)
         ) {
-          if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
+          const matchingStair = MINI_BLOCK_TO_STAIR[itemTypeId];
+          if (matchingStair) {
+            if (tryUpgradeWallSlabToStair(player, block, slabDir, faceLocation, itemTypeId, matchingStair)) {
+              event.cancel = true;
+              return;
+            }
+          } else if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
             event.cancel = true;
             return;
           }
@@ -897,7 +978,15 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         }
       }
 
-      // 1C. Tapping an adjacent block face pointing into a matching Mini Block -> stack!
+      // 1C. Tapping a matching Vanilla Stair (6/8) with 2 Mini Blocks -> completes Full Vanilla Block (8/8)!
+      if (STAIR_TO_MINI_BLOCK[block.typeId] === itemTypeId) {
+        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 2)) {
+          event.cancel = true;
+          return;
+        }
+      }
+
+      // 1D. Tapping an adjacent block face pointing into a matching Mini Block -> stack!
       const offset = FACE_OFFSET[blockFace];
       if (offset) {
         const adjBlock = block.dimension.getBlock({
@@ -972,7 +1061,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    // 2B. Tapping a 4/8..7/8 Mini Block with its matching Wall Slab (4/8) -> Volume-conserved combine!
+    // 2B. Tapping a 4/8..7/8 Mini Block OR matching Vanilla Stair (6/8) with a Wall Slab (4/8) -> Volume-conserved combine!
     if (!player.isSneaking && MINI_BLOCK_IDS.has(block.typeId) && WALL_SLAB_TO_MINI_BLOCK[itemTypeId] === block.typeId) {
       const mShape = block.permutation.getState("addon:shape") || "single";
       const mCount = SHAPE_COUNT[mShape] || 1;
@@ -983,6 +1072,14 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
           event.cancel = true;
           return;
         }
+      }
+    }
+    if (!player.isSneaking && STAIR_TO_MINI_BLOCK[block.typeId] && STAIR_TO_MINI_BLOCK[block.typeId] === WALL_SLAB_TO_MINI_BLOCK[itemTypeId]) {
+      // Vanilla Stair (6/8) + Wall Slab (4/8) = Full Block (8/8) + refund 2 Mini Blocks!
+      const miniRefundId = STAIR_TO_MINI_BLOCK[block.typeId];
+      if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1, miniRefundId, 2)) {
+        event.cancel = true;
+        return;
       }
     }
 

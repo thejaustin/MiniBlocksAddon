@@ -166,6 +166,15 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.5.0 (Bedrock 26.60 — Mini Blocks Build Real Vanilla Stairs at 6/8 Volume! — 2026) ===
+* [Feature] Complete 3D Volume Synthesis (`4 Mini = Wall Slab`, `6 Mini = Stairs`, `8 Mini = Full Block`):
+  - Building a 6th Mini Block onto a 5/8 cluster automatically transforms into the real Vanilla Stair (53 verified v1.26.60.5 stair variants, facing player direction and matching floor/ceiling `upside_down_bit`!) and auto-connects adjacent Wall Slabs. Non-stair materials (Glass, Glowstone, Obsidian, Smooth Stone, etc.) use our custom 6/8 Mini Stair shape.
+  - Tapping a Wall Slab's open inner face with 2 matching Mini Blocks upgrades it directly into a real Vanilla Stair (`4 + 2 = 6`, right-side-up when tapping bottom half, upside-down when tapping top half!).
+  - Tapping a matching Vanilla Stair (`6/8`) with 2 Mini Blocks completes the Full Vanilla Block (`6 + 2 = 8`)!
+  - Tapping a matching Vanilla Stair (`6/8`) with a Wall Slab (`4/8`) completes the Full Vanilla Block and refunds 2 Mini Blocks (`6 + 4 = 8 + 2`)!
+* [Recipes] Bidirectional Mini Block <-> Vanilla Stair Recipes (443 total recipes, 0 conflicts):
+  - 6 Mini Blocks in stair pattern -> 1 Vanilla Stair; 1 Vanilla Stair in Stonecutter -> 6 Mini Blocks!
+
 === v2.4.0 (Bedrock 26.60 — Exact 3D Volume Physics: 8 Mini Blocks = 1 Block, 4 Mini Blocks = 1 Wall Slab — 2026) ===
 * [Fix/Feature] True 3D Octant Volume Conservation (`1 Full Block = 2 Wall Slabs = 8 Mini Blocks`, `1 Wall Slab = 4 Mini Blocks`):
   - Full 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 progressive mini-block building in a single space with exact multi-box 1.26.60 collisions (`slab_half` 4/8, `five` 5/8, `six` 6/8 mini stair, `seven` 7/8, and full vanilla block at 8/8!).

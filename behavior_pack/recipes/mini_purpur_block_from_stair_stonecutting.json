@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:mini_purpur_block_from_stair_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:purpur_stairs"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:purpur_stairs"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_purpur_block",
+      "count": 6
+    }
+  }
+}

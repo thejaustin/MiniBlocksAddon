@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_granite_to_stair_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#  ",
+      "## ",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_granite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_granite"
+      }
+    ],
+    "result": {
+      "item": "minecraft:granite_stairs",
+      "count": 1
+    }
+  }
+}

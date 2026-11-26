@@ -1367,8 +1367,67 @@ def stonecutter(recipe_id, source, result, count):
 
 
 COLUMN = ["#", "#", "#"]
-DIAGONAL = ["# ", " #"]  # 2x2 safe, zero vanilla recipe conflicts; 2 blocks -> 16 mini blocks (exact 1:8 volume!)
-SQUARE_2X2 = ["##", "##"]  # 4 mini blocks -> 1 wall slab (exact 4:1 volume!)
+DIAGONAL = ["# ", " #"]      # 2x2 safe, zero vanilla conflicts; 2 blocks -> 16 mini blocks (exact 1:8 volume!)
+SQUARE_2X2 = ["##", "##"]    # 4 mini blocks -> 1 wall slab (exact 4:1 volume!)
+STAIR_6 = ["#  ", "## ", "###"]  # 6 mini blocks -> 1 vanilla stair (exact 6:6 volume!)
+
+# Verified vanilla Bedrock stair identifiers from Mojang/bedrock-samples v1.26.60.5.
+# (All 53 slab-matching mini blocks that have a vanilla stair; smooth_stone/cut_sandstone/glass use custom 6/8 mini stair.)
+MINI_SLUG_TO_STAIR = {
+    "oak_planks":                 "minecraft:oak_stairs",
+    "spruce_planks":              "minecraft:spruce_stairs",
+    "birch_planks":               "minecraft:birch_stairs",
+    "jungle_planks":              "minecraft:jungle_stairs",
+    "acacia_planks":              "minecraft:acacia_stairs",
+    "dark_oak_planks":            "minecraft:dark_oak_stairs",
+    "mangrove_planks":            "minecraft:mangrove_stairs",
+    "cherry_planks":              "minecraft:cherry_stairs",
+    "bamboo_planks":              "minecraft:bamboo_stairs",
+    "pale_oak_planks":            "minecraft:pale_oak_stairs",
+    "crimson_planks":             "minecraft:crimson_stairs",
+    "warped_planks":              "minecraft:warped_stairs",
+    "stone":                      "minecraft:normal_stone_stairs",
+    "cobblestone":                "minecraft:stone_stairs",
+    "mossy_cobblestone":          "minecraft:mossy_cobblestone_stairs",
+    "stone_bricks":               "minecraft:stone_brick_stairs",
+    "mossy_stone_bricks":         "minecraft:mossy_stone_brick_stairs",
+    "granite":                    "minecraft:granite_stairs",
+    "polished_granite":           "minecraft:polished_granite_stairs",
+    "diorite":                    "minecraft:diorite_stairs",
+    "polished_diorite":           "minecraft:polished_diorite_stairs",
+    "andesite":                   "minecraft:andesite_stairs",
+    "polished_andesite":          "minecraft:polished_andesite_stairs",
+    "cobbled_deepslate":          "minecraft:cobbled_deepslate_stairs",
+    "polished_deepslate":         "minecraft:polished_deepslate_stairs",
+    "deepslate_bricks":           "minecraft:deepslate_brick_stairs",
+    "deepslate_tiles":            "minecraft:deepslate_tile_stairs",
+    "tuff":                       "minecraft:tuff_stairs",
+    "polished_tuff":              "minecraft:polished_tuff_stairs",
+    "tuff_bricks":                "minecraft:tuff_brick_stairs",
+    "brick":                      "minecraft:brick_stairs",
+    "mud_bricks":                 "minecraft:mud_brick_stairs",
+    "resin_bricks":               "minecraft:resin_brick_stairs",
+    "sandstone":                  "minecraft:sandstone_stairs",
+    "smooth_sandstone":           "minecraft:smooth_sandstone_stairs",
+    "red_sandstone":              "minecraft:red_sandstone_stairs",
+    "smooth_red_sandstone":       "minecraft:smooth_red_sandstone_stairs",
+    "quartz_block":               "minecraft:quartz_stairs",
+    "smooth_quartz":              "minecraft:smooth_quartz_stairs",
+    "prismarine":                 "minecraft:prismarine_stairs",
+    "prismarine_bricks":          "minecraft:prismarine_bricks_stairs",
+    "dark_prismarine":            "minecraft:dark_prismarine_stairs",
+    "nether_brick":               "minecraft:nether_brick_stairs",
+    "red_nether_brick":           "minecraft:red_nether_brick_stairs",
+    "blackstone":                 "minecraft:blackstone_stairs",
+    "polished_blackstone":        "minecraft:polished_blackstone_stairs",
+    "polished_blackstone_bricks": "minecraft:polished_blackstone_brick_stairs",
+    "end_stone_brick":            "minecraft:end_brick_stairs",
+    "purpur_block":               "minecraft:purpur_stairs",
+    "cut_copper":                 "minecraft:cut_copper_stairs",
+    "exposed_cut_copper":         "minecraft:exposed_cut_copper_stairs",
+    "weathered_cut_copper":       "minecraft:weathered_cut_copper_stairs",
+    "oxidized_cut_copper":        "minecraft:oxidized_cut_copper_stairs",
+}
 
 expected_recipes = set()
 source_to_mini_id = {source: f"addon:mini_{slug}" for slug, source, *_ in MINI_BLOCKS}
@@ -1412,6 +1471,17 @@ for slug, source, hardness, sound, stone_cut, tool_type, flammable, light_emissi
         expected_recipes.add(cut_file)
         write_json(os.path.join(BP, "recipes", cut_file),
                    stonecutter(f"addon:mini_{slug}_stonecutting", source, identifier, 8))
+    # Bidirectional Mini Block <-> Vanilla Stair recipes (6 Mini Blocks = 1 Stair!)
+    stair_id = MINI_SLUG_TO_STAIR.get(slug)
+    if stair_id:
+        to_stair_file = f"mini_{slug}_to_stair_crafting.json"
+        expected_recipes.add(to_stair_file)
+        write_json(os.path.join(BP, "recipes", to_stair_file),
+                   shaped(f"addon:mini_{slug}_to_stair_crafting", STAIR_6, identifier, stair_id, 1))
+        from_stair_file = f"mini_{slug}_from_stair_stonecutting.json"
+        expected_recipes.add(from_stair_file)
+        write_json(os.path.join(BP, "recipes", from_stair_file),
+                   stonecutter(f"addon:mini_{slug}_from_stair_stonecutting", stair_id, identifier, 6))
 
 clean_generated_dir(os.path.join(BP, "recipes"), expected_recipes)
 print(f"  wrote {len(expected_recipes)} recipes")
@@ -1501,6 +1571,24 @@ with open(slab_map_path, "w") as f:
     for slug, source, *_ in WALL_SLABS:
         if source in source_to_mini:
             f.write(f'  "{source_to_mini[source]}": "addon:{slug}_wall_slab",\n')
+    f.write("};\n\n")
+
+    f.write("export const MINI_BLOCK_TO_STAIR = {\n")
+    for slug, source, *_ in MINI_BLOCKS:
+        if slug in MINI_SLUG_TO_STAIR:
+            f.write(f'  "addon:mini_{slug}": "{MINI_SLUG_TO_STAIR[slug]}",\n')
+    f.write("};\n\n")
+
+    f.write("export const STAIR_TO_MINI_BLOCK = {\n")
+    for slug, source, *_ in MINI_BLOCKS:
+        if slug in MINI_SLUG_TO_STAIR:
+            f.write(f'  "{MINI_SLUG_TO_STAIR[slug]}": "addon:mini_{slug}",\n')
+    f.write("};\n\n")
+
+    f.write("export const STAIR_TO_FULL_BLOCK = {\n")
+    for slug, source, *_ in MINI_BLOCKS:
+        if slug in MINI_SLUG_TO_STAIR:
+            f.write(f'  "{MINI_SLUG_TO_STAIR[slug]}": "{source}",\n')
     f.write("};\n\n")
 
     f.write("export const SLAB_SOUNDS = {\n")

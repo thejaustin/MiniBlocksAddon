@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_purpur_block_to_stair_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "#  ",
+      "## ",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_purpur_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_purpur_block"
+      }
+    ],
+    "result": {
+      "item": "minecraft:purpur_stairs",
+      "count": 1
+    }
+  }
+}
