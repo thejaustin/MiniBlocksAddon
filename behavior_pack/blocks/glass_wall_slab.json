@@ -124,6 +124,12 @@
           }
         ]
       },
+      "minecraft:chest_obstruction": {
+        "obstruction_rule": "never"
+      },
+      "minecraft:redstone_conductivity": {
+        "redstone_conductor": false
+      },
       "minecraft:destruction_particles": {
         "particle_count": 48
       }

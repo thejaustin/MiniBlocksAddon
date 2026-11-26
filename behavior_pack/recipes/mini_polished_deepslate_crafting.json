@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_polished_deepslate_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "# ",
+      " #"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:polished_deepslate"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:polished_deepslate"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_polished_deepslate",
+      "count": 8
+    }
+  }
+}

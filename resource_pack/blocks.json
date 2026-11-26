@@ -78,8 +78,32 @@
   "addon:mini_cobbled_deepslate": {
     "sound": "deepslate"
   },
+  "addon:mini_polished_deepslate": {
+    "sound": "deepslate"
+  },
+  "addon:mini_deepslate_bricks": {
+    "sound": "deepslate_bricks"
+  },
+  "addon:mini_deepslate_tiles": {
+    "sound": "deepslate_bricks"
+  },
+  "addon:mini_tuff": {
+    "sound": "tuff"
+  },
+  "addon:mini_polished_tuff": {
+    "sound": "polished_tuff"
+  },
+  "addon:mini_tuff_bricks": {
+    "sound": "tuff_bricks"
+  },
   "addon:mini_brick": {
     "sound": "stone"
+  },
+  "addon:mini_mud_bricks": {
+    "sound": "mud_bricks"
+  },
+  "addon:mini_resin_bricks": {
+    "sound": "resin_brick"
   },
   "addon:mini_sandstone": {
     "sound": "stone"
@@ -105,6 +129,15 @@
   "addon:mini_smooth_quartz": {
     "sound": "stone"
   },
+  "addon:mini_prismarine": {
+    "sound": "stone"
+  },
+  "addon:mini_prismarine_bricks": {
+    "sound": "stone"
+  },
+  "addon:mini_dark_prismarine": {
+    "sound": "stone"
+  },
   "addon:mini_nether_brick": {
     "sound": "nether_brick"
   },
@@ -117,6 +150,9 @@
   "addon:mini_polished_blackstone": {
     "sound": "stone"
   },
+  "addon:mini_polished_blackstone_bricks": {
+    "sound": "stone"
+  },
   "addon:mini_end_stone_brick": {
     "sound": "stone"
   },
@@ -126,11 +162,17 @@
   "addon:mini_cut_copper": {
     "sound": "copper"
   },
+  "addon:mini_exposed_cut_copper": {
+    "sound": "copper"
+  },
+  "addon:mini_weathered_cut_copper": {
+    "sound": "copper"
+  },
+  "addon:mini_oxidized_cut_copper": {
+    "sound": "copper"
+  },
   "addon:mini_glass": {
     "sound": "glass"
-  },
-  "addon:mini_tuff_bricks": {
-    "sound": "tuff_bricks"
   },
   "addon:mini_obsidian": {
     "sound": "stone"
@@ -249,8 +291,32 @@
   "addon:deepslate_wall_slab": {
     "sound": "deepslate"
   },
+  "addon:polished_deepslate_wall_slab": {
+    "sound": "deepslate"
+  },
+  "addon:deepslate_brick_wall_slab": {
+    "sound": "deepslate_bricks"
+  },
+  "addon:deepslate_tile_wall_slab": {
+    "sound": "deepslate_bricks"
+  },
+  "addon:tuff_wall_slab": {
+    "sound": "tuff"
+  },
+  "addon:polished_tuff_wall_slab": {
+    "sound": "polished_tuff"
+  },
+  "addon:tuff_brick_wall_slab": {
+    "sound": "tuff_bricks"
+  },
   "addon:brick_wall_slab": {
     "sound": "stone"
+  },
+  "addon:mud_brick_wall_slab": {
+    "sound": "mud_bricks"
+  },
+  "addon:resin_brick_wall_slab": {
+    "sound": "resin_brick"
   },
   "addon:sandstone_wall_slab": {
     "sound": "stone"
@@ -276,6 +342,15 @@
   "addon:smooth_quartz_wall_slab": {
     "sound": "stone"
   },
+  "addon:prismarine_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:prismarine_brick_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:dark_prismarine_wall_slab": {
+    "sound": "stone"
+  },
   "addon:nether_brick_wall_slab": {
     "sound": "nether_brick"
   },
@@ -288,6 +363,9 @@
   "addon:polished_blackstone_wall_slab": {
     "sound": "stone"
   },
+  "addon:polished_blackstone_brick_wall_slab": {
+    "sound": "stone"
+  },
   "addon:end_stone_brick_wall_slab": {
     "sound": "stone"
   },
@@ -295,6 +373,15 @@
     "sound": "stone"
   },
   "addon:cut_copper_wall_slab": {
+    "sound": "copper"
+  },
+  "addon:exposed_cut_copper_wall_slab": {
+    "sound": "copper"
+  },
+  "addon:weathered_cut_copper_wall_slab": {
+    "sound": "copper"
+  },
+  "addon:oxidized_cut_copper_wall_slab": {
     "sound": "copper"
   },
   "addon:glass_wall_slab": {

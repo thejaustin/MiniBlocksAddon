@@ -1,12 +1,12 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Auto-connecting wall slabs, tap-aware mini blocks, directional placement, and combining! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
+        "description": "Auto-connecting wall slabs (cross-material + stairs!), tap-aware mini blocks, directional placement, and combining! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Behaviors)",
-        "uuid": "68bc41ed-aa62-4f56-baf0-631918642df7",
+        "uuid": "d2eef884-0e7f-4b7d-bad2-cbd349ea2e99",
         "version": [
             2,
-            1,
+            2,
             0
         ],
         "min_engine_version": [
@@ -19,10 +19,10 @@
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
-            "uuid": "15abbe4d-69e2-494a-9e3b-1d2d8f31a361",
+            "uuid": "db09dd0a-ef70-4e72-9c33-a0d10b15ca34",
             "version": [
                 2,
-                1,
+                2,
                 0
             ]
         },
@@ -30,10 +30,10 @@
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "7918b85b-a714-4148-a035-95444eb2bb6e",
+            "uuid": "3d887e7c-1545-41c8-9af9-318a20e8c746",
             "version": [
                 2,
-                1,
+                2,
                 0
             ],
             "entry": "scripts/main.js"
@@ -41,10 +41,10 @@
     ],
     "dependencies": [
         {
-            "uuid": "47aad785-89bc-4757-83f4-9aba637336cf",
+            "uuid": "33b80143-908c-4917-a3cb-cb4eaa45aef4",
             "version": [
                 2,
-                1,
+                2,
                 0
             ]
         },

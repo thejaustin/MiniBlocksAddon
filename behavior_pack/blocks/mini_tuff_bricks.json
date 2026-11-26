@@ -29,25 +29,25 @@
     "components": {
       "minecraft:material_instances": {
         "*": {
-          "texture": "miniblocks_tuff_bricks",
+          "texture": "miniblocks_tuff_brick",
           "render_method": "opaque",
           "ambient_occlusion": 1.0,
           "face_dimming": true
         },
         "side": {
-          "texture": "miniblocks_tuff_bricks",
+          "texture": "miniblocks_tuff_brick",
           "render_method": "opaque",
           "ambient_occlusion": 1.0,
           "face_dimming": true
         },
         "up": {
-          "texture": "miniblocks_tuff_bricks",
+          "texture": "miniblocks_tuff_brick",
           "render_method": "opaque",
           "ambient_occlusion": 1.0,
           "face_dimming": true
         },
         "down": {
-          "texture": "miniblocks_tuff_bricks",
+          "texture": "miniblocks_tuff_brick",
           "render_method": "opaque",
           "ambient_occlusion": 1.0,
           "face_dimming": true
@@ -58,25 +58,25 @@
         "geometry": "geometry.mini_block_single",
         "material_instances": {
           "*": {
-            "texture": "miniblocks_tuff_bricks",
+            "texture": "miniblocks_tuff_brick",
             "render_method": "opaque",
             "ambient_occlusion": 1.0,
             "face_dimming": true
           },
           "side": {
-            "texture": "miniblocks_tuff_bricks",
+            "texture": "miniblocks_tuff_brick",
             "render_method": "opaque",
             "ambient_occlusion": 1.0,
             "face_dimming": true
           },
           "up": {
-            "texture": "miniblocks_tuff_bricks",
+            "texture": "miniblocks_tuff_brick",
             "render_method": "opaque",
             "ambient_occlusion": 1.0,
             "face_dimming": true
           },
           "down": {
-            "texture": "miniblocks_tuff_bricks",
+            "texture": "miniblocks_tuff_brick",
             "render_method": "opaque",
             "ambient_occlusion": 1.0,
             "face_dimming": true
@@ -125,8 +125,14 @@
           }
         ]
       },
+      "minecraft:chest_obstruction": {
+        "obstruction_rule": "never"
+      },
+      "minecraft:redstone_conductivity": {
+        "redstone_conductor": false
+      },
       "minecraft:destruction_particles": {
-        "texture": "miniblocks_tuff_bricks",
+        "texture": "miniblocks_tuff_brick",
         "particle_count": 32
       },
       "minecraft:tags": [

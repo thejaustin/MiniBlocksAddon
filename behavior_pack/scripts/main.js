@@ -47,7 +47,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   system.runTimeout(() => {
     if (!player?.isValid) return;
     player.sendMessage(
-      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.1.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
+      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.2.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
     );
   }, 20);
 });
@@ -272,13 +272,48 @@ function isWallSlabHalfObstructed(dimension, loc, dir) {
   }
 }
 
-// ── Auto-Connecting Wall Slab Corner Engine ─────────────────────────────────
+// ── Auto-Connecting Wall Slab Corner Engine (Cross-Material + Vanilla Stairs!) ──
+
+// Vanilla Bedrock stair `weirdo_direction` -> side where the stair's full-height 8px back sits:
+//   0 = East (+X), 1 = West (-X), 2 = South (+Z), 3 = North (-Z)
+const STAIR_WEIRDO_TO_DIR = {
+  0: "east",
+  1: "west",
+  2: "south",
+  3: "north",
+};
+
+function isStairBlock(block) {
+  if (!block) return false;
+  if (block.typeId.endsWith("_stairs")) return true;
+  try {
+    return block.permutation.getState("weirdo_direction") !== undefined;
+  } catch {
+    return false;
+  }
+}
 
 function getConnectableSlabDir(dimension, x, y, z) {
   const b = dimension.getBlock({ x, y, z });
-  if (!b || !WALL_SLAB_IDS.has(b.typeId)) return null;
-  if (b.permutation.getState("addon:shape") === "locked") return null;
-  return b.permutation.getState("minecraft:cardinal_direction") || null;
+  if (!b) return null;
+
+  // 1. Any non-locked Wall Slab (works seamlessly cross-material!)
+  if (WALL_SLAB_IDS.has(b.typeId)) {
+    if (b.permutation.getState("addon:shape") === "locked") return null;
+    return b.permutation.getState("minecraft:cardinal_direction") || null;
+  }
+
+  // 2. Any Vanilla Stair (tall 8px vertical back aligns flush with our 8px Wall Slabs!)
+  if (isStairBlock(b)) {
+    const weirdo = b.permutation.getState("weirdo_direction");
+    if (weirdo !== undefined && STAIR_WEIRDO_TO_DIR[weirdo]) {
+      return STAIR_WEIRDO_TO_DIR[weirdo];
+    }
+    const card = b.permutation.getState("minecraft:cardinal_direction");
+    if (card) return card;
+  }
+
+  return null;
 }
 
 function computeWallSlabShape(dimension, loc, dir) {
@@ -609,20 +644,28 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   }
 });
 
-// Auto-connect Wall Slabs placed via native floor/ceiling placement (and lock straight when crouched!)
+// Auto-connect Wall Slabs placed via native floor/ceiling placement (and when placing Vanilla Stairs!)
 world.afterEvents.playerPlaceBlock.subscribe((event) => {
   const { block, player } = event;
-  if (!block?.isValid || !WALL_SLAB_IDS.has(block.typeId)) return;
+  if (!block?.isValid) return;
 
   const loc = block.location;
   const dim = block.dimension;
-  const isLocked = Boolean(player?.isValid && player.isSneaking);
+  const isCrouched = Boolean(player?.isValid && player.isSneaking);
 
-  if (isLocked) {
-    block.setPermutation(block.permutation.withState("addon:shape", "locked"));
-    showHint(player, "§7Wall Slab Locked Straight §8(Crouch prevents auto-connect)");
-  } else {
-    refreshWallSlabShape(dim, loc);
+  if (WALL_SLAB_IDS.has(block.typeId)) {
+    if (isCrouched) {
+      block.setPermutation(block.permutation.withState("addon:shape", "locked"));
+      showHint(player, "§7Wall Slab Locked Straight §8(Crouch prevents auto-connect)");
+    } else {
+      refreshWallSlabShape(dim, loc);
+      refreshAdjacentWallSlabs(dim, loc);
+    }
+    return;
+  }
+
+  // Placing a Vanilla Stair next to existing Wall Slabs connects them cleanly (unless crouching!)
+  if (isStairBlock(block) && !isCrouched) {
     refreshAdjacentWallSlabs(dim, loc);
   }
 });
@@ -635,7 +678,7 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const typeId = block.typeId;
   const loc = block.location;
 
-  if (WALL_SLAB_IDS.has(typeId)) {
+  if (WALL_SLAB_IDS.has(typeId) || isStairBlock(block)) {
     system.run(() => {
       refreshAdjacentWallSlabs(dimension, loc);
     });

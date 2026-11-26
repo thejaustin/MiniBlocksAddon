@@ -166,6 +166,14 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.2.0 (Bedrock 26.60 — Cross-Material + Vanilla Stair Connections & Full Stair-Family Wall Slab Expansion — 2026) ===
+* [Feature] Cross-Material & Vanilla Stair Auto-Connections:
+  - Wall Slabs auto-connect seamlessly across ANY material (Wood, Stone, Deepslate, Tuff, Copper, Glass, etc.) AND directly to ANY Vanilla Stair (`weirdo_direction` exact 8px back-wall alignment!).
+  - Placing or breaking a Vanilla Stair next to existing Wall Slabs dynamically updates their corners (crouching while placing either a Wall Slab or Vanilla Stair prevents connection!).
+* [Feature] Expanded Wall Slabs to 57 Variants (+ 100% 1:1 Mini Block Parity -> 71 Mini Blocks / 129 Total Blocks):
+  - Added full Deepslate suite (Polished Deepslate, Deepslate Bricks, Deepslate Tiles), Tuff suite (Tuff, Polished Tuff, Tuff Bricks), Mud Bricks, Resin Bricks, Polished Blackstone Bricks, Prismarine suite (Prismarine, Prismarine Bricks, Dark Prismarine), and full Cut Copper weathering suite (Exposed, Weathered, Oxidized Cut Copper).
+  - Added `minecraft:chest_obstruction: {obstruction_rule: "never"}` and `minecraft:redstone_conductivity: {redstone_conductor: false}` across all slabs and mini blocks so placing them above chests never blocks chests from opening.
+
 === v2.1.0 (Bedrock 26.60 — Auto-Connecting Wall Slab Corners & Tap-Aware Mini Block Shapes — 2026) ===
 * [Feature] Auto-Connecting Wall Slab Corners (With Crouch-to-Lock Opt-Out):
   - Placing perpendicular wall slabs automatically forms seamless Inner Corners (3/4 L-wall with zero internal glass seam) and Outer Corners (1/4 vertical corner post) using exact 1.26.60 multi-box collisions.

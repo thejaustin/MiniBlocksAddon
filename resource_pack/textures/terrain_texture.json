@@ -82,11 +82,32 @@
     "miniblocks_deepslate": {
       "textures": "textures/blocks/deepslate/cobbled_deepslate"
     },
+    "miniblocks_polished_deepslate": {
+      "textures": "textures/blocks/deepslate/polished_deepslate"
+    },
+    "miniblocks_deepslate_brick": {
+      "textures": "textures/blocks/deepslate/deepslate_bricks"
+    },
+    "miniblocks_deepslate_tile": {
+      "textures": "textures/blocks/deepslate/deepslate_tiles"
+    },
+    "miniblocks_tuff": {
+      "textures": "textures/blocks/tuff"
+    },
+    "miniblocks_polished_tuff": {
+      "textures": "textures/blocks/polished_tuff"
+    },
+    "miniblocks_tuff_brick": {
+      "textures": "textures/blocks/tuff_bricks"
+    },
     "miniblocks_brick": {
       "textures": "textures/blocks/brick"
     },
-    "miniblocks_tuff_bricks": {
-      "textures": "textures/blocks/tuff_bricks"
+    "miniblocks_mud_brick": {
+      "textures": "textures/blocks/mud_bricks"
+    },
+    "miniblocks_resin_brick": {
+      "textures": "textures/blocks/resin_bricks"
     },
     "miniblocks_obsidian": {
       "textures": "textures/blocks/obsidian"
@@ -124,6 +145,15 @@
     "miniblocks_quartz_bottom": {
       "textures": "textures/blocks/quartz_block_bottom"
     },
+    "miniblocks_prismarine": {
+      "textures": "textures/blocks/prismarine_rough"
+    },
+    "miniblocks_prismarine_brick": {
+      "textures": "textures/blocks/prismarine_bricks"
+    },
+    "miniblocks_dark_prismarine": {
+      "textures": "textures/blocks/prismarine_dark"
+    },
     "miniblocks_nether_brick": {
       "textures": "textures/blocks/nether_brick"
     },
@@ -136,6 +166,9 @@
     "miniblocks_polished_blackstone": {
       "textures": "textures/blocks/polished_blackstone"
     },
+    "miniblocks_polished_blackstone_brick": {
+      "textures": "textures/blocks/polished_blackstone_bricks"
+    },
     "miniblocks_end_stone_brick": {
       "textures": "textures/blocks/end_bricks"
     },
@@ -144,6 +177,15 @@
     },
     "miniblocks_cut_copper": {
       "textures": "textures/blocks/cut_copper"
+    },
+    "miniblocks_exposed_cut_copper": {
+      "textures": "textures/blocks/exposed_cut_copper"
+    },
+    "miniblocks_weathered_cut_copper": {
+      "textures": "textures/blocks/weathered_cut_copper"
+    },
+    "miniblocks_oxidized_cut_copper": {
+      "textures": "textures/blocks/oxidized_cut_copper"
     },
     "miniblocks_glass": {
       "textures": "textures/blocks/glass"
