@@ -166,6 +166,13 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.0.1 (Bedrock 26.60 — Full 1:1 Slab-to-Mini-Block Material Parity — 2026) ===
+* [Feature] Complete 1:1 Wall Slab -> Mini Block Parity (57 Mini Blocks total):
+  - Mini Blocks now mirror all 42 Wall Slab materials FIRST in identical building order (Woods -> Stones & Bricks -> Sandstone & Quartz -> Nether, End, Copper & Glass), before extending into extra decor, lights, metals, and nature blocks.
+  - Updated Mini Blocks (+) creative drawer icon to Mini Oak Planks (matching Oak Wall Slab for Wall Slabs (+)).
+  - Added 24 slab-matching Mini Blocks: Mangrove, Crimson, Warped Planks; Smooth Stone, Mossy Cobblestone, Mossy Stone Bricks, Granite, Polished Granite, Diorite, Polished Diorite, Andesite, Polished Andesite; Cut/Smooth Sandstone, Red/Cut Red/Smooth Red Sandstone, Smooth Quartz; Nether Brick, Red Nether Brick, Polished Blackstone, End Stone Brick, Purpur Block, and Cut Copper.
+  - Exported `WALL_SLAB_TO_MINI_BLOCK` in `slab_map.js` (42/42 complete mapping) to power upcoming Chisel/Handsaw carving tools.
+
 === v2.0.0 (Bedrock 26.60 — Full 1.26.60 Modernization, Expandable Creative Groups, 33 Mini Blocks & Smart Placement — 2026) ===
 * [Update] Bedrock 26.60 Native Target: Upgraded min_engine_version to [1, 26, 60], block schemas to 1.26.60 (array collision_box, liquid_detection waterlogging, item_visual, destruction_particles), crafting_item_catalog to 1.26.50, and @minecraft/server to stable 2.11.0.
 * [Feature] Expandable Creative Menu (+) Groups: Properly namespaced Crafting Item Catalog (`addon:itemGroup.name.wall_slab` & `addon:itemGroup.name.mini_block`) consolidates all 42 Wall Slabs and 33 Mini Blocks into clean collapsible (+) drawers in Construction without duplicating loose items.

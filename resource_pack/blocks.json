@@ -3,18 +3,6 @@
   "addon:cobblestone_slab": {
     "sound": "stone"
   },
-  "addon:mini_grass_block": {
-    "sound": "grass"
-  },
-  "addon:mini_dirt": {
-    "sound": "gravel"
-  },
-  "addon:mini_moss_block": {
-    "sound": "moss_block"
-  },
-  "addon:mini_sand": {
-    "sound": "sand"
-  },
   "addon:mini_oak_planks": {
     "sound": "wood"
   },
@@ -33,6 +21,9 @@
   "addon:mini_dark_oak_planks": {
     "sound": "wood"
   },
+  "addon:mini_mangrove_planks": {
+    "sound": "wood"
+  },
   "addon:mini_cherry_planks": {
     "sound": "cherry_wood"
   },
@@ -42,14 +33,50 @@
   "addon:mini_pale_oak_planks": {
     "sound": "wood"
   },
+  "addon:mini_crimson_planks": {
+    "sound": "nether_wood"
+  },
+  "addon:mini_warped_planks": {
+    "sound": "nether_wood"
+  },
   "addon:mini_stone": {
+    "sound": "stone"
+  },
+  "addon:mini_smooth_stone": {
     "sound": "stone"
   },
   "addon:mini_cobblestone": {
     "sound": "stone"
   },
+  "addon:mini_mossy_cobblestone": {
+    "sound": "stone"
+  },
   "addon:mini_stone_bricks": {
     "sound": "stone"
+  },
+  "addon:mini_mossy_stone_bricks": {
+    "sound": "stone"
+  },
+  "addon:mini_granite": {
+    "sound": "stone"
+  },
+  "addon:mini_polished_granite": {
+    "sound": "stone"
+  },
+  "addon:mini_diorite": {
+    "sound": "stone"
+  },
+  "addon:mini_polished_diorite": {
+    "sound": "stone"
+  },
+  "addon:mini_andesite": {
+    "sound": "stone"
+  },
+  "addon:mini_polished_andesite": {
+    "sound": "stone"
+  },
+  "addon:mini_cobbled_deepslate": {
+    "sound": "deepslate"
   },
   "addon:mini_brick": {
     "sound": "stone"
@@ -57,14 +84,50 @@
   "addon:mini_sandstone": {
     "sound": "stone"
   },
+  "addon:mini_cut_sandstone": {
+    "sound": "stone"
+  },
+  "addon:mini_smooth_sandstone": {
+    "sound": "stone"
+  },
+  "addon:mini_red_sandstone": {
+    "sound": "stone"
+  },
+  "addon:mini_cut_red_sandstone": {
+    "sound": "stone"
+  },
+  "addon:mini_smooth_red_sandstone": {
+    "sound": "stone"
+  },
   "addon:mini_quartz_block": {
     "sound": "stone"
   },
-  "addon:mini_cobbled_deepslate": {
-    "sound": "deepslate"
+  "addon:mini_smooth_quartz": {
+    "sound": "stone"
+  },
+  "addon:mini_nether_brick": {
+    "sound": "nether_brick"
+  },
+  "addon:mini_red_nether_brick": {
+    "sound": "nether_brick"
   },
   "addon:mini_blackstone": {
     "sound": "stone"
+  },
+  "addon:mini_polished_blackstone": {
+    "sound": "stone"
+  },
+  "addon:mini_end_stone_brick": {
+    "sound": "stone"
+  },
+  "addon:mini_purpur_block": {
+    "sound": "stone"
+  },
+  "addon:mini_cut_copper": {
+    "sound": "copper"
+  },
+  "addon:mini_glass": {
+    "sound": "glass"
   },
   "addon:mini_tuff_bricks": {
     "sound": "tuff_bricks"
@@ -72,17 +135,14 @@
   "addon:mini_obsidian": {
     "sound": "stone"
   },
-  "addon:mini_glass": {
-    "sound": "glass"
+  "addon:mini_bookshelf": {
+    "sound": "wood"
   },
   "addon:mini_glowstone": {
     "sound": "glass"
   },
   "addon:mini_sea_lantern": {
     "sound": "glass"
-  },
-  "addon:mini_bookshelf": {
-    "sound": "wood"
   },
   "addon:mini_iron_block": {
     "sound": "iron"
@@ -101,6 +161,18 @@
   },
   "addon:mini_amethyst_block": {
     "sound": "amethyst_block"
+  },
+  "addon:mini_dirt": {
+    "sound": "gravel"
+  },
+  "addon:mini_grass_block": {
+    "sound": "grass"
+  },
+  "addon:mini_moss_block": {
+    "sound": "moss_block"
+  },
+  "addon:mini_sand": {
+    "sound": "sand"
   },
   "addon:oak_wall_slab": {
     "sound": "wood"

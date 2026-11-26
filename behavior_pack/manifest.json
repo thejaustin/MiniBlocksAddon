@@ -3,11 +3,11 @@
     "header": {
         "description": "Wall slabs, progressive mini blocks, directional placement, and combining! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Behaviors)",
-        "uuid": "75898541-b13b-4e37-8363-224e29b30f88",
+        "uuid": "d4bb6ea1-c88c-4e3d-b68e-6aea98650801",
         "version": [
             2,
             0,
-            0
+            1
         ],
         "min_engine_version": [
             1,
@@ -19,33 +19,33 @@
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
-            "uuid": "35669d62-4404-4b3b-8815-7df8b9ce27aa",
+            "uuid": "4e33d3f8-7c0f-4c68-82d0-edce71fc2b3d",
             "version": [
                 2,
                 0,
-                0
+                1
             ]
         },
         {
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "97c7553e-aa89-4e19-91e6-28aeb15fb721",
+            "uuid": "9287d0e9-db6d-4f55-8985-0dfd8ca201f3",
             "version": [
                 2,
                 0,
-                0
+                1
             ],
             "entry": "scripts/main.js"
         }
     ],
     "dependencies": [
         {
-            "uuid": "96c44b2b-abe2-4465-973b-428d63b3a790",
+            "uuid": "b9d99a1e-f3a5-4750-90dc-8ce19719d3ea",
             "version": [
                 2,
                 0,
-                0
+                1
             ]
         },
         {

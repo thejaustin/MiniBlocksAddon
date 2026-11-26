@@ -73,46 +73,71 @@ WALL_SLABS = [
 ]
 
 # Mini Blocks: (slug, source_block, hardness, rp_sound, stonecutter_allowed, tool_type, flammable, light_emission)
-# Ordered thoughtfully for the Creative Menu "Mini Blocks (+)" drawer.
+# First matches ALL 42 Wall Slabs in identical 1:1 order (Woods -> Stones & Bricks -> Sandstone & Quartz
+# -> Nether, End, Copper & Glass), then extends into extra building/nature/light/metal blocks!
 MINI_BLOCKS = [
-    # Nature
-    ("grass_block",       "minecraft:grass_block",       0.6,  "grass",          False, None,      False, 0),
-    ("dirt",              "minecraft:dirt",              0.5,  "gravel",         False, None,      False, 0),
-    ("moss_block",        "minecraft:moss_block",        0.1,  "moss_block",     False, None,      False, 0),
-    ("sand",              "minecraft:sand",              0.5,  "sand",           False, None,      False, 0),
-    # Woods
-    ("oak_planks",        "minecraft:oak_planks",        1.5,  "wood",           False, "axe",     True,  0),
-    ("spruce_planks",     "minecraft:spruce_planks",     1.5,  "wood",           False, "axe",     True,  0),
-    ("birch_planks",      "minecraft:birch_planks",      1.5,  "wood",           False, "axe",     True,  0),
-    ("jungle_planks",     "minecraft:jungle_planks",     1.5,  "wood",           False, "axe",     True,  0),
-    ("acacia_planks",     "minecraft:acacia_planks",     1.5,  "wood",           False, "axe",     True,  0),
-    ("dark_oak_planks",   "minecraft:dark_oak_planks",   1.5,  "wood",           False, "axe",     True,  0),
-    ("cherry_planks",     "minecraft:cherry_planks",     1.5,  "cherry_wood",    False, "axe",     True,  0),
-    ("bamboo_planks",     "minecraft:bamboo_planks",     1.5,  "bamboo_wood",    False, "axe",     True,  0),
-    ("pale_oak_planks",   "minecraft:pale_oak_planks",   1.5,  "wood",           False, "axe",     True,  0),
-    # Stones & Masonry
-    ("stone",             "minecraft:stone",             1.5,  "stone",          True,  "pickaxe", False, 0),
-    ("cobblestone",       "minecraft:cobblestone",       2.0,  "stone",          True,  "pickaxe", False, 0),
-    ("stone_bricks",      "minecraft:stone_bricks",      1.5,  "stone",          True,  "pickaxe", False, 0),
-    ("brick",             "minecraft:brick_block",       2.0,  "stone",          True,  "pickaxe", False, 0),
-    ("sandstone",         "minecraft:sandstone",         0.8,  "stone",          True,  "pickaxe", False, 0),
-    ("quartz_block",      "minecraft:quartz_block",      0.8,  "stone",          True,  "pickaxe", False, 0),
-    ("cobbled_deepslate", "minecraft:cobbled_deepslate", 3.5,  "deepslate",      True,  "pickaxe", False, 0),
-    ("blackstone",        "minecraft:blackstone",        1.5,  "stone",          True,  "pickaxe", False, 0),
-    ("tuff_bricks",       "minecraft:tuff_bricks",       1.5,  "tuff_bricks",    True,  "pickaxe", False, 0),
-    ("obsidian",          "minecraft:obsidian",          10.0, "stone",          False, "pickaxe", False, 0),
-    # Glass, Lights & Decor
-    ("glass",             "minecraft:glass",             0.3,  "glass",          False, None,      False, 0),
-    ("glowstone",         "minecraft:glowstone",         0.3,  "glass",          False, None,      False, 15),
-    ("sea_lantern",       "minecraft:sea_lantern",       0.3,  "glass",          False, None,      False, 15),
-    ("bookshelf",         "minecraft:bookshelf",         1.5,  "wood",           False, "axe",     True,  0),
-    # Metals & Gems
-    ("iron_block",        "minecraft:iron_block",        5.0,  "iron",           True,  "pickaxe", False, 0),
-    ("gold_block",        "minecraft:gold_block",        3.0,  "metal",          True,  "pickaxe", False, 0),
-    ("diamond_block",     "minecraft:diamond_block",     5.0,  "metal",          True,  "pickaxe", False, 0),
-    ("emerald_block",     "minecraft:emerald_block",     5.0,  "metal",          True,  "pickaxe", False, 0),
-    ("copper_block",      "minecraft:copper_block",      3.0,  "copper",         True,  "pickaxe", False, 0),
-    ("amethyst_block",    "minecraft:amethyst_block",    1.5,  "amethyst_block", True,  "pickaxe", False, 0),
+    # ── 1:1 Wall Slab Parity: Woods (12) ──
+    ("oak_planks",           "minecraft:oak_planks",           1.5,  "wood",           False, "axe",     True,  0),
+    ("spruce_planks",        "minecraft:spruce_planks",        1.5,  "wood",           False, "axe",     True,  0),
+    ("birch_planks",         "minecraft:birch_planks",         1.5,  "wood",           False, "axe",     True,  0),
+    ("jungle_planks",        "minecraft:jungle_planks",        1.5,  "wood",           False, "axe",     True,  0),
+    ("acacia_planks",        "minecraft:acacia_planks",        1.5,  "wood",           False, "axe",     True,  0),
+    ("dark_oak_planks",      "minecraft:dark_oak_planks",      1.5,  "wood",           False, "axe",     True,  0),
+    ("mangrove_planks",      "minecraft:mangrove_planks",      1.5,  "wood",           False, "axe",     True,  0),
+    ("cherry_planks",        "minecraft:cherry_planks",        1.5,  "cherry_wood",    False, "axe",     True,  0),
+    ("bamboo_planks",        "minecraft:bamboo_planks",        1.5,  "bamboo_wood",    False, "axe",     True,  0),
+    ("pale_oak_planks",      "minecraft:pale_oak_planks",      1.5,  "wood",           False, "axe",     True,  0),
+    ("crimson_planks",       "minecraft:crimson_planks",       1.5,  "nether_wood",    False, "axe",     False, 0),
+    ("warped_planks",        "minecraft:warped_planks",        1.5,  "nether_wood",    False, "axe",     False, 0),
+    # ── 1:1 Wall Slab Parity: Stones & Bricks (14) ──
+    ("stone",                "minecraft:stone",                1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("smooth_stone",         "minecraft:smooth_stone",         2.0,  "stone",          True,  "pickaxe", False, 0),
+    ("cobblestone",          "minecraft:cobblestone",          2.0,  "stone",          True,  "pickaxe", False, 0),
+    ("mossy_cobblestone",    "minecraft:mossy_cobblestone",    2.0,  "stone",          True,  "pickaxe", False, 0),
+    ("stone_bricks",         "minecraft:stone_bricks",         1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("mossy_stone_bricks",   "minecraft:mossy_stone_bricks",   1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("granite",              "minecraft:granite",              1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("polished_granite",     "minecraft:polished_granite",     1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("diorite",              "minecraft:diorite",              1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("polished_diorite",     "minecraft:polished_diorite",     1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("andesite",             "minecraft:andesite",             1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("polished_andesite",    "minecraft:polished_andesite",    1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("cobbled_deepslate",    "minecraft:cobbled_deepslate",    3.5,  "deepslate",      True,  "pickaxe", False, 0),
+    ("brick",                "minecraft:brick_block",          2.0,  "stone",          True,  "pickaxe", False, 0),
+    # ── 1:1 Wall Slab Parity: Sandstone & Quartz (8) ──
+    ("sandstone",            "minecraft:sandstone",            0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("cut_sandstone",        "minecraft:cut_sandstone",        0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("smooth_sandstone",     "minecraft:smooth_sandstone",     0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("red_sandstone",        "minecraft:red_sandstone",        0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("cut_red_sandstone",    "minecraft:cut_red_sandstone",    0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("smooth_red_sandstone", "minecraft:smooth_red_sandstone", 0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("quartz_block",         "minecraft:quartz_block",         0.8,  "stone",          True,  "pickaxe", False, 0),
+    ("smooth_quartz",        "minecraft:smooth_quartz",        0.8,  "stone",          True,  "pickaxe", False, 0),
+    # ── 1:1 Wall Slab Parity: Nether, End, Copper & Glass (8) ──
+    ("nether_brick",         "minecraft:nether_brick",         2.0,  "nether_brick",   True,  "pickaxe", False, 0),
+    ("red_nether_brick",     "minecraft:red_nether_brick",     2.0,  "nether_brick",   True,  "pickaxe", False, 0),
+    ("blackstone",           "minecraft:blackstone",           1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("polished_blackstone",  "minecraft:polished_blackstone",  2.0,  "stone",          True,  "pickaxe", False, 0),
+    ("end_stone_brick",      "minecraft:end_bricks",           3.0,  "stone",          True,  "pickaxe", False, 0),
+    ("purpur_block",         "minecraft:purpur_block",         1.5,  "stone",          True,  "pickaxe", False, 0),
+    ("cut_copper",           "minecraft:cut_copper",           3.0,  "copper",         True,  "pickaxe", False, 0),
+    ("glass",                "minecraft:glass",                0.3,  "glass",          False, None,      False, 0),
+    # ── Extended Territory: Extra Masonry, Decor, Lights, Metals & Nature (15) ──
+    ("tuff_bricks",          "minecraft:tuff_bricks",          1.5,  "tuff_bricks",    True,  "pickaxe", False, 0),
+    ("obsidian",             "minecraft:obsidian",             10.0, "stone",          False, "pickaxe", False, 0),
+    ("bookshelf",            "minecraft:bookshelf",            1.5,  "wood",           False, "axe",     True,  0),
+    ("glowstone",            "minecraft:glowstone",            0.3,  "glass",          False, None,      False, 15),
+    ("sea_lantern",          "minecraft:sea_lantern",          0.3,  "glass",          False, None,      False, 15),
+    ("iron_block",           "minecraft:iron_block",           5.0,  "iron",           True,  "pickaxe", False, 0),
+    ("gold_block",           "minecraft:gold_block",           3.0,  "metal",          True,  "pickaxe", False, 0),
+    ("diamond_block",        "minecraft:diamond_block",        5.0,  "metal",          True,  "pickaxe", False, 0),
+    ("emerald_block",        "minecraft:emerald_block",        5.0,  "metal",          True,  "pickaxe", False, 0),
+    ("copper_block",         "minecraft:copper_block",         3.0,  "copper",         True,  "pickaxe", False, 0),
+    ("amethyst_block",       "minecraft:amethyst_block",       1.5,  "amethyst_block", True,  "pickaxe", False, 0),
+    ("dirt",                 "minecraft:dirt",                 0.5,  "gravel",         False, None,      False, 0),
+    ("grass_block",          "minecraft:grass_block",          0.6,  "grass",          False, None,      False, 0),
+    ("moss_block",           "minecraft:moss_block",           0.1,  "moss_block",     False, None,      False, 0),
+    ("sand",                 "minecraft:sand",                 0.5,  "sand",           False, None,      False, 0),
 ]
 
 # Verified vanilla Bedrock RP texture paths from Mojang/bedrock-samples v1.26.60.5.
@@ -456,6 +481,25 @@ def mini_block_materials(slug):
         }
         return mats, mats, "sandstone_side"
 
+    if slug == "smooth_sandstone":
+        m = mat_inst("sandstone_top")
+        mats = {"*": m, "side": m, "up": m, "down": m}
+        return mats, mats, "sandstone_top"
+
+    if slug == "red_sandstone":
+        mats = {
+            "*":    mat_inst("red_sandstone_side"),
+            "side": mat_inst("red_sandstone_side"),
+            "up":   mat_inst("red_sandstone_top"),
+            "down": mat_inst("red_sandstone_bottom"),
+        }
+        return mats, mats, "red_sandstone_side"
+
+    if slug == "smooth_red_sandstone":
+        m = mat_inst("red_sandstone_top")
+        mats = {"*": m, "side": m, "up": m, "down": m}
+        return mats, mats, "red_sandstone_top"
+
     if slug == "quartz_block":
         mats = {
             "*":    mat_inst("quartz_side"),
@@ -465,18 +509,33 @@ def mini_block_materials(slug):
         }
         return mats, mats, "quartz_side"
 
+    if slug == "smooth_quartz":
+        m = mat_inst("quartz_bottom")
+        mats = {"*": m, "side": m, "up": m, "down": m}
+        return mats, mats, "quartz_bottom"
+
+    if slug == "smooth_stone":
+        m = mat_inst("smooth_stone_top")
+        mats = {"*": m, "side": m, "up": m, "down": m}
+        return mats, mats, "smooth_stone_top"
+
     tex_map = {
-        "oak_planks":        "oak",
-        "spruce_planks":     "spruce",
-        "birch_planks":      "birch",
-        "jungle_planks":     "jungle",
-        "acacia_planks":     "acacia",
-        "dark_oak_planks":   "dark_oak",
-        "cherry_planks":     "cherry",
-        "bamboo_planks":     "bamboo",
-        "pale_oak_planks":   "pale_oak",
-        "stone_bricks":      "stone_brick",
-        "cobbled_deepslate": "deepslate",
+        "oak_planks":         "oak",
+        "spruce_planks":      "spruce",
+        "birch_planks":       "birch",
+        "jungle_planks":      "jungle",
+        "acacia_planks":      "acacia",
+        "dark_oak_planks":    "dark_oak",
+        "mangrove_planks":    "mangrove",
+        "cherry_planks":      "cherry",
+        "bamboo_planks":      "bamboo",
+        "pale_oak_planks":    "pale_oak",
+        "crimson_planks":     "crimson",
+        "warped_planks":      "warped",
+        "stone_bricks":       "stone_brick",
+        "mossy_stone_bricks": "mossy_stone_brick",
+        "cobbled_deepslate":  "deepslate",
+        "purpur_block":       "purpur",
     }
     tex_key = tex_map.get(slug, slug)
     is_glass = (slug == "glass")
@@ -832,7 +891,7 @@ catalog = {
                     },
                     {
                         "group_identifier": {
-                            "icon": "addon:mini_grass_block",
+                            "icon": "addon:mini_oak_planks",
                             "name": "addon:itemGroup.name.mini_block",
                         },
                         "items": mini_block_ids,
@@ -982,6 +1041,13 @@ with open(slab_map_path, "w") as f:
         f.write(f'  "addon:mini_{slug}": "{source}",\n')
     f.write("};\n\n")
 
+    source_to_mini = {source: f"addon:mini_{slug}" for slug, source, *_ in MINI_BLOCKS}
+    f.write("export const WALL_SLAB_TO_MINI_BLOCK = {\n")
+    for slug, source, *_ in WALL_SLABS:
+        if source in source_to_mini:
+            f.write(f'  "addon:{slug}_wall_slab": "{source_to_mini[source]}",\n')
+    f.write("};\n\n")
+
     f.write("export const SLAB_SOUNDS = {\n")
     for slug, source, hardness, stone_cut, sound, *_ in WALL_SLABS:
         f.write(f'  "addon:{slug}_wall_slab": "{SOUND_EVENTS.get(sound, "use.stone")}",\n')
@@ -1040,39 +1106,65 @@ WALL_SLAB_NAMES = {
 }
 
 MINI_BLOCK_NAMES = {
-    "grass_block":       "Mini Grass Block",
-    "dirt":              "Mini Dirt",
-    "moss_block":        "Mini Moss Block",
-    "sand":              "Mini Sand",
-    "oak_planks":        "Mini Oak Planks",
-    "spruce_planks":     "Mini Spruce Planks",
-    "birch_planks":      "Mini Birch Planks",
-    "jungle_planks":     "Mini Jungle Planks",
-    "acacia_planks":     "Mini Acacia Planks",
-    "dark_oak_planks":   "Mini Dark Oak Planks",
-    "cherry_planks":     "Mini Cherry Planks",
-    "bamboo_planks":     "Mini Bamboo Planks",
-    "pale_oak_planks":   "Mini Pale Oak Planks",
-    "stone":             "Mini Stone",
-    "cobblestone":       "Mini Cobblestone",
-    "stone_bricks":      "Mini Stone Bricks",
-    "brick":             "Mini Brick",
-    "sandstone":         "Mini Sandstone",
-    "quartz_block":      "Mini Quartz Block",
-    "cobbled_deepslate": "Mini Cobbled Deepslate",
-    "blackstone":        "Mini Blackstone",
-    "tuff_bricks":       "Mini Tuff Bricks",
-    "obsidian":          "Mini Obsidian",
-    "glass":             "Mini Glass",
-    "glowstone":         "Mini Glowstone",
-    "sea_lantern":       "Mini Sea Lantern",
-    "bookshelf":         "Mini Bookshelf",
-    "iron_block":        "Mini Block of Iron",
-    "gold_block":        "Mini Block of Gold",
-    "diamond_block":     "Mini Block of Diamond",
-    "emerald_block":     "Mini Block of Emerald",
-    "copper_block":      "Mini Block of Copper",
-    "amethyst_block":    "Mini Block of Amethyst",
+    # 1:1 Wall Slab Parity
+    "oak_planks":           "Mini Oak Planks",
+    "spruce_planks":        "Mini Spruce Planks",
+    "birch_planks":         "Mini Birch Planks",
+    "jungle_planks":        "Mini Jungle Planks",
+    "acacia_planks":        "Mini Acacia Planks",
+    "dark_oak_planks":      "Mini Dark Oak Planks",
+    "mangrove_planks":      "Mini Mangrove Planks",
+    "cherry_planks":        "Mini Cherry Planks",
+    "bamboo_planks":        "Mini Bamboo Planks",
+    "pale_oak_planks":      "Mini Pale Oak Planks",
+    "crimson_planks":       "Mini Crimson Planks",
+    "warped_planks":        "Mini Warped Planks",
+    "stone":                "Mini Stone",
+    "smooth_stone":         "Mini Smooth Stone",
+    "cobblestone":          "Mini Cobblestone",
+    "mossy_cobblestone":    "Mini Mossy Cobblestone",
+    "stone_bricks":         "Mini Stone Bricks",
+    "mossy_stone_bricks":   "Mini Mossy Stone Bricks",
+    "granite":              "Mini Granite",
+    "polished_granite":     "Mini Polished Granite",
+    "diorite":              "Mini Diorite",
+    "polished_diorite":     "Mini Polished Diorite",
+    "andesite":             "Mini Andesite",
+    "polished_andesite":    "Mini Polished Andesite",
+    "cobbled_deepslate":    "Mini Cobbled Deepslate",
+    "brick":                "Mini Brick",
+    "sandstone":            "Mini Sandstone",
+    "cut_sandstone":        "Mini Cut Sandstone",
+    "smooth_sandstone":     "Mini Smooth Sandstone",
+    "red_sandstone":        "Mini Red Sandstone",
+    "cut_red_sandstone":    "Mini Cut Red Sandstone",
+    "smooth_red_sandstone": "Mini Smooth Red Sandstone",
+    "quartz_block":         "Mini Quartz Block",
+    "smooth_quartz":        "Mini Smooth Quartz",
+    "nether_brick":         "Mini Nether Brick",
+    "red_nether_brick":     "Mini Red Nether Brick",
+    "blackstone":           "Mini Blackstone",
+    "polished_blackstone":  "Mini Polished Blackstone",
+    "end_stone_brick":      "Mini End Stone Brick",
+    "purpur_block":         "Mini Purpur Block",
+    "cut_copper":           "Mini Cut Copper",
+    "glass":                "Mini Glass",
+    # Extended Territory
+    "tuff_bricks":          "Mini Tuff Bricks",
+    "obsidian":             "Mini Obsidian",
+    "bookshelf":            "Mini Bookshelf",
+    "glowstone":            "Mini Glowstone",
+    "sea_lantern":          "Mini Sea Lantern",
+    "iron_block":           "Mini Block of Iron",
+    "gold_block":           "Mini Block of Gold",
+    "diamond_block":        "Mini Block of Diamond",
+    "emerald_block":        "Mini Block of Emerald",
+    "copper_block":         "Mini Block of Copper",
+    "amethyst_block":       "Mini Block of Amethyst",
+    "dirt":                 "Mini Dirt",
+    "grass_block":          "Mini Grass Block",
+    "moss_block":           "Mini Moss Block",
+    "sand":                 "Mini Sand",
 }
 
 lang_entries = [
