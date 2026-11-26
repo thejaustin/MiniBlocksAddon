@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:sandstone_wall_slab_from_mini"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_sandstone"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_sandstone"
+      }
+    ],
+    "result": {
+      "item": "addon:sandstone_wall_slab",
+      "count": 1
+    }
+  }
+}

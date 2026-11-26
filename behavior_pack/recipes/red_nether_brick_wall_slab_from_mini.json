@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:red_nether_brick_wall_slab_from_mini"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_red_nether_brick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_red_nether_brick"
+      }
+    ],
+    "result": {
+      "item": "addon:red_nether_brick_wall_slab",
+      "count": 1
+    }
+  }
+}

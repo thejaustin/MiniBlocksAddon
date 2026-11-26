@@ -493,6 +493,102 @@ GEOMETRIES = {
         ],
         bounds=(2, 2, 0.5),
     ),
+    # Mini blocks: 4/8 Horizontal Half-Block (4 distinct 8x8x8 cubes filling bottom or top layer)
+    "mini_block_slab_bottom.geo.json": make_geo_doc(
+        "geometry.mini_block_slab_bottom",
+        [
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 1, 0.25),
+    ),
+    "mini_block_slab_top.geo.json": make_geo_doc(
+        "geometry.mini_block_slab_top",
+        [
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 1, 0.75),
+    ),
+    # Mini blocks: 5/8 Block (full half-layer + 1 cube on upper/lower layer)
+    "mini_block_five_bottom.geo.json": make_geo_doc(
+        "geometry.mini_block_five_bottom",
+        [
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    "mini_block_five_top.geo.json": make_geo_doc(
+        "geometry.mini_block_five_top",
+        [
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    # Mini blocks: 6/8 Mini Stair (full half-layer + 2 cubes along back edge)
+    "mini_block_six_bottom.geo.json": make_geo_doc(
+        "geometry.mini_block_six_bottom",
+        [
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    "mini_block_six_top.geo.json": make_geo_doc(
+        "geometry.mini_block_six_top",
+        [
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    # Mini blocks: 7/8 Block (7 of 8 octants filled — 1 corner notch open!)
+    "mini_block_seven_bottom.geo.json": make_geo_doc(
+        "geometry.mini_block_seven_bottom",
+        [
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    "mini_block_seven_top.geo.json": make_geo_doc(
+        "geometry.mini_block_seven_top",
+        [
+            {"origin": [-8, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
 }
 
 models_dir = os.path.join(RP, "models/blocks")
@@ -1049,6 +1145,94 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
         },
     ])
 
+    # ── 6. 4/8 through 7/8 Progressive Octant Stages (Exact 8 Mini = 1 Full Block!) ──
+    permutations.extend([
+        {
+            "condition": f"q.block_state('addon:shape') == 'slab_half' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_slab_bottom",
+                "minecraft:collision_box": [{"origin": [-8, 0, -8], "size": [16, 8, 16]}],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'slab_half' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_slab_top",
+                "minecraft:collision_box": [{"origin": [-8, 8, -8], "size": [16, 8, 16]}],
+                "minecraft:selection_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'five' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_five_bottom",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 8, -8], "size": [ 8, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'five' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_five_top",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 0, -8], "size": [ 8, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'six' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_six_bottom",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 8, -8], "size": [16, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'six' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_six_top",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 0, -8], "size": [16, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'seven' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_seven_bottom",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 0, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 8, -8], "size": [16, 8,  8]},
+                    {"origin": [-8, 8,  0], "size": [ 8, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'seven' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_seven_top",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+                    {"origin": [-8, 0, -8], "size": [16, 8,  8]},
+                    {"origin": [-8, 0,  0], "size": [ 8, 8,  8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+            },
+        },
+    ])
+
     components = {
         "minecraft:material_instances": world_mats,
         "minecraft:geometry": "geometry.mini_block_single",
@@ -1090,7 +1274,10 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
                 # Managed cleanly inside expandable "Mini Blocks (+)" group in crafting_item_catalog.json
                 "menu_category": {"category": "none"},
                 "states": {
-                    "addon:shape": ["single", "pillar", "beam_x", "beam_z", "corner", "step_x", "step_z"],
+                    "addon:shape": [
+                        "single", "pillar", "beam_x", "beam_z", "corner",
+                        "step_x", "step_z", "slab_half", "five", "six", "seven",
+                    ],
                 },
                 "traits": {
                     "minecraft:placement_position": {
@@ -1180,9 +1367,11 @@ def stonecutter(recipe_id, source, result, count):
 
 
 COLUMN = ["#", "#", "#"]
-DIAGONAL = ["# ", " #"]  # 2x2 safe, zero vanilla recipe conflicts; 2 blocks -> 8 mini blocks (exact 1:4 ratio!)
+DIAGONAL = ["# ", " #"]  # 2x2 safe, zero vanilla recipe conflicts; 2 blocks -> 16 mini blocks (exact 1:8 volume!)
+SQUARE_2X2 = ["##", "##"]  # 4 mini blocks -> 1 wall slab (exact 4:1 volume!)
 
 expected_recipes = set()
+source_to_mini_id = {source: f"addon:mini_{slug}" for slug, source, *_ in MINI_BLOCKS}
 
 for slug, source, hardness, stone_cut, sound, tool_type, flammable in WALL_SLABS:
     identifier = f"addon:{slug}_wall_slab"
@@ -1195,6 +1384,17 @@ for slug, source, hardness, stone_cut, sound, tool_type, flammable in WALL_SLABS
         expected_recipes.add(cut_file)
         write_json(os.path.join(BP, "recipes", cut_file),
                    stonecutter(f"addon:{slug}_wall_slab_stonecutting", source, identifier, 2))
+    # Bidirectional Wall Slab <-> Mini Block recipes (1 Wall Slab = 4 Mini Blocks!)
+    mini_id = source_to_mini_id.get(source)
+    if mini_id:
+        from_mini_file = f"{slug}_wall_slab_from_mini.json"
+        expected_recipes.add(from_mini_file)
+        write_json(os.path.join(BP, "recipes", from_mini_file),
+                   shaped(f"addon:{slug}_wall_slab_from_mini", SQUARE_2X2, mini_id, identifier, 1))
+        to_mini_file = f"{slug}_wall_slab_to_mini_stonecutting.json"
+        expected_recipes.add(to_mini_file)
+        write_json(os.path.join(BP, "recipes", to_mini_file),
+                   stonecutter(f"addon:{slug}_wall_slab_to_mini_stonecutting", identifier, mini_id, 4))
 
 expected_recipes.add("cobblestone_slab_stonecutting.json")
 write_json(os.path.join(BP, "recipes/cobblestone_slab_stonecutting.json"),
@@ -1206,12 +1406,12 @@ for slug, source, hardness, sound, stone_cut, tool_type, flammable, light_emissi
     craft_file = f"mini_{slug}_crafting.json"
     expected_recipes.add(craft_file)
     write_json(os.path.join(BP, "recipes", craft_file),
-               shaped(f"addon:mini_{slug}_crafting", DIAGONAL, source, identifier, 8))
+               shaped(f"addon:mini_{slug}_crafting", DIAGONAL, source, identifier, 16))
     if stone_cut:
         cut_file = f"mini_{slug}_stonecutting.json"
         expected_recipes.add(cut_file)
         write_json(os.path.join(BP, "recipes", cut_file),
-                   stonecutter(f"addon:mini_{slug}_stonecutting", source, identifier, 4))
+                   stonecutter(f"addon:mini_{slug}_stonecutting", source, identifier, 8))
 
 clean_generated_dir(os.path.join(BP, "recipes"), expected_recipes)
 print(f"  wrote {len(expected_recipes)} recipes")

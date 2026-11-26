@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:glass_wall_slab_from_mini"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_glass"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_glass"
+      }
+    ],
+    "result": {
+      "item": "addon:glass_wall_slab",
+      "count": 1
+    }
+  }
+}

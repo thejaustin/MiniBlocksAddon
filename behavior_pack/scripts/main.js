@@ -47,7 +47,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   system.runTimeout(() => {
     if (!player?.isValid) return;
     player.sendMessage(
-      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.3.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
+      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.4.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
     );
   }, 20);
 });
@@ -168,33 +168,47 @@ const TRAPDOOR_DIR_TO_SLAB_DIR = {
 const CORNER_SHAPES = new Set(["inner_left", "inner_right", "outer_left", "outer_right"]);
 
 const SHAPE_COUNT = {
-  single: 1,
-  pillar: 2,
-  beam_x: 2,
-  beam_z: 2,
-  corner: 3,
-  step_x: 3,
-  step_z: 3,
+  single:    1,
+  pillar:    2,
+  beam_x:    2,
+  beam_z:    2,
+  corner:    3,
+  step_x:    3,
+  step_z:    3,
+  slab_half: 4,
+  five:      5,
+  six:       6,
+  seven:     7,
 };
 
 const SHAPE_LABELS = {
-  pillar: "Vertical Pillar (2/4)",
-  beam_x: "Horizontal Beam E-W (2/4)",
-  beam_z: "Horizontal Beam N-S (2/4)",
-  corner: "L-Corner (3/4)",
-  step_x: "Mini Step E-W (3/4)",
-  step_z: "Mini Step N-S (3/4)",
-  full:   "Combined -> Full Block",
+  pillar:    "Vertical Pillar (2/8)",
+  beam_x:    "Horizontal Beam E-W (2/8)",
+  beam_z:    "Horizontal Beam N-S (2/8)",
+  corner:    "Flat L-Corner (3/8)",
+  step_x:    "Mini Step E-W (3/8)",
+  step_z:    "Mini Step N-S (3/8)",
+  wall_slab: "Wall Slab (4/8)",
+  slab_half: "Half Block (4/8)",
+  five:      "5/8 Block",
+  six:       "Mini Stair (6/8)",
+  seven:     "7/8 Block",
+  full:      "Combined -> Full Block (8/8)",
 };
 
 const SHAPE_PITCH = {
-  pillar: 0.96,
-  beam_x: 0.96,
-  beam_z: 0.96,
-  corner: 1.04,
-  step_x: 1.04,
-  step_z: 1.04,
-  full:   1.12,
+  pillar:    0.92,
+  beam_x:    0.92,
+  beam_z:    0.92,
+  corner:    0.96,
+  step_x:    0.96,
+  step_z:    0.96,
+  wall_slab: 1.00,
+  slab_half: 1.00,
+  five:      1.04,
+  six:       1.08,
+  seven:     1.12,
+  full:      1.18,
 };
 
 function canBuild(player) {
@@ -238,10 +252,10 @@ function showHint(player, text) {
   }
 }
 
-function hasEnoughItems(player, typeId, selectedSlot, amount = 1) {
-  if (player.getGameMode() === GameMode.Creative) return true;
+function getItemCount(player, typeId, selectedSlot) {
+  if (player.getGameMode() === GameMode.Creative) return 64;
   const container = player.getComponent("minecraft:inventory")?.container;
-  if (!container) return false;
+  if (!container) return 0;
 
   const activeSlot = player.selectedSlotIndex;
   const slot =
@@ -249,7 +263,11 @@ function hasEnoughItems(player, typeId, selectedSlot, amount = 1) {
       ? activeSlot
       : selectedSlot;
   const item = container.getItem(slot);
-  return item?.typeId === typeId && item.amount >= amount;
+  return item?.typeId === typeId ? item.amount : 0;
+}
+
+function hasEnoughItems(player, typeId, selectedSlot, amount = 1) {
+  return getItemCount(player, typeId, selectedSlot) >= amount;
 }
 
 function consumeItem(player, typeId, selectedSlot, amount = 1) {
@@ -522,7 +540,8 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = bloc
   const selectedSlot = player.selectedSlotIndex;
   if (!hasEnoughItems(player, itemTypeId, selectedSlot, consumeCount)) {
     if (consumeCount > 1) {
-      showHint(player, `§eNeed ${consumeCount} Mini Blocks to fill Wall Slab`);
+      const have = getItemCount(player, itemTypeId, selectedSlot);
+      showHint(player, `§eNeed ${consumeCount} Mini Blocks to fill Wall Slab §7(have ${have}/${consumeCount})`);
     }
     return false;
   }
@@ -685,7 +704,19 @@ function getPlayerHorizontalAxis(player) {
   }
 }
 
-function resolveNextMiniShape(currentShape, blockFace, faceLocation, player) {
+function getPlayerCardinalDir(player) {
+  try {
+    const view = player.getViewDirection();
+    if (Math.abs(view.x) >= Math.abs(view.z)) {
+      return view.x >= 0 ? "east" : "west";
+    }
+    return view.z >= 0 ? "south" : "north";
+  } catch {
+    return "north";
+  }
+}
+
+function resolveNextMiniShape(currentShape, blockFace, faceLocation, player, miniTypeId) {
   const isVerticalFace = blockFace === Direction.Up || blockFace === Direction.Down;
   const isXFace = blockFace === Direction.East || blockFace === Direction.West;
   const isZFace = blockFace === Direction.North || blockFace === Direction.South;
@@ -720,9 +751,19 @@ function resolveNextMiniShape(currentShape, blockFace, faceLocation, player) {
     return "step_z";
   }
 
-  if (currentShape === "corner" || currentShape === "step_x" || currentShape === "step_z") {
-    return "full";
+  // 3/8 -> 4/8: Vertical Mini Step transforms into a real Wall Slab (4 Mini = 1 Wall Slab!)
+  // when a matching Wall Slab exists; Flat L-Corner completes into a 4/8 Horizontal Half-Block!
+  if (currentShape === "step_x" || currentShape === "step_z") {
+    if (MINI_BLOCK_TO_WALL_SLAB[miniTypeId]) return "wall_slab";
+    return "slab_half";
   }
+  if (currentShape === "corner") return "slab_half";
+
+  // 4/8 -> 5/8 -> 6/8 -> 7/8 -> 8/8 (Full Vanilla Block!)
+  if (currentShape === "slab_half") return "five";
+  if (currentShape === "five") return "six";
+  if (currentShape === "six") return "seven";
+  if (currentShape === "seven") return "full";
 
   return null;
 }
@@ -731,7 +772,7 @@ function tryStackMiniBlock(player, targetBlock, blockFace, faceLocation, miniTyp
   if (!canBuild(player)) return false;
 
   const currentShape = targetBlock.permutation.getState("addon:shape") || "single";
-  const nextShape = resolveNextMiniShape(currentShape, blockFace, faceLocation, player);
+  const nextShape = resolveNextMiniShape(currentShape, blockFace, faceLocation, player, miniTypeId);
   if (!nextShape) return false;
 
   const location = targetBlock.location;
@@ -749,7 +790,7 @@ function tryStackMiniBlock(player, targetBlock, blockFace, faceLocation, miniTyp
     if (current?.typeId !== miniTypeId) return;
 
     const liveShape = current.permutation.getState("addon:shape") || "single";
-    const liveNext = resolveNextMiniShape(liveShape, blockFace, faceLocation, player);
+    const liveNext = resolveNextMiniShape(liveShape, blockFace, faceLocation, player, miniTypeId);
     if (!liveNext) return;
 
     if (!consumeItem(player, miniTypeId, selectedSlot)) return;
@@ -759,6 +800,26 @@ function tryStackMiniBlock(player, targetBlock, blockFace, faceLocation, miniTyp
       if (fullBlockId) {
         current.setType(fullBlockId);
       }
+      refreshAdjacentWallSlabs(dimension, location);
+    } else if (liveNext === "wall_slab") {
+      // 4 Mini Blocks in a vertical step -> real auto-connecting Wall Slab!
+      const wallSlabId = MINI_BLOCK_TO_WALL_SLAB[miniTypeId];
+      const mf = current.permutation.getState("minecraft:block_face");
+      let slabDir = mf && MINI_FACE_TO_SLAB_DIR[mf] ? MINI_FACE_TO_SLAB_DIR[mf] : null;
+      if (!slabDir) {
+        const pDir = getPlayerCardinalDir(player);
+        if (liveShape === "step_x") {
+          slabDir = pDir === "north" || pDir === "south" ? pDir : "north";
+        } else {
+          slabDir = pDir === "east" || pDir === "west" ? pDir : "west";
+        }
+      }
+      const wallShape = computeWallSlabShape(dimension, location, slabDir);
+      const perm = BlockPermutation.resolve(wallSlabId, {
+        "minecraft:cardinal_direction": slabDir,
+        "addon:shape": wallShape,
+      });
+      current.setPermutation(perm);
       refreshAdjacentWallSlabs(dimension, location);
     } else {
       current.setPermutation(current.permutation.withState("addon:shape", liveNext));
@@ -810,12 +871,12 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         const slabShape = block.permutation.getState("addon:shape") || "straight";
         const basis = SLAB_BASIS[slabDir];
 
-        // Matching Mini Block tapped onto the Wall Slab's open inner face -> 2 Mini Blocks fill it to Full Block!
+        // Matching Mini Block tapped onto the Wall Slab's open inner face -> 4 Mini Blocks fill it to Full Block (4 + 4 = 8)!
         if (
           MINI_BLOCK_TO_WALL_SLAB[itemTypeId] === block.typeId &&
           isWallSlabCombineFace(slabDir, slabShape, blockFace)
         ) {
-          if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 2)) {
+          if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
             event.cancel = true;
             return;
           }
@@ -911,19 +972,14 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    // 2B. Tapping a matching Mini Block (2-cube or 3-cube) with a Wall Slab -> Volume-conserved combine!
+    // 2B. Tapping a 4/8..7/8 Mini Block with its matching Wall Slab (4/8) -> Volume-conserved combine!
     if (!player.isSneaking && MINI_BLOCK_IDS.has(block.typeId) && WALL_SLAB_TO_MINI_BLOCK[itemTypeId] === block.typeId) {
       const mShape = block.permutation.getState("addon:shape") || "single";
       const mCount = SHAPE_COUNT[mShape] || 1;
-      if (mCount === 2) {
-        // 2 Mini Blocks + 1 Wall Slab (2) = 4/4 Full Block!
-        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1)) {
-          event.cancel = true;
-          return;
-        }
-      } else if (mCount === 3) {
-        // 3 Mini Blocks + 1 Wall Slab (2) = 4/4 Full Block + 1 Mini Block refund!
-        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1, block.typeId, 1)) {
+      if (mCount >= 4) {
+        // mCount + 4 >= 8 -> Full Block (8/8) + exact refund of (mCount - 4) Mini Blocks!
+        const refund = mCount - 4;
+        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1, refund > 0 ? block.typeId : null, refund)) {
           event.cancel = true;
           return;
         }

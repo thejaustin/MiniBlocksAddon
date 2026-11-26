@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:purpur_wall_slab_from_mini"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##",
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_purpur_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_purpur_block"
+      }
+    ],
+    "result": {
+      "item": "addon:purpur_wall_slab",
+      "count": 1
+    }
+  }
+}

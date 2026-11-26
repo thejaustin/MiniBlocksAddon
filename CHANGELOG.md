@@ -166,6 +166,17 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.4.0 (Bedrock 26.60 — Exact 3D Volume Physics: 8 Mini Blocks = 1 Block, 4 Mini Blocks = 1 Wall Slab — 2026) ===
+* [Fix/Feature] True 3D Octant Volume Conservation (`1 Full Block = 2 Wall Slabs = 8 Mini Blocks`, `1 Wall Slab = 4 Mini Blocks`):
+  - Full 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8 progressive mini-block building in a single space with exact multi-box 1.26.60 collisions (`slab_half` 4/8, `five` 5/8, `six` 6/8 mini stair, `seven` 7/8, and full vanilla block at 8/8!).
+  - Building a 4th Mini Block onto a vertical Mini Step (`step_x`/`step_z`) transforms it directly into the real auto-connecting Wall Slab (4/8)!
+  - Tapping a Wall Slab's open inner face with 4 matching Mini Blocks fills it into the full vanilla block (`4 + 4 = 8`)!
+  - Tapping a 4/8..7/8 Mini Block with its matching Wall Slab (4/8) completes the full vanilla block and refunds any surplus Mini Blocks in Survival (`5+4 -> Full + 1`, `6+4 -> Full + 2`, `7+4 -> Full + 3`)!
+  - Survival break conservation drops exact 1..7 Mini Blocks for every shape.
+* [Recipes] Exact 1:8 / 1:4 Crafting & Stonecutter Ratios (337 recipes):
+  - 2 Full Blocks (diagonal 2x2) -> 16 Mini Blocks; 1 Full Block in Stonecutter -> 8 Mini Blocks.
+  - 4 Mini Blocks (2x2 square) -> 1 Wall Slab; 1 Wall Slab in Stonecutter -> 4 Mini Blocks!
+
 === v2.3.0 (Bedrock 26.60 — Face-Aware Building, Vertical Corner Continuity, Mini Block <-> Wall Slab Synergy & Smarter Connections — 2026) ===
 * [Feature] Face-Aware Wall Slab & Floor Slab Building (Fixes classic accidental combine friction!):
   - Tapping the OPEN INNER FACE of a Wall Slab (or inner cavity of a corner) combines 2:1 into the full vanilla block—matching vanilla horizontal slab intuition and fixing the original MCPE v1.9 adjacent-block wipe bug!

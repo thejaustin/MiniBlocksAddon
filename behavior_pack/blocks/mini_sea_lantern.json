@@ -14,7 +14,11 @@
           "beam_z",
           "corner",
           "step_x",
-          "step_z"
+          "step_z",
+          "slab_half",
+          "five",
+          "six",
+          "seven"
         ]
       },
       "traits": {
@@ -1118,6 +1122,358 @@
               0,
               90,
               0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'slab_half' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_slab_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              8,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'slab_half' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_slab_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              8,
+              -8
+            ],
+            "size": [
+              16,
+              8,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'five' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_five_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'five' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_five_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'six' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_six_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'six' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_six_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'seven' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_seven_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                0
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'seven' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_seven_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                16
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                0
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
             ]
           }
         }
