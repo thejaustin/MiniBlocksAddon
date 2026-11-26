@@ -1297,6 +1297,12 @@ with open(slab_map_path, "w") as f:
             f.write(f'  "addon:{slug}_wall_slab": "{source_to_mini[source]}",\n')
     f.write("};\n\n")
 
+    f.write("export const MINI_BLOCK_TO_WALL_SLAB = {\n")
+    for slug, source, *_ in WALL_SLABS:
+        if source in source_to_mini:
+            f.write(f'  "{source_to_mini[source]}": "addon:{slug}_wall_slab",\n')
+    f.write("};\n\n")
+
     f.write("export const SLAB_SOUNDS = {\n")
     for slug, source, hardness, stone_cut, sound, *_ in WALL_SLABS:
         f.write(f'  "addon:{slug}_wall_slab": "{SOUND_EVENTS.get(sound, "use.stone")}",\n')

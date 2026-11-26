@@ -166,6 +166,23 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.3.0 (Bedrock 26.60 — Face-Aware Building, Vertical Corner Continuity, Mini Block <-> Wall Slab Synergy & Smarter Connections — 2026) ===
+* [Feature] Face-Aware Wall Slab & Floor Slab Building (Fixes classic accidental combine friction!):
+  - Tapping the OPEN INNER FACE of a Wall Slab (or inner cavity of a corner) combines 2:1 into the full vanilla block—matching vanilla horizontal slab intuition and fixing the original MCPE v1.9 adjacent-block wipe bug!
+  - Tapping TOP/BOTTOM stacks a matching Wall Slab directly above/below in the same facing direction.
+  - Tapping LEFT/RIGHT narrow edges extends the thin wall sideways in the same facing direction—build long or tall thin walls tap-tap-tap with zero crouching!
+  - Tapping BACK places flush back-to-back behind the wall.
+  - Cobblestone Floor Slab gets identical face-aware combining (top of bottom / bottom of top combines; sides extend matching half).
+* [Feature] Vertical Corner Continuity:
+  - Stacking a Wall Slab onto Top/Bottom of an Outer Corner (1/4 post) or Inner Corner (3/4 L-wall) automatically inherits the corner shape vertically when no horizontal neighbors override it (crouch to lock straight!).
+* [Feature] Mini Blocks <-> Wall Slabs Cross-Synergy:
+  - Placing ANY Mini Block onto the Top, Bottom, or Side edges of ANY Wall Slab snaps it flush onto the Wall Slab's plane with zero 4px overhang!
+  - Volume-conserved cross-combining (`1 Full Block = 2 Wall Slabs = 4 Mini Blocks`): tapping a Wall Slab's open face with 2 matching Mini Blocks fills it into the full block; tapping a 2-cube or 3-cube Mini Block with its matching Wall Slab completes the full block (refunding 1 Mini Block on 3+2!).
+  - Wall-Mounted Mini Block Pillars connect seamlessly with adjacent Wall Slabs.
+* [Feature] Smarter Neighbor Connections Beyond Stairs:
+  - Added Vanilla Stair `minecraft:corner` precision checking to prevent false corners next to narrowed outer stair corners.
+  - Added auto-connections to Open Vertical Trapdoors (`open_bit == true`), updating live on place, toggle, and break.
+
 === v2.2.0 (Bedrock 26.60 — Cross-Material + Vanilla Stair Connections & Full Stair-Family Wall Slab Expansion — 2026) ===
 * [Feature] Cross-Material & Vanilla Stair Auto-Connections:
   - Wall Slabs auto-connect seamlessly across ANY material (Wood, Stone, Deepslate, Tuff, Copper, Glass, etc.) AND directly to ANY Vanilla Stair (`weirdo_direction` exact 8px back-wall alignment!).
