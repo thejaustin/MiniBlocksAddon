@@ -1,29 +1,29 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Textures, models, and audio for wall slabs and mini blocks! The official Bedrock successor to the classic MCPE Mini Blocks Mod.",
+        "description": "Textures, models, and audio for wall slabs and mini blocks! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Resources)",
-        "uuid": "6bebf210-8216-4843-ba96-48427670f091",
+        "uuid": "96c44b2b-abe2-4465-973b-428d63b3a790",
         "version": [
-            1,
-            5,
-            1
+            2,
+            0,
+            0
         ],
         "min_engine_version": [
             1,
-            21,
-            0
+            26,
+            60
         ]
     },
     "modules": [
         {
             "description": "MiniBlocks Addon Resources",
             "type": "resources",
-            "uuid": "7d3de432-34e2-4296-89a8-8e8387bf9aa0",
+            "uuid": "fa9ea8f1-0556-49c6-97e9-9a6d6a469d8d",
             "version": [
-                1,
-                5,
-                1
+                2,
+                0,
+                0
             ]
         }
     ]

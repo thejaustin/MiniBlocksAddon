@@ -1,56 +1,56 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Wall slabs, mini blocks, and combining mechanics! The official Bedrock successor to the classic MCPE Mini Blocks Mod.",
+        "description": "Wall slabs, progressive mini blocks, directional placement, and combining! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Behaviors)",
-        "uuid": "74153b5c-65db-4841-896a-bff2b7ec07a8",
+        "uuid": "75898541-b13b-4e37-8363-224e29b30f88",
         "version": [
-            1,
-            5,
-            1
+            2,
+            0,
+            0
         ],
         "min_engine_version": [
             1,
-            21,
-            0
+            26,
+            60
         ]
     },
     "modules": [
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
-            "uuid": "e103b046-dc95-40eb-b8e8-f1384f9f093f",
+            "uuid": "35669d62-4404-4b3b-8815-7df8b9ce27aa",
             "version": [
-                1,
-                5,
-                1
+                2,
+                0,
+                0
             ]
         },
         {
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "c1302b40-90ef-43cb-aabd-e3c6a5fac9b0",
+            "uuid": "97c7553e-aa89-4e19-91e6-28aeb15fb721",
             "version": [
-                1,
-                5,
-                1
+                2,
+                0,
+                0
             ],
             "entry": "scripts/main.js"
         }
     ],
     "dependencies": [
         {
-            "uuid": "6bebf210-8216-4843-ba96-48427670f091",
+            "uuid": "96c44b2b-abe2-4465-973b-428d63b3a790",
             "version": [
-                1,
-                5,
-                1
+                2,
+                0,
+                0
             ]
         },
         {
             "module_name": "@minecraft/server",
-            "version": "1.14.0"
+            "version": "2.11.0"
         }
     ]
 }

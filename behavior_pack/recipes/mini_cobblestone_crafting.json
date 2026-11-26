@@ -8,9 +8,8 @@
       "crafting_table"
     ],
     "pattern": [
-      "#",
-      "#",
-      "#"
+      "# ",
+      " #"
     ],
     "key": {
       "#": {
@@ -24,7 +23,7 @@
     ],
     "result": {
       "item": "addon:mini_cobblestone",
-      "count": 6
+      "count": 8
     }
   }
 }

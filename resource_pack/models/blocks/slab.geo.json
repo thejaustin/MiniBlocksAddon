@@ -1,5 +1,5 @@
 {
-  "format_version": "1.12.0",
+  "format_version": "1.21.0",
   "minecraft:geometry": [
     {
       "description": {
@@ -16,7 +16,7 @@
       },
       "bones": [
         {
-          "name": "slab",
+          "name": "bb_main",
           "pivot": [
             0,
             0,
@@ -43,7 +43,8 @@
                   "uv_size": [
                     16,
                     8
-                  ]
+                  ],
+                  "material_instance": "side"
                 },
                 "south": {
                   "uv": [
@@ -53,7 +54,8 @@
                   "uv_size": [
                     16,
                     8
-                  ]
+                  ],
+                  "material_instance": "side"
                 },
                 "east": {
                   "uv": [
@@ -63,7 +65,8 @@
                   "uv_size": [
                     16,
                     8
-                  ]
+                  ],
+                  "material_instance": "side"
                 },
                 "west": {
                   "uv": [
@@ -73,7 +76,8 @@
                   "uv_size": [
                     16,
                     8
-                  ]
+                  ],
+                  "material_instance": "side"
                 },
                 "up": {
                   "uv": [
@@ -83,7 +87,8 @@
                   "uv_size": [
                     16,
                     16
-                  ]
+                  ],
+                  "material_instance": "up"
                 },
                 "down": {
                   "uv": [
@@ -93,7 +98,8 @@
                   "uv_size": [
                     16,
                     16
-                  ]
+                  ],
+                  "material_instance": "down"
                 }
               }
             }

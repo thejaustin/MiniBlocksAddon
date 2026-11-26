@@ -1,0 +1,29 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_diamond_block_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "# ",
+      " #"
+    ],
+    "key": {
+      "#": {
+        "item": "minecraft:diamond_block"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:diamond_block"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_diamond_block",
+      "count": 8
+    }
+  }
+}

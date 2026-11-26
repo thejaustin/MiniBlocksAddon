@@ -166,6 +166,25 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.0.0 (Bedrock 26.60 — Full 1.26.60 Modernization, Expandable Creative Groups, 33 Mini Blocks & Smart Placement — 2026) ===
+* [Update] Bedrock 26.60 Native Target: Upgraded min_engine_version to [1, 26, 60], block schemas to 1.26.60 (array collision_box, liquid_detection waterlogging, item_visual, destruction_particles), crafting_item_catalog to 1.26.50, and @minecraft/server to stable 2.11.0.
+* [Feature] Expandable Creative Menu (+) Groups: Properly namespaced Crafting Item Catalog (`addon:itemGroup.name.wall_slab` & `addon:itemGroup.name.mini_block`) consolidates all 42 Wall Slabs and 33 Mini Blocks into clean collapsible (+) drawers in Construction without duplicating loose items.
+* [Feature] Smart Directional Wall Slab Placement & Combining:
+  - Tapping any horizontal wall face (N/S/E/W) snaps the wall slab flush against that wall face!
+  - Tapping floor/ceiling places facing player direction via native minecraft:placement_direction + minecraft:transformation (rotates geometry, collision, and selection together with zero axis mismatch).
+  - Tapping a matching wall slab (or adjacent face pointing into one) combines 2 halves into the full vanilla block; sneak to place adjacent thin walls.
+  - Added Acacia Wall Slab (42 total variants) and top/bottom placement to Cobblestone Floor Slab.
+* [Feature] Extended & Improved Mini Blocks (33 Variants + Progressive Stacking):
+  - Expanded from 9 to 33 iconic mini blocks: Nature (multi-face Grass Block with biome tinting, Dirt, Moss, Sand), all Overworld Woods, Stones & Masonry (Stone, Cobblestone, Stone Bricks, Brick, multi-face Sandstone & Quartz, Cobbled Deepslate, Blackstone, Tuff Bricks, Obsidian), Glass, Functional Mini Lights (Glowstone & Sea Lantern with real light_emission: 15!), multi-face Bookshelf, and Metals/Gems (Iron, Gold, Diamond, Emerald, Copper, Amethyst).
+  - Multi-surface attachment: mounts cleanly to floor, ceiling, and all 4 walls (bottom & top halves).
+  - Progressive 1 -> 2 -> 3 -> Full Block stacking in a single space with accurate multi-box 1.26.60 collision boxes and Survival drop conservation.
+  - 2x2-grid friendly diagonal crafting recipe (2 blocks -> 8 mini blocks) + stonecutter (1 -> 4).
+* [Fix] Icons & Textures Overhaul:
+  - Removed placeholder "D" and "C" PNGs so Dirt and Cobblestone use authentic vanilla textures (and automatically respect user texture packs!).
+  - Replaced broken box-UV mapping on mini blocks with explicit per-face 16x16 UVs and multi-face material instances.
+  - Added minecraft:item_visual with centered geometry.wall_slab_icon and vibrant carried Grass Block textures so every inventory/hotbar/creative icon renders crisply and centered.
+  - Fixed invalid "dirt" block sound -> vanilla "gravel", plus accurate cherry_wood, bamboo_wood, moss_block, tuff_bricks, iron, metal, and amethyst_block sounds.
+
 === v1.5.1 (Bedrock Port — Launch Crash Fix & Bulletproof Schema Parity — 2026) ===
 * [Fix] Launch Crash Resolution: Fixed startup crash on Minecraft Bedrock by strictly adhering to valid vanilla creative item groups (minecraft:itemGroup.name.slab for wall slabs; top-level category registration without custom item groups for mini blocks).
 * [Fix] Custom States & Permutations: Removed unmapped block states without permutations from block definitions to guarantee 100% schema compliance across all Bedrock engine releases.

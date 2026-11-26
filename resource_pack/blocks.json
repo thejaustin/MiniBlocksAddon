@@ -3,16 +3,49 @@
   "addon:cobblestone_slab": {
     "sound": "stone"
   },
-  "addon:mini_dirt": {
-    "sound": "dirt"
+  "addon:mini_grass_block": {
+    "sound": "grass"
   },
-  "addon:mini_cobblestone": {
-    "sound": "stone"
+  "addon:mini_dirt": {
+    "sound": "gravel"
+  },
+  "addon:mini_moss_block": {
+    "sound": "moss_block"
+  },
+  "addon:mini_sand": {
+    "sound": "sand"
   },
   "addon:mini_oak_planks": {
     "sound": "wood"
   },
+  "addon:mini_spruce_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_birch_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_jungle_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_acacia_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_dark_oak_planks": {
+    "sound": "wood"
+  },
+  "addon:mini_cherry_planks": {
+    "sound": "cherry_wood"
+  },
+  "addon:mini_bamboo_planks": {
+    "sound": "bamboo_wood"
+  },
+  "addon:mini_pale_oak_planks": {
+    "sound": "wood"
+  },
   "addon:mini_stone": {
+    "sound": "stone"
+  },
+  "addon:mini_cobblestone": {
     "sound": "stone"
   },
   "addon:mini_stone_bricks": {
@@ -24,133 +57,175 @@
   "addon:mini_sandstone": {
     "sound": "stone"
   },
+  "addon:mini_quartz_block": {
+    "sound": "stone"
+  },
+  "addon:mini_cobbled_deepslate": {
+    "sound": "deepslate"
+  },
+  "addon:mini_blackstone": {
+    "sound": "stone"
+  },
+  "addon:mini_tuff_bricks": {
+    "sound": "tuff_bricks"
+  },
   "addon:mini_obsidian": {
     "sound": "stone"
   },
   "addon:mini_glass": {
     "sound": "glass"
   },
-  "addon:andesite_wall_slab": {
-    "sound": "stone"
+  "addon:mini_glowstone": {
+    "sound": "glass"
   },
-  "addon:bamboo_wall_slab": {
+  "addon:mini_sea_lantern": {
+    "sound": "glass"
+  },
+  "addon:mini_bookshelf": {
+    "sound": "wood"
+  },
+  "addon:mini_iron_block": {
+    "sound": "iron"
+  },
+  "addon:mini_gold_block": {
+    "sound": "metal"
+  },
+  "addon:mini_diamond_block": {
+    "sound": "metal"
+  },
+  "addon:mini_emerald_block": {
+    "sound": "metal"
+  },
+  "addon:mini_copper_block": {
+    "sound": "copper"
+  },
+  "addon:mini_amethyst_block": {
+    "sound": "amethyst_block"
+  },
+  "addon:oak_wall_slab": {
+    "sound": "wood"
+  },
+  "addon:spruce_wall_slab": {
     "sound": "wood"
   },
   "addon:birch_wall_slab": {
     "sound": "wood"
   },
-  "addon:blackstone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:brick_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:cherry_wall_slab": {
+  "addon:jungle_wall_slab": {
     "sound": "wood"
   },
-  "addon:cobblestone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:crimson_wall_slab": {
-    "sound": "nether_wood"
-  },
-  "addon:cut_copper_wall_slab": {
-    "sound": "copper"
-  },
-  "addon:cut_red_sandstone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:cut_sandstone_wall_slab": {
-    "sound": "stone"
+  "addon:acacia_wall_slab": {
+    "sound": "wood"
   },
   "addon:dark_oak_wall_slab": {
-    "sound": "wood"
-  },
-  "addon:deepslate_wall_slab": {
-    "sound": "deepslate"
-  },
-  "addon:diorite_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:end_stone_brick_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:glass_wall_slab": {
-    "sound": "glass"
-  },
-  "addon:granite_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:jungle_wall_slab": {
     "sound": "wood"
   },
   "addon:mangrove_wall_slab": {
     "sound": "wood"
   },
-  "addon:mossy_cobblestone_wall_slab": {
-    "sound": "stone"
+  "addon:cherry_wall_slab": {
+    "sound": "cherry_wood"
   },
-  "addon:mossy_stone_brick_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:nether_brick_wall_slab": {
-    "sound": "nether_brick"
-  },
-  "addon:oak_wall_slab": {
-    "sound": "wood"
+  "addon:bamboo_wall_slab": {
+    "sound": "bamboo_wood"
   },
   "addon:pale_oak_wall_slab": {
     "sound": "wood"
   },
-  "addon:polished_andesite_wall_slab": {
-    "sound": "stone"
+  "addon:crimson_wall_slab": {
+    "sound": "nether_wood"
   },
-  "addon:polished_blackstone_wall_slab": {
-    "sound": "stone"
+  "addon:warped_wall_slab": {
+    "sound": "nether_wood"
   },
-  "addon:polished_diorite_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:polished_granite_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:purpur_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:quartz_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:red_nether_brick_wall_slab": {
-    "sound": "nether_brick"
-  },
-  "addon:red_sandstone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:sandstone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:smooth_quartz_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:smooth_red_sandstone_wall_slab": {
-    "sound": "stone"
-  },
-  "addon:smooth_sandstone_wall_slab": {
+  "addon:stone_wall_slab": {
     "sound": "stone"
   },
   "addon:smooth_stone_wall_slab": {
     "sound": "stone"
   },
-  "addon:spruce_wall_slab": {
-    "sound": "wood"
+  "addon:cobblestone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:mossy_cobblestone_wall_slab": {
+    "sound": "stone"
   },
   "addon:stone_brick_wall_slab": {
     "sound": "stone"
   },
-  "addon:stone_wall_slab": {
+  "addon:mossy_stone_brick_wall_slab": {
     "sound": "stone"
   },
-  "addon:warped_wall_slab": {
-    "sound": "nether_wood"
+  "addon:granite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:polished_granite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:diorite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:polished_diorite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:andesite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:polished_andesite_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:deepslate_wall_slab": {
+    "sound": "deepslate"
+  },
+  "addon:brick_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:cut_sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:smooth_sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:red_sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:cut_red_sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:smooth_red_sandstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:quartz_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:smooth_quartz_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:nether_brick_wall_slab": {
+    "sound": "nether_brick"
+  },
+  "addon:red_nether_brick_wall_slab": {
+    "sound": "nether_brick"
+  },
+  "addon:blackstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:polished_blackstone_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:end_stone_brick_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:purpur_wall_slab": {
+    "sound": "stone"
+  },
+  "addon:cut_copper_wall_slab": {
+    "sound": "copper"
+  },
+  "addon:glass_wall_slab": {
+    "sound": "glass"
   }
 }

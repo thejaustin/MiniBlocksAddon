@@ -4,155 +4,200 @@
   "padding": 8,
   "num_mip_levels": 4,
   "texture_data": {
-    "miniblocks_andesite": {
-      "textures": "textures/blocks/stone_andesite"
-    },
-    "miniblocks_bamboo": {
-      "textures": "textures/blocks/bamboo_planks"
-    },
-    "miniblocks_birch": {
-      "textures": "textures/blocks/planks_birch"
-    },
-    "miniblocks_blackstone": {
-      "textures": "textures/blocks/blackstone"
-    },
-    "miniblocks_brick": {
-      "textures": "textures/blocks/brick"
-    },
-    "miniblocks_cherry": {
-      "textures": "textures/blocks/cherry_planks"
-    },
-    "miniblocks_cobblestone": {
-      "textures": "textures/blocks/miniblocks_cobblestone"
-    },
-    "miniblocks_crimson": {
-      "textures": "textures/blocks/huge_fungus/crimson_planks"
-    },
-    "miniblocks_cut_copper": {
-      "textures": "textures/blocks/cut_copper"
-    },
-    "miniblocks_cut_red_sandstone": {
-      "textures": "textures/blocks/red_sandstone_smooth"
-    },
-    "miniblocks_cut_sandstone": {
-      "textures": "textures/blocks/sandstone_smooth"
-    },
-    "miniblocks_dark_oak": {
-      "textures": "textures/blocks/planks_big_oak"
-    },
-    "miniblocks_deepslate": {
-      "textures": "textures/blocks/deepslate/cobbled_deepslate"
-    },
-    "miniblocks_diorite": {
-      "textures": "textures/blocks/stone_diorite"
-    },
-    "miniblocks_end_stone_brick": {
-      "textures": "textures/blocks/end_bricks"
-    },
-    "miniblocks_glass": {
-      "textures": "textures/blocks/glass"
-    },
-    "miniblocks_granite": {
-      "textures": "textures/blocks/stone_granite"
-    },
-    "miniblocks_jungle": {
-      "textures": "textures/blocks/planks_jungle"
-    },
-    "miniblocks_mangrove": {
-      "textures": "textures/blocks/mangrove_planks"
-    },
-    "miniblocks_mossy_cobblestone": {
-      "textures": "textures/blocks/cobblestone_mossy"
-    },
-    "miniblocks_mossy_stone_brick": {
-      "textures": "textures/blocks/stonebrick_mossy"
-    },
-    "miniblocks_nether_brick": {
-      "textures": "textures/blocks/nether_brick"
-    },
     "miniblocks_oak": {
       "textures": "textures/blocks/planks_oak"
-    },
-    "miniblocks_pale_oak": {
-      "textures": "textures/blocks/pale_oak_planks"
-    },
-    "miniblocks_polished_andesite": {
-      "textures": "textures/blocks/stone_andesite_smooth"
-    },
-    "miniblocks_polished_blackstone": {
-      "textures": "textures/blocks/polished_blackstone"
-    },
-    "miniblocks_polished_diorite": {
-      "textures": "textures/blocks/stone_diorite_smooth"
-    },
-    "miniblocks_polished_granite": {
-      "textures": "textures/blocks/stone_granite_smooth"
-    },
-    "miniblocks_purpur": {
-      "textures": "textures/blocks/purpur_block"
-    },
-    "miniblocks_quartz": {
-      "textures": "textures/blocks/quartz_block_side"
-    },
-    "miniblocks_red_nether_brick": {
-      "textures": "textures/blocks/red_nether_brick"
-    },
-    "miniblocks_red_sandstone": {
-      "textures": "textures/blocks/red_sandstone_normal"
-    },
-    "miniblocks_sandstone": {
-      "textures": "textures/blocks/sandstone_normal"
-    },
-    "miniblocks_smooth_quartz": {
-      "textures": "textures/blocks/quartz_block_bottom"
-    },
-    "miniblocks_smooth_red_sandstone": {
-      "textures": "textures/blocks/red_sandstone_top"
-    },
-    "miniblocks_smooth_sandstone": {
-      "textures": "textures/blocks/sandstone_top"
-    },
-    "miniblocks_smooth_stone": {
-      "textures": "textures/blocks/stone_slab_top"
     },
     "miniblocks_spruce": {
       "textures": "textures/blocks/planks_spruce"
     },
-    "miniblocks_stone_brick": {
-      "textures": "textures/blocks/stonebrick"
+    "miniblocks_birch": {
+      "textures": "textures/blocks/planks_birch"
     },
-    "miniblocks_stone": {
-      "textures": "textures/blocks/stone"
+    "miniblocks_jungle": {
+      "textures": "textures/blocks/planks_jungle"
+    },
+    "miniblocks_acacia": {
+      "textures": "textures/blocks/planks_acacia"
+    },
+    "miniblocks_dark_oak": {
+      "textures": "textures/blocks/planks_big_oak"
+    },
+    "miniblocks_mangrove": {
+      "textures": "textures/blocks/mangrove_planks"
+    },
+    "miniblocks_cherry": {
+      "textures": "textures/blocks/cherry_planks"
+    },
+    "miniblocks_bamboo": {
+      "textures": "textures/blocks/bamboo_planks"
+    },
+    "miniblocks_pale_oak": {
+      "textures": "textures/blocks/pale_oak_planks"
+    },
+    "miniblocks_crimson": {
+      "textures": "textures/blocks/huge_fungus/crimson_planks"
     },
     "miniblocks_warped": {
       "textures": "textures/blocks/huge_fungus/warped_planks"
     },
-    "miniblocks_mini_dirt": {
-      "textures": "textures/blocks/mini_dirt"
-    },
-    "miniblocks_mini_cobblestone": {
-      "textures": "textures/blocks/miniblocks_cobblestone"
-    },
-    "miniblocks_mini_oak_planks": {
-      "textures": "textures/blocks/planks_oak"
-    },
-    "miniblocks_mini_stone": {
+    "miniblocks_stone": {
       "textures": "textures/blocks/stone"
     },
-    "miniblocks_mini_stone_bricks": {
+    "miniblocks_smooth_stone_top": {
+      "textures": "textures/blocks/stone_slab_top"
+    },
+    "miniblocks_smooth_stone_side": {
+      "textures": "textures/blocks/stone_slab_side"
+    },
+    "miniblocks_cobblestone": {
+      "textures": "textures/blocks/cobblestone"
+    },
+    "miniblocks_mossy_cobblestone": {
+      "textures": "textures/blocks/cobblestone_mossy"
+    },
+    "miniblocks_stone_brick": {
       "textures": "textures/blocks/stonebrick"
     },
-    "miniblocks_mini_brick": {
+    "miniblocks_mossy_stone_brick": {
+      "textures": "textures/blocks/stonebrick_mossy"
+    },
+    "miniblocks_granite": {
+      "textures": "textures/blocks/stone_granite"
+    },
+    "miniblocks_polished_granite": {
+      "textures": "textures/blocks/stone_granite_smooth"
+    },
+    "miniblocks_diorite": {
+      "textures": "textures/blocks/stone_diorite"
+    },
+    "miniblocks_polished_diorite": {
+      "textures": "textures/blocks/stone_diorite_smooth"
+    },
+    "miniblocks_andesite": {
+      "textures": "textures/blocks/stone_andesite"
+    },
+    "miniblocks_polished_andesite": {
+      "textures": "textures/blocks/stone_andesite_smooth"
+    },
+    "miniblocks_deepslate": {
+      "textures": "textures/blocks/deepslate/cobbled_deepslate"
+    },
+    "miniblocks_brick": {
       "textures": "textures/blocks/brick"
     },
-    "miniblocks_mini_sandstone": {
-      "textures": "textures/blocks/sandstone_normal"
+    "miniblocks_tuff_bricks": {
+      "textures": "textures/blocks/tuff_bricks"
     },
-    "miniblocks_mini_obsidian": {
+    "miniblocks_obsidian": {
       "textures": "textures/blocks/obsidian"
     },
-    "miniblocks_mini_glass": {
+    "miniblocks_sandstone_top": {
+      "textures": "textures/blocks/sandstone_top"
+    },
+    "miniblocks_sandstone_side": {
+      "textures": "textures/blocks/sandstone_normal"
+    },
+    "miniblocks_sandstone_bottom": {
+      "textures": "textures/blocks/sandstone_bottom"
+    },
+    "miniblocks_cut_sandstone": {
+      "textures": "textures/blocks/sandstone_smooth"
+    },
+    "miniblocks_red_sandstone_top": {
+      "textures": "textures/blocks/red_sandstone_top"
+    },
+    "miniblocks_red_sandstone_side": {
+      "textures": "textures/blocks/red_sandstone_normal"
+    },
+    "miniblocks_red_sandstone_bottom": {
+      "textures": "textures/blocks/red_sandstone_bottom"
+    },
+    "miniblocks_cut_red_sandstone": {
+      "textures": "textures/blocks/red_sandstone_smooth"
+    },
+    "miniblocks_quartz_top": {
+      "textures": "textures/blocks/quartz_block_top"
+    },
+    "miniblocks_quartz_side": {
+      "textures": "textures/blocks/quartz_block_side"
+    },
+    "miniblocks_quartz_bottom": {
+      "textures": "textures/blocks/quartz_block_bottom"
+    },
+    "miniblocks_nether_brick": {
+      "textures": "textures/blocks/nether_brick"
+    },
+    "miniblocks_red_nether_brick": {
+      "textures": "textures/blocks/red_nether_brick"
+    },
+    "miniblocks_blackstone": {
+      "textures": "textures/blocks/blackstone"
+    },
+    "miniblocks_polished_blackstone": {
+      "textures": "textures/blocks/polished_blackstone"
+    },
+    "miniblocks_end_stone_brick": {
+      "textures": "textures/blocks/end_bricks"
+    },
+    "miniblocks_purpur": {
+      "textures": "textures/blocks/purpur_block"
+    },
+    "miniblocks_cut_copper": {
+      "textures": "textures/blocks/cut_copper"
+    },
+    "miniblocks_glass": {
       "textures": "textures/blocks/glass"
+    },
+    "miniblocks_dirt": {
+      "textures": "textures/blocks/dirt"
+    },
+    "miniblocks_grass_top": {
+      "textures": "textures/blocks/grass_top"
+    },
+    "miniblocks_grass_side": {
+      "textures": "textures/blocks/grass_side"
+    },
+    "miniblocks_grass_carried_top": {
+      "textures": "textures/blocks/grass_carried"
+    },
+    "miniblocks_grass_carried_side": {
+      "textures": {
+        "path": "textures/blocks/grass_side",
+        "overlay_color": "#79c05a"
+      }
+    },
+    "miniblocks_moss_block": {
+      "textures": "textures/blocks/moss_block"
+    },
+    "miniblocks_sand": {
+      "textures": "textures/blocks/sand"
+    },
+    "miniblocks_glowstone": {
+      "textures": "textures/blocks/glowstone"
+    },
+    "miniblocks_sea_lantern": {
+      "textures": "textures/blocks/sea_lantern"
+    },
+    "miniblocks_bookshelf": {
+      "textures": "textures/blocks/bookshelf"
+    },
+    "miniblocks_iron_block": {
+      "textures": "textures/blocks/iron_block"
+    },
+    "miniblocks_gold_block": {
+      "textures": "textures/blocks/gold_block"
+    },
+    "miniblocks_diamond_block": {
+      "textures": "textures/blocks/diamond_block"
+    },
+    "miniblocks_emerald_block": {
+      "textures": "textures/blocks/emerald_block"
+    },
+    "miniblocks_copper_block": {
+      "textures": "textures/blocks/copper_block"
+    },
+    "miniblocks_amethyst_block": {
+      "textures": "textures/blocks/amethyst_block"
     }
   }
 }
