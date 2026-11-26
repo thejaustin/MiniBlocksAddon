@@ -1,12 +1,12 @@
 {
     "format_version": 2,
     "header": {
-        "description": "Face-aware auto-connecting wall slabs, exact 8-to-1 mini blocks (4 = wall slab, 6 = stairs, 8 = full block), directional placement, and combining! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
+        "description": "Survival-ready auto-connecting wall slabs (drop 4 mini blocks; Silk Touch keeps slab), exact 8-to-1 mini blocks (4 = wall slab, 6 = stairs, 8 = full block), vanilla slab combining, and sneak-break undo! Bedrock 26.60 successor to the classic MCPE Mini Blocks Mod.",
         "name": "Mini Blocks Add-on (Behaviors)",
-        "uuid": "8bb5fdfb-ecfe-44af-aaf2-e13da053d496",
+        "uuid": "e88219f5-7dd5-4c29-a1fe-0874574d35a5",
         "version": [
             2,
-            5,
+            6,
             0
         ],
         "min_engine_version": [
@@ -19,10 +19,10 @@
         {
             "description": "MiniBlocks Addon Behaviors",
             "type": "data",
-            "uuid": "32076eae-acea-4509-96fd-84a412d19f6f",
+            "uuid": "9cb8aef9-36cb-491c-940b-f94cb6b5368a",
             "version": [
                 2,
-                5,
+                6,
                 0
             ]
         },
@@ -30,10 +30,10 @@
             "description": "MiniBlocks Addon Scripts",
             "language": "javascript",
             "type": "script",
-            "uuid": "597af9da-1ade-4685-b763-3dec6c4a41f7",
+            "uuid": "2abc6517-7ef1-46f3-bf8a-f0b39f15e862",
             "version": [
                 2,
-                5,
+                6,
                 0
             ],
             "entry": "scripts/main.js"
@@ -41,10 +41,10 @@
     ],
     "dependencies": [
         {
-            "uuid": "af19a046-27a9-4dd8-a842-15e7be9eb367",
+            "uuid": "c49a3c6c-3a06-47db-a634-889eae28b5d6",
             "version": [
                 2,
-                5,
+                6,
                 0
             ]
         },

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:warped_wall_slab_to_full_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:warped_wall_slab"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:warped_wall_slab"
+      }
+    ],
+    "result": {
+      "item": "minecraft:warped_planks",
+      "count": 1
+    }
+  }
+}

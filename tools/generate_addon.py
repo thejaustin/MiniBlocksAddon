@@ -857,6 +857,7 @@ def make_wall_slab_block(slug, hardness, sound, tool_type, flammable):
         "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 8]},
         "minecraft:destructible_by_mining": {"seconds_to_destroy": hardness},
         "minecraft:destructible_by_explosion": {"explosion_resistance": round(hardness * 3, 2)},
+        "minecraft:loot": f"loot_tables/blocks/{slug}_wall_slab.json",
         "minecraft:light_dampening": 0,
         "minecraft:liquid_detection": WATERLOGGABLE,
         "minecraft:chest_obstruction": {"obstruction_rule": "never"},
@@ -898,14 +899,38 @@ def make_wall_slab_block(slug, hardness, sound, tool_type, flammable):
     }
 
 
+source_to_mini_block_id = {source: f"addon:mini_{slug}" for slug, source, *_ in MINI_BLOCKS}
+expected_loot = set()
 for slug, source, hardness, stone_cut, sound, tool_type, flammable in WALL_SLABS:
     fname = f"{slug}_wall_slab.json"
     expected_blocks.add(fname)
     write_json(os.path.join(BP, "blocks", fname),
                make_wall_slab_block(slug, hardness, sound, tool_type, flammable))
+    # Survival drop rule (mirrors vanilla double slabs): breaking a Wall Slab returns 4 Mini Blocks!
+    # (Mining with Silk Touch is handled in main.js to return 1 Wall Slab intact.)
+    mini_drop = source_to_mini_block_id[source]
+    expected_loot.add(fname)
+    write_json(os.path.join(BP, "loot_tables/blocks", fname), {
+        "pools": [
+            {
+                "rolls": 1,
+                "entries": [
+                    {
+                        "type": "item",
+                        "name": mini_drop,
+                        "weight": 1,
+                        "functions": [{"function": "set_count", "count": 4}],
+                    }
+                ],
+            }
+        ]
+    })
+clean_generated_dir(os.path.join(BP, "loot_tables/blocks"), expected_loot)
+print(f"  wrote {len(expected_loot)} wall slab loot tables (4 mini blocks per break)")
 
 
-# Cobblestone floor slab (supports both bottom and top halves!)
+# Legacy cobblestone floor slab (hidden from Creative & Survival crafting in favor of vanilla cobblestone_slab;
+# kept registered solely for backward compatibility with older worlds!)
 cobble_mat = mat_inst("cobblestone")
 cobble_mats = {"*": cobble_mat, "side": cobble_mat, "up": cobble_mat, "down": cobble_mat}
 floor_slab = {
@@ -914,8 +939,7 @@ floor_slab = {
         "description": {
             "identifier": "addon:cobblestone_slab",
             "menu_category": {
-                "category": "construction",
-                "group": "minecraft:itemGroup.name.slab",
+                "category": "none",
             },
             "traits": {
                 "minecraft:placement_position": {
@@ -1352,6 +1376,20 @@ def shaped(recipe_id, pattern, source, result, count):
     }
 
 
+def shapeless(recipe_id, source, result, count):
+    return {
+        "format_version": RECIPE_FORMAT,
+        "minecraft:recipe_shapeless": {
+            "description": {"identifier": recipe_id},
+            "tags": ["crafting_table"],
+            "priority": 0,
+            "ingredients": [{"item": source}],
+            "unlock": [{"item": source}],
+            "result": {"item": result, "count": count},
+        },
+    }
+
+
 def stonecutter(recipe_id, source, result, count):
     return {
         "format_version": RECIPE_FORMAT,
@@ -1367,9 +1405,27 @@ def stonecutter(recipe_id, source, result, count):
 
 
 COLUMN = ["#", "#", "#"]
-DIAGONAL = ["# ", " #"]      # 2x2 safe, zero vanilla conflicts; 2 blocks -> 16 mini blocks (exact 1:8 volume!)
-SQUARE_2X2 = ["##", "##"]    # 4 mini blocks -> 1 wall slab (exact 4:1 volume!)
+DIAGONAL = ["# ", " #"]          # 2x2 safe, zero vanilla conflicts; 2 blocks -> 16 mini blocks (exact 1:8 volume!)
+PAIR_2 = ["##"]                  # 2x2 safe; 2 wall slabs -> 1 full block (exact 4+4=8 volume!)
+SQUARE_2X2 = ["##", "##"]        # 2x2 safe; 4 mini blocks -> 1 wall slab (exact 4:1 volume!)
 STAIR_6 = ["#  ", "## ", "###"]  # 6 mini blocks -> 1 vanilla stair (exact 6:6 volume!)
+RING_8 = ["###", "# #", "###"]   # 8 mini blocks -> 1 full block (exact 8:8 volume!)
+
+# Verified vanilla Bedrock single horizontal slab identifiers from Mojang/bedrock-samples v1.26.60.5.
+# All 56 non-glass Wall Slabs map 1:1 to a vanilla single slab (state: minecraft:vertical_half = bottom|top).
+WALL_SLAB_VANILLA_SLAB_OVERRIDES = {
+    "stone": "minecraft:normal_stone_slab",
+    "deepslate": "minecraft:cobbled_deepslate_slab",
+    "glass": None,
+}
+WALL_SLAB_SLUG_TO_VANILLA_SLAB = {
+    slug: (
+        WALL_SLAB_VANILLA_SLAB_OVERRIDES[slug]
+        if slug in WALL_SLAB_VANILLA_SLAB_OVERRIDES
+        else f"minecraft:{slug}_slab"
+    )
+    for slug, *_ in WALL_SLABS
+}
 
 # Verified vanilla Bedrock stair identifiers from Mojang/bedrock-samples v1.26.60.5.
 # (All 53 slab-matching mini blocks that have a vanilla stair; smooth_stone/cut_sandstone/glass use custom 6/8 mini stair.)
@@ -1443,6 +1499,11 @@ for slug, source, hardness, stone_cut, sound, tool_type, flammable in WALL_SLABS
         expected_recipes.add(cut_file)
         write_json(os.path.join(BP, "recipes", cut_file),
                    stonecutter(f"addon:{slug}_wall_slab_stonecutting", source, identifier, 2))
+    # 2x2 pocket grid: 2 Wall Slabs -> 1 Full Block (4 + 4 = 8!)
+    to_full_file = f"{slug}_wall_slab_to_full_crafting.json"
+    expected_recipes.add(to_full_file)
+    write_json(os.path.join(BP, "recipes", to_full_file),
+               shaped(f"addon:{slug}_wall_slab_to_full_crafting", PAIR_2, identifier, source, 1))
     # Bidirectional Wall Slab <-> Mini Block recipes (1 Wall Slab = 4 Mini Blocks!)
     mini_id = source_to_mini_id.get(source)
     if mini_id:
@@ -1450,15 +1511,34 @@ for slug, source, hardness, stone_cut, sound, tool_type, flammable in WALL_SLABS
         expected_recipes.add(from_mini_file)
         write_json(os.path.join(BP, "recipes", from_mini_file),
                    shaped(f"addon:{slug}_wall_slab_from_mini", SQUARE_2X2, mini_id, identifier, 1))
+        # 2x2 pocket grid: 1 Wall Slab -> 4 Mini Blocks (no Stonecutter needed for wood or field edits!)
+        to_mini_craft_file = f"{slug}_wall_slab_to_mini_crafting.json"
+        expected_recipes.add(to_mini_craft_file)
+        write_json(os.path.join(BP, "recipes", to_mini_craft_file),
+                   shapeless(f"addon:{slug}_wall_slab_to_mini_crafting", identifier, mini_id, 4))
         to_mini_file = f"{slug}_wall_slab_to_mini_stonecutting.json"
         expected_recipes.add(to_mini_file)
         write_json(os.path.join(BP, "recipes", to_mini_file),
                    stonecutter(f"addon:{slug}_wall_slab_to_mini_stonecutting", identifier, mini_id, 4))
-
-expected_recipes.add("cobblestone_slab_stonecutting.json")
-write_json(os.path.join(BP, "recipes/cobblestone_slab_stonecutting.json"),
-           stonecutter("addon:cobblestone_slab_stonecutting", "minecraft:cobblestone",
-                       "addon:cobblestone_slab", 2))
+    # Vanilla Horizontal Slab <-> Wall Slab & Mini Blocks (exact 4/8 volume!)
+    vanilla_slab = WALL_SLAB_SLUG_TO_VANILLA_SLAB.get(slug)
+    if vanilla_slab:
+        # 2x2 pocket grid: 1 Vanilla Horizontal Slab -> 1 Wall Slab (instant vertical rotation!)
+        from_vslab_file = f"{slug}_wall_slab_from_vanilla_slab.json"
+        expected_recipes.add(from_vslab_file)
+        write_json(os.path.join(BP, "recipes", from_vslab_file),
+                   shapeless(f"addon:{slug}_wall_slab_from_vanilla_slab", vanilla_slab, identifier, 1))
+        # Stonecutter: 1 Wall Slab -> 1 Vanilla Horizontal Slab
+        to_vslab_file = f"{slug}_wall_slab_to_vanilla_slab_stonecutting.json"
+        expected_recipes.add(to_vslab_file)
+        write_json(os.path.join(BP, "recipes", to_vslab_file),
+                   stonecutter(f"addon:{slug}_wall_slab_to_vanilla_slab_stonecutting", identifier, vanilla_slab, 1))
+        # Stonecutter: 1 Vanilla Horizontal Slab -> 4 Mini Blocks
+        if mini_id:
+            vslab_to_mini_file = f"{slug}_vanilla_slab_to_mini_stonecutting.json"
+            expected_recipes.add(vslab_to_mini_file)
+            write_json(os.path.join(BP, "recipes", vslab_to_mini_file),
+                       stonecutter(f"addon:{slug}_vanilla_slab_to_mini_stonecutting", vanilla_slab, mini_id, 4))
 
 for slug, source, hardness, sound, stone_cut, tool_type, flammable, light_emission in MINI_BLOCKS:
     identifier = f"addon:mini_{slug}"
@@ -1471,6 +1551,11 @@ for slug, source, hardness, sound, stone_cut, tool_type, flammable, light_emissi
         expected_recipes.add(cut_file)
         write_json(os.path.join(BP, "recipes", cut_file),
                    stonecutter(f"addon:mini_{slug}_stonecutting", source, identifier, 8))
+    # 3x3 Crafting Table: 8 Mini Blocks (hollow ring) -> 1 Full Block (exact 8 = 8!)
+    to_full_file = f"mini_{slug}_to_full_crafting.json"
+    expected_recipes.add(to_full_file)
+    write_json(os.path.join(BP, "recipes", to_full_file),
+               shaped(f"addon:mini_{slug}_to_full_crafting", RING_8, identifier, source, 1))
     # Bidirectional Mini Block <-> Vanilla Stair recipes (6 Mini Blocks = 1 Stair!)
     stair_id = MINI_SLUG_TO_STAIR.get(slug)
     if stair_id:
@@ -1478,6 +1563,11 @@ for slug, source, hardness, sound, stone_cut, tool_type, flammable, light_emissi
         expected_recipes.add(to_stair_file)
         write_json(os.path.join(BP, "recipes", to_stair_file),
                    shaped(f"addon:mini_{slug}_to_stair_crafting", STAIR_6, identifier, stair_id, 1))
+        # 2x2 pocket grid: 1 Vanilla Stair -> 6 Mini Blocks (zero-dupe salvage, no Stonecutter needed!)
+        from_stair_craft_file = f"mini_{slug}_from_stair_crafting.json"
+        expected_recipes.add(from_stair_craft_file)
+        write_json(os.path.join(BP, "recipes", from_stair_craft_file),
+                   shapeless(f"addon:mini_{slug}_from_stair_crafting", stair_id, identifier, 6))
         from_stair_file = f"mini_{slug}_from_stair_stonecutting.json"
         expected_recipes.add(from_stair_file)
         write_json(os.path.join(BP, "recipes", from_stair_file),
@@ -1589,6 +1679,20 @@ with open(slab_map_path, "w") as f:
     for slug, source, *_ in MINI_BLOCKS:
         if slug in MINI_SLUG_TO_STAIR:
             f.write(f'  "{MINI_SLUG_TO_STAIR[slug]}": "{source}",\n')
+    f.write("};\n\n")
+
+    f.write("export const VANILLA_SLAB_TO_MINI_BLOCK = {\n")
+    for slug, source, *_ in WALL_SLABS:
+        vslab = WALL_SLAB_SLUG_TO_VANILLA_SLAB.get(slug)
+        if vslab and source in source_to_mini:
+            f.write(f'  "{vslab}": "{source_to_mini[source]}",\n')
+    f.write("};\n\n")
+
+    f.write("export const VANILLA_SLAB_TO_FULL_BLOCK = {\n")
+    for slug, source, *_ in WALL_SLABS:
+        vslab = WALL_SLAB_SLUG_TO_VANILLA_SLAB.get(slug)
+        if vslab:
+            f.write(f'  "{vslab}": "{source}",\n')
     f.write("};\n\n")
 
     f.write("export const SLAB_SOUNDS = {\n")

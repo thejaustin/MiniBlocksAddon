@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:mangrove_wall_slab_from_vanilla_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:mangrove_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:mangrove_slab"
+      }
+    ],
+    "result": {
+      "item": "addon:mangrove_wall_slab",
+      "count": 1
+    }
+  }
+}

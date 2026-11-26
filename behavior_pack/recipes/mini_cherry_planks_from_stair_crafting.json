@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:mini_cherry_planks_from_stair_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:cherry_stairs"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:cherry_stairs"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_cherry_planks",
+      "count": 6
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:resin_brick_wall_slab_from_vanilla_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:resin_brick_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:resin_brick_slab"
+      }
+    ],
+    "result": {
+      "item": "addon:resin_brick_wall_slab",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:exposed_cut_copper_vanilla_slab_to_mini_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:exposed_cut_copper_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:exposed_cut_copper_slab"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_exposed_cut_copper",
+      "count": 4
+    }
+  }
+}

@@ -166,6 +166,24 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.6.0 (Bedrock 26.60 — Survival Volume Economy, 4-Mini Wall Slab Drops, Silk Touch, Sneak-Pop Undo & Vanilla Slab Synergy — 2026) ===
+* [Survival/Loot] Vanilla-Consistent Wall Slab Drops + Silk Touch:
+  - Added 57 native Bedrock block loot tables (`loot_tables/blocks/*_wall_slab.json`) so breaking a Wall Slab in Survival (or via explosion!) drops 4 Mini Blocks—matching vanilla double-slab economics and keeping Mini Blocks as the universal 1/8 building currency.
+  - Mining a Wall Slab with Silk Touch in Survival preserves and drops 1 intact Wall Slab (respecting tool durability & Unbreaking!).
+* [Survival/Sculpting] Sneak + Break ("Pop 1 Off") Undo:
+  - Crouching while breaking any multi-cube Mini Block (`2/8`..`7/8`) or Wall Slab (`4/8`) removes just 1 Mini Block at a time (`7->6->5->4->3->2->1` and `Wall Slab -> 3/8 Step`) instead of shattering the whole cluster!
+* [Survival/Explosions] Full Explosion Drop Conservation:
+  - `world.beforeEvents.explosion` conserves exact Mini Block counts for `2/8`..`7/8` Mini Blocks destroyed by TNT/Creepers and refreshes adjacent auto-connecting Wall Slabs.
+* [Feature] Vanilla Horizontal Slab (4/8) + Mini Block Combining (56 verified v1.26.60.5 slabs):
+  - Tapping the open inner face of any matching Vanilla Slab (`4/8`) with 2 Mini Blocks upgrades it into the matching Vanilla Stair (`6/8`, matching top/bottom half & player facing), or fills non-stair slabs (`smooth_stone`, `cut_sandstone`) with 4 Mini Blocks into the Full Block (`8/8`).
+* [Recipes] Complete Pocket-Grid (`2x2`) & Stonecutter Survival Economy (zero conflicts, zero dupes):
+  - `1 Wall Slab` (2x2 shapeless) -> `4 Mini Blocks` (no Stonecutter needed for wood/field edits!)
+  - `2 Wall Slabs` (`##`, 2x2) -> `1 Full Block`
+  - `1 Vanilla Stair` (2x2 shapeless) -> `6 Mini Blocks`
+  - `8 Mini Blocks` (3x3 hollow ring) -> `1 Full Block`
+  - `1 Vanilla Horizontal Slab` (2x2 shapeless) -> `1 Wall Slab` (+ Stonecutter `1 Wall Slab -> 1 Vanilla Slab` & `1 Vanilla Slab -> 4 Mini Blocks`)
+* [Cleanup] Hid legacy `addon:cobblestone_slab` from Creative menu & Survival recipes in favor of real vanilla `minecraft:cobblestone_slab` (kept registered for backward world compatibility).
+
 === v2.5.0 (Bedrock 26.60 — Mini Blocks Build Real Vanilla Stairs at 6/8 Volume! — 2026) ===
 * [Feature] Complete 3D Volume Synthesis (`4 Mini = Wall Slab`, `6 Mini = Stairs`, `8 Mini = Full Block`):
   - Building a 6th Mini Block onto a 5/8 cluster automatically transforms into the real Vanilla Stair (53 verified v1.26.60.5 stair variants, facing player direction and matching floor/ceiling `upside_down_bit`!) and auto-connects adjacent Wall Slabs. Non-stair materials (Glass, Glowstone, Obsidian, Smooth Stone, etc.) use our custom 6/8 Mini Stair shape.

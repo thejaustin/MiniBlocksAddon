@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:nether_brick_vanilla_slab_to_mini_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:nether_brick_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:nether_brick_slab"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_nether_brick",
+      "count": 4
+    }
+  }
+}

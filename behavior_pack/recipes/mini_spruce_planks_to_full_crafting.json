@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_spruce_planks_to_full_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "# #",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_spruce_planks"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_spruce_planks"
+      }
+    ],
+    "result": {
+      "item": "minecraft:spruce_planks",
+      "count": 1
+    }
+  }
+}

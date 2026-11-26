@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mud_brick_wall_slab_to_full_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "##"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mud_brick_wall_slab"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mud_brick_wall_slab"
+      }
+    ],
+    "result": {
+      "item": "minecraft:mud_bricks",
+      "count": 1
+    }
+  }
+}

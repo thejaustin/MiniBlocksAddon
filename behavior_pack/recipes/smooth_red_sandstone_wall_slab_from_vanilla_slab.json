@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:smooth_red_sandstone_wall_slab_from_vanilla_slab"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:smooth_red_sandstone_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:smooth_red_sandstone_slab"
+      }
+    ],
+    "result": {
+      "item": "addon:smooth_red_sandstone_wall_slab",
+      "count": 1
+    }
+  }
+}

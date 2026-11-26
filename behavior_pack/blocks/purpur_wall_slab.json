@@ -114,6 +114,7 @@
       "minecraft:destructible_by_explosion": {
         "explosion_resistance": 4.5
       },
+      "minecraft:loot": "loot_tables/blocks/purpur_wall_slab.json",
       "minecraft:light_dampening": 0,
       "minecraft:liquid_detection": {
         "detection_rules": [

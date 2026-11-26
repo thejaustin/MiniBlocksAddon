@@ -4,8 +4,7 @@
     "description": {
       "identifier": "addon:cobblestone_slab",
       "menu_category": {
-        "category": "construction",
-        "group": "minecraft:itemGroup.name.slab"
+        "category": "none"
       },
       "traits": {
         "minecraft:placement_position": {

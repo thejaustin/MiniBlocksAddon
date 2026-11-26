@@ -2,7 +2,7 @@
   "format_version": "1.20.10",
   "minecraft:recipe_shapeless": {
     "description": {
-      "identifier": "addon:cobblestone_slab_stonecutting"
+      "identifier": "addon:exposed_cut_copper_wall_slab_to_vanilla_slab_stonecutting"
     },
     "tags": [
       "stonecutter"
@@ -10,17 +10,17 @@
     "priority": 0,
     "ingredients": [
       {
-        "item": "minecraft:cobblestone"
+        "item": "addon:exposed_cut_copper_wall_slab"
       }
     ],
     "unlock": [
       {
-        "item": "minecraft:cobblestone"
+        "item": "addon:exposed_cut_copper_wall_slab"
       }
     ],
     "result": {
-      "item": "addon:cobblestone_slab",
-      "count": 2
+      "item": "minecraft:exposed_cut_copper_slab",
+      "count": 1
     }
   }
 }

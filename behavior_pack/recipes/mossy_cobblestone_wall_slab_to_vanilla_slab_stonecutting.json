@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:mossy_cobblestone_wall_slab_to_vanilla_slab_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "addon:mossy_cobblestone_wall_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "addon:mossy_cobblestone_wall_slab"
+      }
+    ],
+    "result": {
+      "item": "minecraft:mossy_cobblestone_slab",
+      "count": 1
+    }
+  }
+}

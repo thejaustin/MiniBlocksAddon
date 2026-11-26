@@ -1,0 +1,30 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:mini_polished_diorite_to_full_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "###",
+      "# #",
+      "###"
+    ],
+    "key": {
+      "#": {
+        "item": "addon:mini_polished_diorite"
+      }
+    },
+    "unlock": [
+      {
+        "item": "addon:mini_polished_diorite"
+      }
+    ],
+    "result": {
+      "item": "minecraft:polished_diorite",
+      "count": 1
+    }
+  }
+}

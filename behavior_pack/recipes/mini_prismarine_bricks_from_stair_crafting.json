@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:mini_prismarine_bricks_from_stair_crafting"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "minecraft:prismarine_bricks_stairs"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:prismarine_bricks_stairs"
+      }
+    ],
+    "result": {
+      "item": "addon:mini_prismarine_bricks",
+      "count": 6
+    }
+  }
+}

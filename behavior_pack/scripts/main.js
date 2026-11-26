@@ -16,29 +16,26 @@ import {
   MINI_BLOCK_TO_STAIR,
   STAIR_TO_MINI_BLOCK,
   STAIR_TO_FULL_BLOCK,
+  VANILLA_SLAB_TO_MINI_BLOCK,
+  VANILLA_SLAB_TO_FULL_BLOCK,
   SLAB_SOUNDS,
 } from "./slab_map.js";
 
-// Mini Blocks Add-on v2.3.0 — Bedrock 26.60 (@minecraft/server 2.11.0)
+// Mini Blocks Add-on v2.6.0 — Bedrock 26.60 (@minecraft/server 2.11.0)
 // Successor to the classic 2015 MCPE Mini Blocks Mod by thejaustin.
 //
 // Mechanics:
-// 1. Face-Aware Wall Slab Building & Combining (57 variants):
-//    - Tap open inner face of a matching Wall Slab -> Combines 2:1 into full vanilla block!
-//    - Tap Top/Bottom face -> Stacks directly above/below in same facing direction (with Vertical
-//      Corner Continuity when stacking onto outer/inner corners!).
-//    - Tap Left/Right narrow edge -> Extends the thin wall sideways in the same facing direction!
-//    - Tap Back face -> Places back-to-back behind it.
-//    - Tap any solid block's vertical side face -> Snaps flush against that wall.
-//    - Auto-Connects cross-material to Wall Slabs, Vanilla Stairs (with corner precision),
-//      Open Vertical Trapdoors, and Wall-Mounted Mini Block Pillars!
+// 1. Survival Volume Economy (1 Full Block = 2 Wall Slabs = 8 Mini Blocks; 1 Stair = 6 Mini Blocks):
+//    - Breaking a Wall Slab drops 4 Mini Blocks (mirroring vanilla double slabs); Silk Touch keeps 1 Wall Slab!
+//    - Sneak + Break on multi-cube Mini Blocks (2/8..7/8) or Wall Slabs (4/8) pops off 1 Mini Block at a time!
+//    - Multi-cube Mini Blocks & Wall Slabs conserve exact Mini Block drops even in explosions.
+//    - Full 2x2 pocket-grid & Stonecutter conversions across Full Blocks, Vanilla Slabs, Wall Slabs, Stairs & Mini Blocks.
+// 2. Face-Aware Wall Slab Building & Combining (57 variants):
+//    - Auto-Connects cross-material to Wall Slabs, Vanilla Stairs, Open Trapdoors, and Wall-Mounted Mini Pillars.
 //    - Crouch (Sneak): universal opt-out — prevents combining AND locks straight (`addon:shape = 'locked'`).
-// 2. Mini Blocks <-> Wall Slabs Synergy (71 Mini Blocks, 57/57 1:1 parity):
-//    - Placing any Mini Block onto Top/Bottom/Side of any Wall Slab aligns flush to the slab's plane!
-//    - Tap Wall Slab's open face with matching Mini Block -> fills with 2 Mini Blocks -> Full Block!
-//    - Tap 2-cube or 3-cube Mini Block with matching Wall Slab -> combines into Full Block (with refund)!
-//    - Wall-mounted Mini Pillars connect seamlessly with adjacent Wall Slabs.
-// 3. Tap-Aware Mini Block Shapes & Face-Aware Floor Slab Combining.
+// 3. Mini Blocks <-> Wall Slabs <-> Vanilla Slabs <-> Vanilla Stairs Synergy (71 Mini Blocks, 57/57 parity):
+//    - Stacking 1 -> 2 -> 3 -> 4 (Wall Slab / Half Block) -> 5 -> 6 (Vanilla Stair!) -> 7 -> 8 (Full Block).
+//    - Wall Slab (4/8) or Vanilla Horizontal Slab (4/8) + 2 Mini -> Vanilla Stair (6/8) (+ 2 more -> Full Block)!
 
 const welcomedPlayers = new Set();
 world.afterEvents.playerSpawn.subscribe((event) => {
@@ -50,7 +47,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   system.runTimeout(() => {
     if (!player?.isValid) return;
     player.sendMessage(
-      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.5.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
+      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.6.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
     );
   }, 20);
 });
@@ -191,6 +188,20 @@ const SHAPE_COUNT = {
   seven:     7,
 };
 
+// Sneak + Break ("Pop 1 Off") undo progression for multi-cube Mini Blocks:
+const PREV_MINI_SHAPE = {
+  pillar:    "single",
+  beam_x:    "single",
+  beam_z:    "single",
+  corner:    "beam_x",
+  step_x:    "beam_x",
+  step_z:    "beam_z",
+  slab_half: "corner",
+  five:      "slab_half",
+  six:       "five",
+  seven:     "six",
+};
+
 const SHAPE_LABELS = {
   pillar:    "Vertical Pillar (2/8)",
   beam_x:    "Horizontal Beam E-W (2/8)",
@@ -302,6 +313,49 @@ function consumeItem(player, typeId, selectedSlot, amount = 1) {
     container.setItem(slot, undefined);
   }
   return true;
+}
+
+function hasSilkTouch(itemStack) {
+  if (!itemStack) return false;
+  try {
+    const ench = itemStack.getComponent("minecraft:enchantable");
+    return ench?.hasEnchantment("silk_touch") === true;
+  } catch {
+    return false;
+  }
+}
+
+function damageHeldTool(player, selectedSlot) {
+  if (!player?.isValid || player.getGameMode() !== GameMode.Survival) return;
+  try {
+    const container = player.getComponent("minecraft:inventory")?.container;
+    if (!container) return;
+    const slot = player.selectedSlotIndex ?? selectedSlot;
+    if (slot === undefined) return;
+    const item = container.getItem(slot);
+    if (!item) return;
+    const dur = item.getComponent("minecraft:durability");
+    if (!dur || dur.unbreakable) return;
+    const unbreaking = item.getComponent("minecraft:enchantable")?.getEnchantment("unbreaking")?.level ?? 0;
+    const chance =
+      typeof dur.getDamageChance === "function"
+        ? dur.getDamageChance(unbreaking)
+        : 100 / (unbreaking + 1);
+    if (Math.random() * 100 >= chance) return;
+    if (dur.damage + 1 >= dur.maxDurability) {
+      container.setItem(slot, undefined);
+      try {
+        player.playSound("random.break");
+      } catch {
+        // Ignore
+      }
+    } else {
+      dur.damage += 1;
+      container.setItem(slot, item);
+    }
+  } catch {
+    // Ignore if tool has no durability component
+  }
 }
 
 function playSound(dimension, location, typeId, basePitch = 1.0) {
@@ -542,7 +596,10 @@ function isWallSlabCombineFace(dir, shape, blockFace) {
 // ── Placement & Combining Actions ───────────────────────────────────────────
 
 function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = blockTypeId, consumeCount = 1, refundTypeId = null, refundCount = 0) {
-  const fullBlockId = SLAB_TO_FULL_BLOCK[blockTypeId] || STAIR_TO_FULL_BLOCK[blockTypeId];
+  const fullBlockId =
+    SLAB_TO_FULL_BLOCK[blockTypeId] ||
+    STAIR_TO_FULL_BLOCK[blockTypeId] ||
+    VANILLA_SLAB_TO_FULL_BLOCK[blockTypeId];
   if (!fullBlockId || !canBuild(player)) return false;
 
   const location = targetBlock.location;
@@ -553,7 +610,11 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = bloc
   if (!hasEnoughItems(player, itemTypeId, selectedSlot, consumeCount)) {
     if (consumeCount > 1) {
       const have = getItemCount(player, itemTypeId, selectedSlot);
-      const targetName = STAIR_TO_FULL_BLOCK[blockTypeId] ? "Stairs" : "Wall Slab";
+      const targetName = STAIR_TO_FULL_BLOCK[blockTypeId]
+        ? "Stairs"
+        : VANILLA_SLAB_TO_FULL_BLOCK[blockTypeId]
+          ? "Slab"
+          : "Wall Slab";
       showHint(player, `§eNeed ${consumeCount} Mini Blocks to fill ${targetName} §7(have ${have}/${consumeCount})`);
     }
     return false;
@@ -621,6 +682,46 @@ function tryUpgradeWallSlabToStair(player, wallSlabBlock, slabDir, faceLocation,
     }
     refreshAdjacentWallSlabs(dimension, location);
     showHint(player, "§bWall Slab + 2 Mini: §fStairs (6/8) §8(Tap w/ 2 more -> Full Block)");
+    playSound(dimension, location, miniTypeId, SHAPE_PITCH.stair);
+  });
+
+  return true;
+}
+
+function tryUpgradeVanillaSlabToStair(player, vanillaSlabBlock, half, miniTypeId, stairId) {
+  if (!canBuild(player)) return false;
+  const location = vanillaSlabBlock.location;
+  const dimension = vanillaSlabBlock.dimension;
+  const selectedSlot = player.selectedSlotIndex;
+
+  if (!hasEnoughItems(player, miniTypeId, selectedSlot, 2)) {
+    const have = getItemCount(player, miniTypeId, selectedSlot);
+    showHint(player, `§eNeed 2 Mini Blocks to form Stairs §7(have ${have}/2)`);
+    return false;
+  }
+
+  const pDir = getPlayerCardinalDir(player);
+  const weirdo = DIR_TO_STAIR_WEIRDO[pDir] ?? 3;
+  const upsideDown = half === "top";
+  const slabTypeId = vanillaSlabBlock.typeId;
+
+  system.run(() => {
+    const current = dimension.getBlock(location);
+    if (current?.typeId !== slabTypeId) return;
+    if (!player?.isValid || !canBuild(player)) return;
+    if (!consumeItem(player, miniTypeId, selectedSlot, 2)) return;
+
+    try {
+      const perm = BlockPermutation.resolve(stairId, {
+        weirdo_direction: weirdo,
+        upside_down_bit: upsideDown,
+      });
+      current.setPermutation(perm);
+    } catch {
+      current.setType(stairId);
+    }
+    refreshAdjacentWallSlabs(dimension, location);
+    showHint(player, "§bSlab + 2 Mini: §fStairs (6/8) §8(Tap w/ 2 more -> Full Block)");
     playSound(dimension, location, miniTypeId, SHAPE_PITCH.stair);
   });
 
@@ -986,7 +1087,29 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         }
       }
 
-      // 1D. Tapping an adjacent block face pointing into a matching Mini Block -> stack!
+      // 1D. Tapping a matching Vanilla Horizontal Slab's (4/8) open inner face with Mini Blocks:
+      //   - If a Vanilla Stair exists: Slab (4/8) + 2 Mini -> Stairs (6/8)!
+      //   - Otherwise (smooth_stone, cut_sandstone): Slab (4/8) + 4 Mini -> Full Block (8/8)!
+      if (VANILLA_SLAB_TO_MINI_BLOCK[block.typeId] === itemTypeId) {
+        const half = block.permutation.getState("minecraft:vertical_half") || "bottom";
+        const isCombineFace =
+          (half === "bottom" && blockFace === Direction.Up) ||
+          (half === "top" && blockFace === Direction.Down);
+        if (isCombineFace) {
+          const matchingStair = MINI_BLOCK_TO_STAIR[itemTypeId];
+          if (matchingStair) {
+            if (tryUpgradeVanillaSlabToStair(player, block, half, itemTypeId, matchingStair)) {
+              event.cancel = true;
+              return;
+            }
+          } else if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
+            event.cancel = true;
+            return;
+          }
+        }
+      }
+
+      // 1E. Tapping an adjacent block face pointing into a matching Mini Block -> stack!
       const offset = FACE_OFFSET[blockFace];
       if (offset) {
         const adjBlock = block.dimension.getBlock({
@@ -1179,39 +1302,203 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
   }
 });
 
-// Survival drop conservation for multi-cube Mini Blocks + refresh Wall Slab neighbors on break
+// Survival drop conservation, Wall Slab Silk Touch vs 4-Mini-Block loot, Sneak-Break Pop-1-Off undo,
+// and Wall Slab neighbor refresh on break!
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  const { block, player, dimension } = event;
+  const { block, player, dimension, itemStack } = event;
   if (!block?.isValid) return;
 
   const typeId = block.typeId;
   const loc = block.location;
+  const isSurvival = Boolean(player?.isValid && player.getGameMode() === GameMode.Survival);
+  const isSneaking = Boolean(player?.isValid && player.isSneaking);
+  const selectedSlot = player?.selectedSlotIndex;
+  const dropLoc = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
 
-  if (WALL_SLAB_IDS.has(typeId) || isStairBlock(block) || isTrapdoorBlock(block)) {
+  // ── A. Wall Slabs (4/8) ───────────────────────────────────────────────────
+  if (WALL_SLAB_IDS.has(typeId)) {
+    // A1. Sneak + Break ("Pop 1 Off"): carves Wall Slab (4/8) down to a 3/8 Mini Step + drops 1 Mini Block!
+    if (isSneaking && canBuild(player)) {
+      const miniTypeId = WALL_SLAB_TO_MINI_BLOCK[typeId];
+      if (miniTypeId) {
+        const slabDir = block.permutation.getState("minecraft:cardinal_direction") || "north";
+        const miniFace = SLAB_DIR_TO_MINI_FACE[slabDir] || "south";
+        const stepShape = slabDir === "north" || slabDir === "south" ? "step_x" : "step_z";
+        event.cancel = true;
+        system.run(() => {
+          const current = dimension.getBlock(loc);
+          if (current?.typeId !== typeId) return;
+          try {
+            const perm = BlockPermutation.resolve(miniTypeId, {
+              "minecraft:block_face": miniFace,
+              "minecraft:vertical_half": "bottom",
+              "addon:shape": stepShape,
+            });
+            current.setPermutation(perm);
+          } catch {
+            return;
+          }
+          if (isSurvival) {
+            try {
+              dimension.spawnItem(new ItemStack(miniTypeId, 1), dropLoc);
+            } catch {
+              // Fail-safe
+            }
+            damageHeldTool(player, selectedSlot);
+          }
+          refreshAdjacentWallSlabs(dimension, loc);
+          playSound(dimension, loc, miniTypeId, SHAPE_PITCH[stepShape] || 0.96);
+          showHint(player, "§ePopped 1 Mini Block §7(3/8 remaining)");
+        });
+        return;
+      }
+    }
+
+    // A2. Silk Touch in Survival: keeps 1 Wall Slab intact (overrides native 4-Mini-Block loot table!)
+    if (isSurvival && hasSilkTouch(itemStack)) {
+      event.cancel = true;
+      system.run(() => {
+        const current = dimension.getBlock(loc);
+        if (current?.typeId !== typeId) return;
+        current.setType("minecraft:air");
+        try {
+          dimension.spawnItem(new ItemStack(typeId, 1), dropLoc);
+        } catch {
+          // Fail-safe
+        }
+        damageHeldTool(player, selectedSlot);
+        refreshAdjacentWallSlabs(dimension, loc);
+        playSound(dimension, loc, typeId, 0.9);
+        showHint(player, "§dSilk Touch: §fKept Wall Slab intact");
+      });
+      return;
+    }
+
+    // A3. Normal break: native loot table drops 4 Mini Blocks automatically!
     system.run(() => {
       refreshAdjacentWallSlabs(dimension, loc);
     });
     return;
   }
 
+  // ── B. Vanilla Stairs & Trapdoors (refresh adjacent Wall Slabs) ───────────
+  if (isStairBlock(block) || isTrapdoorBlock(block)) {
+    system.run(() => {
+      refreshAdjacentWallSlabs(dimension, loc);
+    });
+    return;
+  }
+
+  // ── C. Mini Blocks (1/8..7/8) ─────────────────────────────────────────────
   if (!MINI_BLOCK_IDS.has(typeId)) return;
 
   const shape = block.permutation.getState("addon:shape") || "single";
+
+  // C1. Sneak + Break ("Pop 1 Off"): removes just 1 Mini Block instead of shattering the whole cluster!
+  if (isSneaking && PREV_MINI_SHAPE[shape] && canBuild(player)) {
+    const prevShape = PREV_MINI_SHAPE[shape];
+    event.cancel = true;
+    system.run(() => {
+      const current = dimension.getBlock(loc);
+      if (current?.typeId !== typeId) return;
+      try {
+        current.setPermutation(current.permutation.withState("addon:shape", prevShape));
+      } catch {
+        return;
+      }
+      if (isSurvival) {
+        try {
+          dimension.spawnItem(new ItemStack(typeId, 1), dropLoc);
+        } catch {
+          // Fail-safe
+        }
+        damageHeldTool(player, selectedSlot);
+      }
+      if (shape === "pillar") {
+        refreshAdjacentWallSlabs(dimension, loc);
+      }
+      playSound(dimension, loc, typeId, SHAPE_PITCH[prevShape] || 0.9);
+      showHint(player, `§ePopped 1 Mini Block §7(${SHAPE_COUNT[prevShape] || 1}/8 remaining)`);
+    });
+    return;
+  }
+
   if (shape === "pillar") {
     system.run(() => refreshAdjacentWallSlabs(dimension, loc));
   }
 
-  if (!player?.isValid || player.getGameMode() !== GameMode.Survival) return;
+  if (!isSurvival) return;
 
   const count = SHAPE_COUNT[shape] || 1;
   if (count <= 1) return;
 
-  const dropLoc = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
   system.run(() => {
     try {
       dimension.spawnItem(new ItemStack(typeId, count - 1), dropLoc);
     } catch {
       // Fail-safe
+    }
+  });
+});
+
+// Explosion drop conservation for multi-cube Mini Blocks (Wall Slabs drop 4 Mini natively via loot table!)
+// + refresh adjacent Wall Slabs after blasts.
+world.beforeEvents.explosion.subscribe((event) => {
+  const dimension = event.dimension;
+  let impacted;
+  try {
+    impacted = event.getImpactedBlocks();
+  } catch {
+    return;
+  }
+  if (!impacted?.length) return;
+
+  const multiMiniDrops = [];
+  const refreshLocs = [];
+
+  for (const block of impacted) {
+    if (!block?.isValid) continue;
+    const typeId = block.typeId;
+    const loc = { x: block.location.x, y: block.location.y, z: block.location.z };
+
+    if (MINI_BLOCK_IDS.has(typeId)) {
+      const shape = block.permutation.getState("addon:shape") || "single";
+      const count = SHAPE_COUNT[shape] || 1;
+      if (count > 1) {
+        multiMiniDrops.push({ loc, typeId, extra: count - 1 });
+      }
+      if (shape === "pillar") {
+        refreshLocs.push(loc);
+      }
+    } else if (WALL_SLAB_IDS.has(typeId) || isStairBlock(block) || isTrapdoorBlock(block)) {
+      refreshLocs.push(loc);
+    }
+  }
+
+  if (!multiMiniDrops.length && !refreshLocs.length) return;
+
+  system.run(() => {
+    for (const entry of multiMiniDrops) {
+      try {
+        const after = dimension.getBlock(entry.loc);
+        // Only spawn extra drops if the explosion actually destroyed the block
+        if (after?.typeId !== entry.typeId) {
+          dimension.spawnItem(new ItemStack(entry.typeId, entry.extra), {
+            x: entry.loc.x + 0.5,
+            y: entry.loc.y + 0.5,
+            z: entry.loc.z + 0.5,
+          });
+        }
+      } catch {
+        // Fail-safe
+      }
+    }
+    for (const loc of refreshLocs) {
+      try {
+        refreshAdjacentWallSlabs(dimension, loc);
+      } catch {
+        // Ignore unloaded chunks
+      }
     }
   });
 });

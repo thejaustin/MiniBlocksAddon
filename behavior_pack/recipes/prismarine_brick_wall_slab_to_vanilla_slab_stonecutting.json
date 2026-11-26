@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "addon:prismarine_brick_wall_slab_to_vanilla_slab_stonecutting"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 0,
+    "ingredients": [
+      {
+        "item": "addon:prismarine_brick_wall_slab"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "addon:prismarine_brick_wall_slab"
+      }
+    ],
+    "result": {
+      "item": "minecraft:prismarine_brick_slab",
+      "count": 1
+    }
+  }
+}
