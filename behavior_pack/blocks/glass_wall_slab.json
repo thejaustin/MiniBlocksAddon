@@ -6,6 +6,16 @@
       "menu_category": {
         "category": "none"
       },
+      "states": {
+        "addon:shape": [
+          "straight",
+          "locked",
+          "inner_left",
+          "inner_right",
+          "outer_left",
+          "outer_right"
+        ]
+      },
       "traits": {
         "minecraft:placement_direction": {
           "enabled_states": [
@@ -163,6 +173,158 @@
               0,
               270,
               0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'outer_left'",
+        "components": {
+          "minecraft:geometry": "geometry.wall_slab_outer_left",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'outer_right'",
+        "components": {
+          "minecraft:geometry": "geometry.wall_slab_outer_right",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                0,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              0,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'inner_left'",
+        "components": {
+          "minecraft:geometry": "geometry.wall_slab_inner_left",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                16,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                0
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'inner_right'",
+        "components": {
+          "minecraft:geometry": "geometry.wall_slab_inner_right",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -8
+              ],
+              "size": [
+                16,
+                16,
+                8
+              ]
+            },
+            {
+              "origin": [
+                0,
+                0,
+                0
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -8
+            ],
+            "size": [
+              16,
+              16,
+              16
             ]
           }
         }

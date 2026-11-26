@@ -14,24 +14,28 @@ import {
   SLAB_SOUNDS,
 } from "./slab_map.js";
 
-// Mini Blocks Add-on v2.0.0 — Bedrock 26.60 (@minecraft/server 2.11.0)
+// Mini Blocks Add-on v2.1.0 — Bedrock 26.60 (@minecraft/server 2.11.0)
 // Successor to the classic 2015 MCPE Mini Blocks Mod by thejaustin.
 //
 // Mechanics:
-// 1. Wall Slabs:
-//    - Tap any horizontal wall face (N/S/E/W) -> snaps flush against that wall face!
-//    - Tap any floor/ceiling (Up/Down) -> faces the player's cardinal direction!
-//    - Tap an existing matching wall slab (or adjacent face pointing into one) ->
-//      combines both halves into the full vanilla block!
-//    - Sneak while placing to bypass combining and build adjacent thin walls.
-// 2. Mini Blocks:
+// 1. Wall Slabs (42 variants):
+//    - Side-face snapping: tap any vertical wall face (N/S/E/W) -> attaches flush to that wall.
+//    - Floor/ceiling facing: tap Up/Down -> faces your cardinal direction.
+//    - Auto-Connecting Corners: placing perpendicular wall slabs automatically forms seamless
+//      Inner Corners (3/4 L-wall) and Outer Corners (1/4 post), updating neighbors on place & break.
+//    - Tap-to-Combine: tap a matching wall slab to combine 2 halves into the full vanilla block.
+//    - Crouching (Sneak): universal opt-out — prevents combining AND prevents auto-connecting
+//      (locks the placed wall slab straight without distorting neighbors!).
+// 2. Mini Blocks (57 variants — 42 1:1 slab parity + 15 extended):
 //    - Mounts natively to floor, ceiling, or any of the 4 walls (bottom or top half).
-//    - Tap an existing matching mini block to stack progressively in the same space:
-//      Single (1) -> Double (2) -> Triple L-cluster (3) -> Full Vanilla Block (4)!
-//    - Breaking a Double or Triple cluster in Survival refunds all constituent mini blocks.
-//    - Sneak while placing to bypass stacking and place a separate adjacent mini block.
-// 3. Cobblestone Floor Slab:
-//    - Supports top & bottom placement and combines 2:1 into full cobblestone.
+//    - Tap-Aware Directional Stacking (1 -> 2 -> 3 -> Full Block):
+//      * Tap Up/Down on Single -> Vertical Pillar (2-high, centered or wall-mounted)
+//      * Tap East/West on Single -> East-West Horizontal Beam (2-wide)
+//      * Tap North/South on Single -> North-South Horizontal Beam (2-wide)
+//      * Tap Side on Beam -> Flat L-Corner (3) | Tap Up/Down on Beam or Side on Pillar -> Vertical Step (3)
+//      * Tap any 3-cube shape -> Full Vanilla Block (4)
+//    - Breaking multi-cube mini blocks in Survival refunds all pieces.
+//    - Crouching (Sneak) bypasses stacking to place a separate adjacent mini block.
 
 const welcomedPlayers = new Set();
 world.afterEvents.playerSpawn.subscribe((event) => {
@@ -43,7 +47,7 @@ world.afterEvents.playerSpawn.subscribe((event) => {
   system.runTimeout(() => {
     if (!player?.isValid) return;
     player.sendMessage(
-      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.0.1§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
+      "§eWelcome back to Minecraft! You are using the §aMini Blocks Add-on v2.1.0§e (Bedrock 26.60)! Originally created by §bthejaustin§e."
     );
   }, 20);
 });
@@ -63,6 +67,14 @@ const REPLACEABLE_BLOCKS = new Set([
   "minecraft:deadbush",
 ]);
 
+const INTERACTIVE_BLOCK_PATTERNS = [
+  "chest", "barrel", "shulker_box", "furnace", "smoker", "hopper", "dropper",
+  "dispenser", "crafting_table", "stonecutter", "anvil", "grindstone", "loom",
+  "cartography_table", "smithing_table", "enchanting_table", "brewing_stand",
+  "beacon", "bed", "door", "trapdoor", "fence_gate", "button", "lever",
+  "repeater", "comparator", "noteblock", "jukebox", "lectern", "bell", "crafter",
+];
+
 const FACE_OFFSET = {
   [Direction.Down]:  { x: 0, y: -1, z: 0 },
   [Direction.Up]:    { x: 0, y: 1,  z: 0 },
@@ -72,12 +84,13 @@ const FACE_OFFSET = {
   [Direction.East]:  { x: 1,  y: 0, z: 0 },
 };
 
-// When tapping a vertical face of a block, the wall slab placed in the adjacent cell
-// attaches flush against that tapped block (opposite cardinal half of the new cell):
-//   Tap North face (-Z) -> new cell is z-1 -> flush against South side of new cell ('south')
-//   Tap South face (+Z) -> new cell is z+1 -> flush against North side of new cell ('north')
-//   Tap East face  (+X) -> new cell is x+1 -> flush against West side of new cell  ('west')
-//   Tap West face  (-X) -> new cell is x-1 -> flush against East side of new cell  ('east')
+const HORIZONTAL_OFFSETS = [
+  { x: 0, y: 0, z: -1 }, // North
+  { x: 0, y: 0, z:  1 }, // South
+  { x: -1, y: 0, z: 0 }, // West
+  { x:  1, y: 0, z: 0 }, // East
+];
+
 const FACE_TO_WALL_SLAB_DIR = {
   [Direction.North]: "south",
   [Direction.South]: "north",
@@ -85,15 +98,65 @@ const FACE_TO_WALL_SLAB_DIR = {
   [Direction.West]:  "east",
 };
 
-const NEXT_MINI_SIZE = {
-  single: "double",
-  double: "triple",
-  triple: "full",
+// Local basis vectors for each wall slab facing (matching CCW Y-rotation in Bedrock):
+//   back  = where the slab panel rests (Outer Corner neighbor direction)
+//   front = open side of the slab (Inner Corner neighbor direction)
+//   left  = left perpendicular facing direction & offset
+//   right = right perpendicular facing direction & offset
+const SLAB_BASIS = {
+  north: {
+    back:  { x:  0, z: -1 },
+    front: { x:  0, z:  1 },
+    left:  { dir: "west",  x: -1, z:  0 },
+    right: { dir: "east",  x:  1, z:  0 },
+  },
+  west: {
+    back:  { x: -1, z:  0 },
+    front: { x:  1, z:  0 },
+    left:  { dir: "south", x:  0, z:  1 },
+    right: { dir: "north", x:  0, z: -1 },
+  },
+  south: {
+    back:  { x:  0, z:  1 },
+    front: { x:  0, z: -1 },
+    left:  { dir: "east",  x:  1, z:  0 },
+    right: { dir: "west",  x: -1, z:  0 },
+  },
+  east: {
+    back:  { x:  1, z:  0 },
+    front: { x: -1, z:  0 },
+    left:  { dir: "north", x:  0, z: -1 },
+    right: { dir: "south", x:  0, z:  1 },
+  },
 };
 
-const STAGE_PITCH = {
-  double: 0.96,
-  triple: 1.04,
+const SHAPE_COUNT = {
+  single: 1,
+  pillar: 2,
+  beam_x: 2,
+  beam_z: 2,
+  corner: 3,
+  step_x: 3,
+  step_z: 3,
+};
+
+const SHAPE_LABELS = {
+  pillar: "Vertical Pillar (2/4)",
+  beam_x: "Horizontal Beam E-W (2/4)",
+  beam_z: "Horizontal Beam N-S (2/4)",
+  corner: "L-Corner (3/4)",
+  step_x: "Mini Step E-W (3/4)",
+  step_z: "Mini Step N-S (3/4)",
+  full:   "Combined -> Full Block",
+};
+
+const SHAPE_PITCH = {
+  pillar: 0.96,
+  beam_x: 0.96,
+  beam_z: 0.96,
+  corner: 1.04,
+  step_x: 1.04,
+  step_z: 1.04,
   full:   1.12,
 };
 
@@ -102,14 +165,6 @@ function canBuild(player) {
   if (mode !== GameMode.Survival && mode !== GameMode.Creative) return false;
   return player.playerPermissionLevel !== PlayerPermissionLevel.Visitor;
 }
-
-const INTERACTIVE_BLOCK_PATTERNS = [
-  "chest", "barrel", "shulker_box", "furnace", "smoker", "hopper", "dropper",
-  "dispenser", "crafting_table", "stonecutter", "anvil", "grindstone", "loom",
-  "cartography_table", "smithing_table", "enchanting_table", "brewing_stand",
-  "beacon", "bed", "door", "trapdoor", "fence_gate", "button", "lever",
-  "repeater", "comparator", "noteblock", "jukebox", "lectern", "bell", "crafter",
-];
 
 function isInteractiveBlock(block) {
   const id = block?.typeId || "";
@@ -121,6 +176,14 @@ function isInteractiveBlock(block) {
 function isReplaceable(block) {
   if (!block) return false;
   return block.isAir || REPLACEABLE_BLOCKS.has(block.typeId);
+}
+
+function showHint(player, text) {
+  try {
+    player.onScreenDisplay.setActionBar(text);
+  } catch {
+    // Ignore if HUD unavailable
+  }
 }
 
 function consumeItem(player, typeId, selectedSlot) {
@@ -158,7 +221,6 @@ function playSound(dimension, location, typeId, basePitch = 1.0) {
       pitch: basePitch + (Math.random() - 0.5) * 0.14,
     });
   } catch {
-    // Fallback if a specific sound event is unavailable
     try {
       dimension.playSound("use.stone", soundLoc, { volume: 0.9, pitch: basePitch });
     } catch {
@@ -210,6 +272,70 @@ function isWallSlabHalfObstructed(dimension, loc, dir) {
   }
 }
 
+// ── Auto-Connecting Wall Slab Corner Engine ─────────────────────────────────
+
+function getConnectableSlabDir(dimension, x, y, z) {
+  const b = dimension.getBlock({ x, y, z });
+  if (!b || !WALL_SLAB_IDS.has(b.typeId)) return null;
+  if (b.permutation.getState("addon:shape") === "locked") return null;
+  return b.permutation.getState("minecraft:cardinal_direction") || null;
+}
+
+function computeWallSlabShape(dimension, loc, dir) {
+  const basis = SLAB_BASIS[dir];
+  if (!basis) return "straight";
+
+  // 1. Check Back neighbor -> Outer Corner (1/4 post)
+  const backDir = getConnectableSlabDir(dimension, loc.x + basis.back.x, loc.y, loc.z + basis.back.z);
+  if (backDir === basis.left.dir) {
+    // Don't narrow into an outer corner if our right neighbor continues the same wall
+    const rightDir = getConnectableSlabDir(dimension, loc.x + basis.right.x, loc.y, loc.z + basis.right.z);
+    if (rightDir !== dir) return "outer_left";
+  } else if (backDir === basis.right.dir) {
+    const leftDir = getConnectableSlabDir(dimension, loc.x + basis.left.x, loc.y, loc.z + basis.left.z);
+    if (leftDir !== dir) return "outer_right";
+  }
+
+  // 2. Check Front neighbor -> Inner Corner (3/4 L-wall)
+  const frontDir = getConnectableSlabDir(dimension, loc.x + basis.front.x, loc.y, loc.z + basis.front.z);
+  if (frontDir === basis.left.dir) {
+    const leftDir = getConnectableSlabDir(dimension, loc.x + basis.left.x, loc.y, loc.z + basis.left.z);
+    if (leftDir !== dir) return "inner_left";
+  } else if (frontDir === basis.right.dir) {
+    const rightDir = getConnectableSlabDir(dimension, loc.x + basis.right.x, loc.y, loc.z + basis.right.z);
+    if (rightDir !== dir) return "inner_right";
+  }
+
+  return "straight";
+}
+
+function refreshWallSlabShape(dimension, loc) {
+  const block = dimension.getBlock(loc);
+  if (!block || !WALL_SLAB_IDS.has(block.typeId)) return;
+  const curShape = block.permutation.getState("addon:shape") || "straight";
+  if (curShape === "locked") return; // Respect crouched/locked wall slabs!
+
+  const dir = block.permutation.getState("minecraft:cardinal_direction");
+  if (!dir) return;
+
+  const newShape = computeWallSlabShape(dimension, loc, dir);
+  if (newShape !== curShape) {
+    block.setPermutation(block.permutation.withState("addon:shape", newShape));
+  }
+}
+
+function refreshAdjacentWallSlabs(dimension, loc) {
+  for (const off of HORIZONTAL_OFFSETS) {
+    refreshWallSlabShape(dimension, {
+      x: loc.x + off.x,
+      y: loc.y,
+      z: loc.z + off.z,
+    });
+  }
+}
+
+// ── Wall Slab & Floor Slab Actions ──────────────────────────────────────────
+
 function tryMergeToFullBlock(player, targetBlock, blockTypeId) {
   const fullBlockId = SLAB_TO_FULL_BLOCK[blockTypeId];
   if (!fullBlockId || !canBuild(player)) return false;
@@ -218,6 +344,7 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId) {
   const dimension = targetBlock.dimension;
   if (isFullBlockObstructed(dimension, location)) return false;
 
+  const wasWallSlab = WALL_SLAB_IDS.has(blockTypeId);
   const selectedSlot = player.selectedSlotIndex;
 
   system.run(() => {
@@ -227,6 +354,9 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId) {
     if (!consumeItem(player, blockTypeId, selectedSlot)) return;
 
     current.setType(fullBlockId);
+    if (wasWallSlab) {
+      refreshAdjacentWallSlabs(dimension, location);
+    }
     playSound(dimension, location, blockTypeId, 1.0);
   });
 
@@ -248,15 +378,8 @@ function trySnapWallSlabToFace(player, clickedBlock, blockFace, slabTypeId) {
   if (!isReplaceable(targetBlock)) return false;
   if (isWallSlabHalfObstructed(dimension, targetLoc, dir)) return false;
 
+  const isLocked = player.isSneaking;
   const selectedSlot = player.selectedSlotIndex;
-  let perm;
-  try {
-    perm = BlockPermutation.resolve(slabTypeId, {
-      "minecraft:cardinal_direction": dir,
-    });
-  } catch {
-    return false;
-  }
 
   system.run(() => {
     if (!player?.isValid || !canBuild(player)) return;
@@ -264,24 +387,90 @@ function trySnapWallSlabToFace(player, clickedBlock, blockFace, slabTypeId) {
     if (!isReplaceable(current)) return;
     if (!consumeItem(player, slabTypeId, selectedSlot)) return;
 
+    const shape = isLocked ? "locked" : computeWallSlabShape(dimension, targetLoc, dir);
+    const perm = BlockPermutation.resolve(slabTypeId, {
+      "minecraft:cardinal_direction": dir,
+      "addon:shape": shape,
+    });
     current.setPermutation(perm);
+
+    if (!isLocked) {
+      refreshAdjacentWallSlabs(dimension, targetLoc);
+    } else {
+      showHint(player, "§7Wall Slab Locked Straight §8(Crouch prevents auto-connect)");
+    }
     playSound(dimension, targetLoc, slabTypeId, 1.0);
   });
 
   return true;
 }
 
-function tryStackMiniBlock(player, targetBlock, miniTypeId) {
+// ── Tap-Aware Directional Mini Block Stacking ───────────────────────────────
+
+function getPlayerHorizontalAxis(player) {
+  try {
+    const view = player.getViewDirection();
+    return Math.abs(view.x) >= Math.abs(view.z) ? "x" : "z";
+  } catch {
+    return "x";
+  }
+}
+
+function resolveNextMiniShape(currentShape, blockFace, faceLocation, player) {
+  const isVerticalFace = blockFace === Direction.Up || blockFace === Direction.Down;
+  const isXFace = blockFace === Direction.East || blockFace === Direction.West;
+  const isZFace = blockFace === Direction.North || blockFace === Direction.South;
+
+  if (currentShape === "single") {
+    if (isXFace) return "beam_x";
+    if (isZFace) return "beam_z";
+    // Tapping Up/Down: center tap -> vertical Pillar! Far edge tap -> horizontal Beam along that edge!
+    if (faceLocation) {
+      const dx = Math.abs(faceLocation.x - 0.5);
+      const dz = Math.abs(faceLocation.z - 0.5);
+      if (dx > 0.32 && dx >= dz) return "beam_x";
+      if (dz > 0.32 && dz > dx) return "beam_z";
+    }
+    return "pillar";
+  }
+
+  if (currentShape === "pillar") {
+    if (isXFace) return "step_x";
+    if (isZFace) return "step_z";
+    return getPlayerHorizontalAxis(player) === "x" ? "step_x" : "step_z";
+  }
+
+  if (currentShape === "beam_x") {
+    if (isVerticalFace) return "step_x";
+    if (isZFace) return "corner";
+    // Tapping X ends of an already X-wide beam -> build up into a mini step
+    return "step_x";
+  }
+
+  if (currentShape === "beam_z") {
+    if (isVerticalFace) return "step_z";
+    if (isXFace) return "corner";
+    return "step_z";
+  }
+
+  if (currentShape === "corner" || currentShape === "step_x" || currentShape === "step_z") {
+    return "full";
+  }
+
+  return null;
+}
+
+function tryStackMiniBlock(player, targetBlock, blockFace, faceLocation, miniTypeId) {
   if (!canBuild(player)) return false;
 
-  const currentSize = targetBlock.permutation.getState("addon:size") || "single";
-  const nextSize = NEXT_MINI_SIZE[currentSize];
-  if (!nextSize) return false;
+  const currentShape = targetBlock.permutation.getState("addon:shape") || "single";
+  const nextShape = resolveNextMiniShape(currentShape, blockFace, faceLocation, player);
+  if (!nextShape) return false;
 
   const location = targetBlock.location;
   const dimension = targetBlock.dimension;
 
-  if (nextSize === "full") {
+  if (nextShape === "full") {
     if (isFullBlockObstructed(dimension, location)) return false;
   }
 
@@ -292,8 +481,8 @@ function tryStackMiniBlock(player, targetBlock, miniTypeId) {
     const current = dimension.getBlock(location);
     if (current?.typeId !== miniTypeId) return;
 
-    const liveSize = current.permutation.getState("addon:size") || "single";
-    const liveNext = NEXT_MINI_SIZE[liveSize];
+    const liveShape = current.permutation.getState("addon:shape") || "single";
+    const liveNext = resolveNextMiniShape(liveShape, blockFace, faceLocation, player);
     if (!liveNext) return;
 
     if (!consumeItem(player, miniTypeId, selectedSlot)) return;
@@ -304,29 +493,34 @@ function tryStackMiniBlock(player, targetBlock, miniTypeId) {
         current.setType(fullBlockId);
       }
     } else {
-      const updatedPerm = current.permutation.withState("addon:size", liveNext);
-      current.setPermutation(updatedPerm);
+      current.setPermutation(current.permutation.withState("addon:shape", liveNext));
     }
-    playSound(dimension, location, miniTypeId, STAGE_PITCH[liveNext] || 1.0);
+
+    if (SHAPE_LABELS[liveNext]) {
+      showHint(player, `§bMini Block: §f${SHAPE_LABELS[liveNext]}`);
+    }
+    playSound(dimension, location, miniTypeId, SHAPE_PITCH[liveNext] || 1.0);
   });
 
   return true;
 }
 
+// ── Event Subscriptions ─────────────────────────────────────────────────────
+
 world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-  const { block, player, itemStack, blockFace } = event;
+  const { block, player, itemStack, blockFace, faceLocation } = event;
   if (!event.isFirstEvent) return;
   if (!itemStack) return;
 
   const itemTypeId = itemStack.typeId;
   if (!SLAB_TO_FULL_BLOCK[itemTypeId]) return;
 
-  // ── 1. Mini Blocks: Progressive 1 -> 2 -> 3 -> Full Block Stacking ──
+  // ── 1. Mini Blocks: Tap-Aware Directional Stacking (1 -> 2 -> 3 -> Full) ──
   if (MINI_BLOCK_IDS.has(itemTypeId)) {
-    if (player.isSneaking) return; // Sneak to place a separate adjacent mini block
+    if (player.isSneaking) return; // Crouch to place a separate adjacent mini block
 
     if (block.typeId === itemTypeId) {
-      if (tryStackMiniBlock(player, block, itemTypeId)) {
+      if (tryStackMiniBlock(player, block, blockFace, faceLocation, itemTypeId)) {
         event.cancel = true;
         return;
       }
@@ -340,7 +534,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         z: block.location.z + offset.z,
       });
       if (adjBlock?.typeId === itemTypeId) {
-        if (tryStackMiniBlock(player, adjBlock, itemTypeId)) {
+        if (tryStackMiniBlock(player, adjBlock, blockFace, faceLocation, itemTypeId)) {
           event.cancel = true;
           return;
         }
@@ -352,7 +546,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   // ── 2. Wall Slabs: Combine 2:1 OR Snap Flush to Tapped Wall Face ──
   if (WALL_SLAB_IDS.has(itemTypeId)) {
     if (!player.isSneaking) {
-      // Case A: Tapping an existing matching wall slab directly -> combine into full block!
+      // Case A: Direct tap on matching wall slab -> combine into full block!
       if (block.typeId === itemTypeId) {
         if (tryMergeToFullBlock(player, block, itemTypeId)) {
           event.cancel = true;
@@ -360,7 +554,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         }
       }
 
-      // Case B: Tapping an adjacent block face pointing into an existing matching wall slab -> combine!
+      // Case B: Adjacent block face pointing into matching wall slab -> combine!
       const offset = FACE_OFFSET[blockFace];
       if (offset) {
         const adjBlock = block.dimension.getBlock({
@@ -377,9 +571,9 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    // Case C: Tapping a vertical side face (N/S/E/W) -> snap wall slab flush against that wall!
-    // (Respect interactive blocks like chests/doors unless sneaking; floor/ceiling falls through
-    // to native minecraft:placement_direction!)
+    // Case C: Tapping a vertical side face (N/S/E/W) -> snap flush against that wall!
+    // (Respects interactive blocks like chests/doors unless sneaking; floor/ceiling falls
+    // through to native minecraft:placement_direction + playerPlaceBlock auto-connect!)
     if (FACE_TO_WALL_SLAB_DIR[blockFace] && (player.isSneaking || !isInteractiveBlock(block))) {
       if (trySnapWallSlabToFace(player, block, blockFace, itemTypeId)) {
         event.cancel = true;
@@ -415,27 +609,50 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   }
 });
 
-// Survival conservation: breaking a Double or Triple mini block cluster drops all pieces!
+// Auto-connect Wall Slabs placed via native floor/ceiling placement (and lock straight when crouched!)
+world.afterEvents.playerPlaceBlock.subscribe((event) => {
+  const { block, player } = event;
+  if (!block?.isValid || !WALL_SLAB_IDS.has(block.typeId)) return;
+
+  const loc = block.location;
+  const dim = block.dimension;
+  const isLocked = Boolean(player?.isValid && player.isSneaking);
+
+  if (isLocked) {
+    block.setPermutation(block.permutation.withState("addon:shape", "locked"));
+    showHint(player, "§7Wall Slab Locked Straight §8(Crouch prevents auto-connect)");
+  } else {
+    refreshWallSlabShape(dim, loc);
+    refreshAdjacentWallSlabs(dim, loc);
+  }
+});
+
+// Survival drop conservation for multi-cube Mini Blocks + un-connect Wall Slab neighbors on break
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const { block, player, dimension } = event;
-  if (!block?.isValid || !player?.isValid) return;
-  if (!MINI_BLOCK_IDS.has(block.typeId)) return;
+  if (!block?.isValid) return;
+
+  const typeId = block.typeId;
+  const loc = block.location;
+
+  if (WALL_SLAB_IDS.has(typeId)) {
+    system.run(() => {
+      refreshAdjacentWallSlabs(dimension, loc);
+    });
+    return;
+  }
+
+  if (!player?.isValid || !MINI_BLOCK_IDS.has(typeId)) return;
   if (player.getGameMode() !== GameMode.Survival) return;
 
-  const size = block.permutation.getState("addon:size");
-  const extraCount = size === "triple" ? 2 : size === "double" ? 1 : 0;
-  if (extraCount <= 0) return;
+  const shape = block.permutation.getState("addon:shape") || "single";
+  const count = SHAPE_COUNT[shape] || 1;
+  if (count <= 1) return;
 
-  const dropLoc = {
-    x: block.location.x + 0.5,
-    y: block.location.y + 0.5,
-    z: block.location.z + 0.5,
-  };
-  const typeId = block.typeId;
-
+  const dropLoc = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
   system.run(() => {
     try {
-      dimension.spawnItem(new ItemStack(typeId, extraCount), dropLoc);
+      dimension.spawnItem(new ItemStack(typeId, count - 1), dropLoc);
     } catch {
       // Fail-safe
     }

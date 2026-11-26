@@ -166,6 +166,21 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
 ## Historical Version Archive
 
 ```text
+=== v2.1.0 (Bedrock 26.60 — Auto-Connecting Wall Slab Corners & Tap-Aware Mini Block Shapes — 2026) ===
+* [Feature] Auto-Connecting Wall Slab Corners (With Crouch-to-Lock Opt-Out):
+  - Placing perpendicular wall slabs automatically forms seamless Inner Corners (3/4 L-wall with zero internal glass seam) and Outer Corners (1/4 vertical corner post) using exact 1.26.60 multi-box collisions.
+  - Neighbors dynamically update when placing, combining, or breaking wall slabs.
+  - Crouching (Sneaking) acts as the universal opt-out: prevents combining AND locks the placed wall slab straight (`addon:shape = "locked"`) so neither it nor adjacent walls deform into corners.
+* [Feature] Tap-Aware Mini Block Shapes & Directions:
+  - Tapping a placed mini block now grows in the exact direction you tapped:
+    - Tap Up/Down on Single -> Vertical Pillar (2-high, centered or wall-mounted!)
+    - Tap East/West on Single -> East-West Horizontal Beam (2-wide)
+    - Tap North/South on Single -> North-South Horizontal Beam (2-wide)
+    - Tap Side on Beam -> Flat L-Corner (3) | Tap Up/Down on Beam or Side on Pillar -> Vertical Mini Step / Bracket (3)
+    - Tap any 3-cube shape -> Full Vanilla Block (4)
+  - Subtle Action Bar feedback shows active shape/lock state on placement.
+  - Full Survival break conservation across all 7 shapes (pillar/beams drop 2, corner/steps drop 3).
+
 === v2.0.1 (Bedrock 26.60 — Full 1:1 Slab-to-Mini-Block Material Parity — 2026) ===
 * [Feature] Complete 1:1 Wall Slab -> Mini Block Parity (57 Mini Blocks total):
   - Mini Blocks now mirror all 42 Wall Slab materials FIRST in identical building order (Woods -> Stones & Bricks -> Sandstone & Quartz -> Nether, End, Copper & Glass), before extending into extra decor, lights, metals, and nature blocks.

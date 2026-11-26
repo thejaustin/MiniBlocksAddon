@@ -7,10 +7,14 @@
         "category": "none"
       },
       "states": {
-        "addon:size": [
+        "addon:shape": [
           "single",
-          "double",
-          "triple"
+          "pillar",
+          "beam_x",
+          "beam_z",
+          "corner",
+          "step_x",
+          "step_z"
         ]
       },
       "traits": {
@@ -133,7 +137,7 @@
     },
     "permutations": [
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'up'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'up'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_single",
           "minecraft:collision_box": [
@@ -165,7 +169,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'down'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'down'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_ceiling",
           "minecraft:collision_box": [
@@ -197,7 +201,39 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom'",
+        "condition": "q.block_state('addon:shape') == 'pillar' && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_pillar",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -4,
+                0,
+                -4
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -4
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'bottom'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_bottom",
           "minecraft:collision_box": [
@@ -236,7 +272,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'south' && q.block_state('minecraft:vertical_half') == 'top'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_top",
           "minecraft:collision_box": [
@@ -275,7 +311,46 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom'",
+        "condition": "q.block_state('addon:shape') == 'pillar' && q.block_state('minecraft:block_face') == 'south'",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_pillar_wall",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -4,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'bottom'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_bottom",
           "minecraft:collision_box": [
@@ -314,7 +389,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'east' && q.block_state('minecraft:vertical_half') == 'top'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_top",
           "minecraft:collision_box": [
@@ -353,7 +428,46 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom'",
+        "condition": "q.block_state('addon:shape') == 'pillar' && q.block_state('minecraft:block_face') == 'east'",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_pillar_wall",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -4,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'bottom'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_bottom",
           "minecraft:collision_box": [
@@ -392,7 +506,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'north' && q.block_state('minecraft:vertical_half') == 'top'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_top",
           "minecraft:collision_box": [
@@ -431,7 +545,46 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom'",
+        "condition": "q.block_state('addon:shape') == 'pillar' && q.block_state('minecraft:block_face') == 'north'",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_pillar_wall",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -4,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              180,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'bottom'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_bottom",
           "minecraft:collision_box": [
@@ -470,7 +623,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'west' && q.block_state('minecraft:vertical_half') == 'top'",
         "components": {
           "minecraft:geometry": "geometry.mini_block_wall_top",
           "minecraft:collision_box": [
@@ -509,7 +662,46 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'up' || ((q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south') && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "condition": "q.block_state('addon:shape') == 'pillar' && q.block_state('minecraft:block_face') == 'west'",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_pillar_wall",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -4,
+                0,
+                -8
+              ],
+              "size": [
+                8,
+                16,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -4,
+              0,
+              -8
+            ],
+            "size": [
+              8,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              270,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'beam_x' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
         "components": {
           "minecraft:geometry": "geometry.mini_block_double_bottom",
           "minecraft:collision_box": [
@@ -541,7 +733,39 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west') && q.block_state('minecraft:vertical_half') == 'bottom'",
+        "condition": "q.block_state('addon:shape') == 'beam_x' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_double_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -4
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              8,
+              -4
+            ],
+            "size": [
+              16,
+              8,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'beam_z' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
         "components": {
           "minecraft:geometry": "geometry.mini_block_double_bottom",
           "minecraft:collision_box": [
@@ -580,39 +804,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'down' || ((q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south') && q.block_state('minecraft:vertical_half') == 'top'))",
-        "components": {
-          "minecraft:geometry": "geometry.mini_block_double_top",
-          "minecraft:collision_box": [
-            {
-              "origin": [
-                -8,
-                8,
-                -4
-              ],
-              "size": [
-                16,
-                8,
-                8
-              ]
-            }
-          ],
-          "minecraft:selection_box": {
-            "origin": [
-              -8,
-              8,
-              -4
-            ],
-            "size": [
-              16,
-              8,
-              8
-            ]
-          }
-        }
-      },
-      {
-        "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west') && q.block_state('minecraft:vertical_half') == 'top'",
+        "condition": "q.block_state('addon:shape') == 'beam_z' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
         "components": {
           "minecraft:geometry": "geometry.mini_block_double_top",
           "minecraft:collision_box": [
@@ -651,7 +843,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'triple' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "condition": "q.block_state('addon:shape') == 'corner' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
         "components": {
           "minecraft:geometry": "geometry.mini_block_triple_bottom",
           "minecraft:collision_box": [
@@ -695,7 +887,7 @@
         }
       },
       {
-        "condition": "q.block_state('addon:size') == 'triple' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "condition": "q.block_state('addon:shape') == 'corner' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
         "components": {
           "minecraft:geometry": "geometry.mini_block_triple_top",
           "minecraft:collision_box": [
@@ -734,6 +926,196 @@
               16,
               8,
               16
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'step_x' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_step_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -4
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                -4
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -4
+            ],
+            "size": [
+              16,
+              16,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'step_x' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_step_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -4
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -4
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -4
+            ],
+            "size": [
+              16,
+              16,
+              8
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'step_z' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_step_bottom",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                0,
+                -4
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                8,
+                -4
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -4
+            ],
+            "size": [
+              16,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
+            ]
+          }
+        }
+      },
+      {
+        "condition": "q.block_state('addon:shape') == 'step_z' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+        "components": {
+          "minecraft:geometry": "geometry.mini_block_step_top",
+          "minecraft:collision_box": [
+            {
+              "origin": [
+                -8,
+                8,
+                -4
+              ],
+              "size": [
+                16,
+                8,
+                8
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                0,
+                -4
+              ],
+              "size": [
+                8,
+                8,
+                8
+              ]
+            }
+          ],
+          "minecraft:selection_box": {
+            "origin": [
+              -8,
+              0,
+              -4
+            ],
+            "size": [
+              16,
+              16,
+              8
+            ]
+          },
+          "minecraft:transformation": {
+            "rotation": [
+              0,
+              90,
+              0
             ]
           }
         }

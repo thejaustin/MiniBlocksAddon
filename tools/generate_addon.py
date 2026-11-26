@@ -292,11 +292,53 @@ def slab_uv(is_top=False):
     }
 
 
+def quarter_uv(north=True, south=True, east=True, west=True, up=True, down=True, u_x=0, v_z=0):
+    """Per-face UVs for an 8x16x8 vertical quarter-column; omitting internal faces eliminates glass seams."""
+    faces = {}
+    if north: faces["north"] = uv_face(u_x, 0, 8, 16, "side")
+    if south: faces["south"] = uv_face(u_x, 0, 8, 16, "side")
+    if east:  faces["east"]  = uv_face(v_z, 0, 8, 16, "side")
+    if west:  faces["west"]  = uv_face(v_z, 0, 8, 16, "side")
+    if up:    faces["up"]    = uv_face(u_x, v_z, 8, 8, "up")
+    if down:  faces["down"]  = uv_face(u_x, v_z, 8, 8, "down")
+    return faces
+
+
 GEOMETRIES = {
     # Wall slab: North half (z = -8..0); rotated by minecraft:transformation for W/S/E!
     "wall_slab.geo.json": make_geo_doc(
         "geometry.wall_slab",
         [{"origin": [-8, 0, -8], "size": [16, 16, 8], "uv": wall_slab_uv()}],
+        bounds=(2, 2, 0.5),
+    ),
+    # Auto-connecting Wall Slab Outer Corners (1/4 vertical corner posts)
+    "wall_slab_outer_left.geo.json": make_geo_doc(
+        "geometry.wall_slab_outer_left",
+        [{"origin": [-8, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(u_x=0, v_z=0)}],
+        bounds=(2, 2, 0.5),
+    ),
+    "wall_slab_outer_right.geo.json": make_geo_doc(
+        "geometry.wall_slab_outer_right",
+        [{"origin": [0, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(u_x=8, v_z=0)}],
+        bounds=(2, 2, 0.5),
+    ),
+    # Auto-connecting Wall Slab Inner Corners (3/4 L-shaped wall with ZERO internal faces for clean glass!)
+    "wall_slab_inner_left.geo.json": make_geo_doc(
+        "geometry.wall_slab_inner_left",
+        [
+            {"origin": [-8, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(east=False, south=False, u_x=0, v_z=0)},
+            {"origin": [ 0, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(west=False, u_x=8, v_z=0)},
+            {"origin": [-8, 0,  0], "size": [8, 16, 8], "uv": quarter_uv(north=False, u_x=0, v_z=8)},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    "wall_slab_inner_right.geo.json": make_geo_doc(
+        "geometry.wall_slab_inner_right",
+        [
+            {"origin": [ 0, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(west=False, south=False, u_x=8, v_z=0)},
+            {"origin": [-8, 0, -8], "size": [8, 16, 8], "uv": quarter_uv(east=False, u_x=0, v_z=0)},
+            {"origin": [ 0, 0,  0], "size": [8, 16, 8], "uv": quarter_uv(north=False, u_x=8, v_z=8)},
+        ],
         bounds=(2, 2, 0.5),
     ),
     # Centered wall slab icon for inventory/hotbar/creative UI via minecraft:item_visual
@@ -337,7 +379,24 @@ GEOMETRIES = {
         [{"origin": [-4, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()}],
         bounds=(1, 1, 0.75),
     ),
-    # Mini blocks: Double (2 distinct 8x8x8 cubes side-by-side)
+    # Mini blocks: Vertical Pillar (2 stacked 8x8x8 cubes — centered or flush against wall!)
+    "mini_block_pillar.geo.json": make_geo_doc(
+        "geometry.mini_block_pillar",
+        [
+            {"origin": [-4, 0, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-4, 8, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(1, 2, 0.5),
+    ),
+    "mini_block_pillar_wall.geo.json": make_geo_doc(
+        "geometry.mini_block_pillar_wall",
+        [
+            {"origin": [-4, 0, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-4, 8, -8], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(1, 2, 0.5),
+    ),
+    # Mini blocks: Horizontal Beam (2 distinct 8x8x8 cubes side-by-side; rotated 90 deg for beam_z)
     "mini_block_double_bottom.geo.json": make_geo_doc(
         "geometry.mini_block_double_bottom",
         [
@@ -354,7 +413,7 @@ GEOMETRIES = {
         ],
         bounds=(2, 1, 0.75),
     ),
-    # Mini blocks: Triple (3 distinct 8x8x8 cubes in an L-cluster)
+    # Mini blocks: Flat L-Corner (3 distinct 8x8x8 cubes on floor/ceiling)
     "mini_block_triple_bottom.geo.json": make_geo_doc(
         "geometry.mini_block_triple_bottom",
         [
@@ -372,6 +431,25 @@ GEOMETRIES = {
             {"origin": [-8, 8,  0], "size": [8, 8, 8], "uv": full_cube_uv()},
         ],
         bounds=(2, 1, 0.75),
+    ),
+    # Mini blocks: Vertical Step / Bracket (3 distinct 8x8x8 cubes — 2 bottom + 1 top, or inverted for ceiling!)
+    "mini_block_step_bottom.geo.json": make_geo_doc(
+        "geometry.mini_block_step_bottom",
+        [
+            {"origin": [-8, 0, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 0, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 8, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
+    ),
+    "mini_block_step_top.geo.json": make_geo_doc(
+        "geometry.mini_block_step_top",
+        [
+            {"origin": [-8, 8, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [ 0, 8, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+            {"origin": [-8, 0, -4], "size": [8, 8, 8], "uv": full_cube_uv()},
+        ],
+        bounds=(2, 2, 0.5),
     ),
 }
 
@@ -566,7 +644,7 @@ def make_wall_slab_block(slug, hardness, sound, tool_type, flammable):
     identifier = f"addon:{slug}_wall_slab"
     mats = wall_slab_materials(slug)
 
-    # Rotate single North-half panel + collision/selection box together via minecraft:transformation!
+    # Rotate base North-aligned geometries + collision/selection boxes together via minecraft:transformation!
     # Bedrock Y rotation is CCW from above (+Y):
     #   0   -> North (z = -8..0)
     #   90  -> West  (x = -8..0)
@@ -578,15 +656,50 @@ def make_wall_slab_block(slug, hardness, sound, tool_type, flammable):
         ("south", [0, 180, 0]),
         ("east",  [0, 270, 0]),
     ]
-    permutations = [
-        {
+
+    shape_specs = {
+        "outer_left": {
+            "minecraft:geometry": "geometry.wall_slab_outer_left",
+            "minecraft:collision_box": [{"origin": [-8, 0, -8], "size": [8, 16, 8]}],
+            "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [8, 16, 8]},
+        },
+        "outer_right": {
+            "minecraft:geometry": "geometry.wall_slab_outer_right",
+            "minecraft:collision_box": [{"origin": [0, 0, -8], "size": [8, 16, 8]}],
+            "minecraft:selection_box": {"origin": [0, 0, -8], "size": [8, 16, 8]},
+        },
+        "inner_left": {
+            "minecraft:geometry": "geometry.wall_slab_inner_left",
+            "minecraft:collision_box": [
+                {"origin": [-8, 0, -8], "size": [16, 16, 8]},
+                {"origin": [-8, 0,  0], "size": [ 8, 16, 8]},
+            ],
+            "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+        },
+        "inner_right": {
+            "minecraft:geometry": "geometry.wall_slab_inner_right",
+            "minecraft:collision_box": [
+                {"origin": [-8, 0, -8], "size": [16, 16, 8]},
+                {"origin": [ 0, 0,  0], "size": [ 8, 16, 8]},
+            ],
+            "minecraft:selection_box": {"origin": [-8, 0, -8], "size": [16, 16, 16]},
+        },
+    }
+
+    permutations = []
+    # Apply cardinal rotation first for all shapes, then override geometry/collision for corner shapes!
+    for direction, rot in rotations:
+        permutations.append({
             "condition": f"q.block_state('minecraft:cardinal_direction') == '{direction}'",
             "components": {
                 "minecraft:transformation": {"rotation": rot},
             },
-        }
-        for direction, rot in rotations
-    ]
+        })
+    for shape_name, shape_comps in shape_specs.items():
+        permutations.append({
+            "condition": f"q.block_state('addon:shape') == '{shape_name}'",
+            "components": shape_comps,
+        })
 
     components = {
         "minecraft:material_instances": mats,
@@ -621,6 +734,10 @@ def make_wall_slab_block(slug, hardness, sound, tool_type, flammable):
                 "identifier": identifier,
                 # Managed cleanly inside expandable "Wall Slabs (+)" group in crafting_item_catalog.json
                 "menu_category": {"category": "none"},
+                "states": {
+                    # 'locked' renders straight and never auto-connects (placed while crouching!)
+                    "addon:shape": ["straight", "locked", "inner_left", "inner_right", "outer_left", "outer_right"],
+                },
                 "traits": {
                     "minecraft:placement_direction": {
                         "enabled_states": ["minecraft:cardinal_direction"],
@@ -695,7 +812,8 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
     identifier = f"addon:mini_{slug}"
     world_mats, item_mats, particle_tex = mini_block_materials(slug)
 
-    # Multi-surface placement (floor, ceiling, 4 walls × bottom/top) + progressive 1→2→3→Full stacking!
+    # Multi-surface placement (floor, ceiling, 4 walls × bottom/top) + tap-aware directional shapes!
+    # Shapes: single (1) -> pillar / beam_x / beam_z (2) -> corner / step_x / step_z (3) -> full (4)
     wall_rotations = [
         ("south", [0,   0, 0]),  # Tapped South face -> cell at z+1 -> mounts on North side (z = -8..0)
         ("east",  [0,  90, 0]),  # Tapped East face  -> cell at x+1 -> mounts on West side  (x = -8..0)
@@ -703,10 +821,13 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
         ("west",  [0, 270, 0]),  # Tapped West face  -> cell at x-1 -> mounts on East side  (x =  0..8)
     ]
 
+    is_bottom = "(q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))"
+    is_top = "(q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))"
+
     permutations = [
-        # ── Single (1 mini block) ──
+        # ── 1. Single (1 mini block) ──
         {
-            "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'up'",
+            "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'up'",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_single",
                 "minecraft:collision_box": [{"origin": [-4, 0, -4], "size": [8, 8, 8]}],
@@ -714,18 +835,27 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
             },
         },
         {
-            "condition": "q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == 'down'",
+            "condition": "q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == 'down'",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_ceiling",
                 "minecraft:collision_box": [{"origin": [-4, 8, -4], "size": [8, 8, 8]}],
                 "minecraft:selection_box": {"origin": [-4, 8, -4], "size": [8, 8, 8]},
             },
         },
+        # ── 2. Pillar (2 stacked vertically, 8x16x8 — centered on floor/ceiling, flush on walls!) ──
+        {
+            "condition": "q.block_state('addon:shape') == 'pillar' && (q.block_state('minecraft:block_face') == 'up' || q.block_state('minecraft:block_face') == 'down')",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_pillar",
+                "minecraft:collision_box": [{"origin": [-4, 0, -4], "size": [8, 16, 8]}],
+                "minecraft:selection_box": {"origin": [-4, 0, -4], "size": [8, 16, 8]},
+            },
+        },
     ]
 
     for face, rot in wall_rotations:
         permutations.append({
-            "condition": f"q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == '{face}' && q.block_state('minecraft:vertical_half') == 'bottom'",
+            "condition": f"q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == '{face}' && q.block_state('minecraft:vertical_half') == 'bottom'",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_wall_bottom",
                 "minecraft:collision_box": [{"origin": [-4, 0, -8], "size": [8, 8, 8]}],
@@ -734,7 +864,7 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
             },
         })
         permutations.append({
-            "condition": f"q.block_state('addon:size') == 'single' && q.block_state('minecraft:block_face') == '{face}' && q.block_state('minecraft:vertical_half') == 'top'",
+            "condition": f"q.block_state('addon:shape') == 'single' && q.block_state('minecraft:block_face') == '{face}' && q.block_state('minecraft:vertical_half') == 'top'",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_wall_top",
                 "minecraft:collision_box": [{"origin": [-4, 8, -8], "size": [8, 8, 8]}],
@@ -742,11 +872,20 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
                 "minecraft:transformation": {"rotation": rot},
             },
         })
+        permutations.append({
+            "condition": f"q.block_state('addon:shape') == 'pillar' && q.block_state('minecraft:block_face') == '{face}'",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_pillar_wall",
+                "minecraft:collision_box": [{"origin": [-4, 0, -8], "size": [8, 16, 8]}],
+                "minecraft:selection_box": {"origin": [-4, 0, -8], "size": [8, 16, 8]},
+                "minecraft:transformation": {"rotation": rot},
+            },
+        })
 
-    # ── Double (2 mini blocks side-by-side) ──
+    # ── 3. Horizontal Beams (beam_x: East-West 16x8x8, beam_z: North-South 8x8x16) ──
     permutations.extend([
         {
-            "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'up' || ((q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south') && q.block_state('minecraft:vertical_half') == 'bottom'))",
+            "condition": f"q.block_state('addon:shape') == 'beam_x' && {is_bottom}",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_double_bottom",
                 "minecraft:collision_box": [{"origin": [-8, 0, -4], "size": [16, 8, 8]}],
@@ -754,7 +893,15 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
             },
         },
         {
-            "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west') && q.block_state('minecraft:vertical_half') == 'bottom'",
+            "condition": f"q.block_state('addon:shape') == 'beam_x' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_double_top",
+                "minecraft:collision_box": [{"origin": [-8, 8, -4], "size": [16, 8, 8]}],
+                "minecraft:selection_box": {"origin": [-8, 8, -4], "size": [16, 8, 8]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'beam_z' && {is_bottom}",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_double_bottom",
                 "minecraft:collision_box": [{"origin": [-8, 0, -4], "size": [16, 8, 8]}],
@@ -763,15 +910,7 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
             },
         },
         {
-            "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'down' || ((q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south') && q.block_state('minecraft:vertical_half') == 'top'))",
-            "components": {
-                "minecraft:geometry": "geometry.mini_block_double_top",
-                "minecraft:collision_box": [{"origin": [-8, 8, -4], "size": [16, 8, 8]}],
-                "minecraft:selection_box": {"origin": [-8, 8, -4], "size": [16, 8, 8]},
-            },
-        },
-        {
-            "condition": "q.block_state('addon:size') == 'double' && (q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west') && q.block_state('minecraft:vertical_half') == 'top'",
+            "condition": f"q.block_state('addon:shape') == 'beam_z' && {is_top}",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_double_top",
                 "minecraft:collision_box": [{"origin": [-8, 8, -4], "size": [16, 8, 8]}],
@@ -781,10 +920,10 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
         },
     ])
 
-    # ── Triple (3 mini blocks L-cluster, multi-box 1.26.60 collision!) ──
+    # ── 4. Flat L-Corner (3 mini blocks horizontal, multi-box 1.26.60 collision) ──
     permutations.extend([
         {
-            "condition": "q.block_state('addon:size') == 'triple' && (q.block_state('minecraft:block_face') == 'up' || (q.block_state('minecraft:block_face') != 'down' && q.block_state('minecraft:vertical_half') == 'bottom'))",
+            "condition": f"q.block_state('addon:shape') == 'corner' && {is_bottom}",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_triple_bottom",
                 "minecraft:collision_box": [
@@ -795,7 +934,7 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
             },
         },
         {
-            "condition": "q.block_state('addon:size') == 'triple' && (q.block_state('minecraft:block_face') == 'down' || (q.block_state('minecraft:block_face') != 'up' && q.block_state('minecraft:vertical_half') == 'top'))",
+            "condition": f"q.block_state('addon:shape') == 'corner' && {is_top}",
             "components": {
                 "minecraft:geometry": "geometry.mini_block_triple_top",
                 "minecraft:collision_box": [
@@ -803,6 +942,56 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
                     {"origin": [-8, 8,  0], "size": [ 8, 8, 8]},
                 ],
                 "minecraft:selection_box": {"origin": [-8, 8, -8], "size": [16, 8, 16]},
+            },
+        },
+    ])
+
+    # ── 5. Vertical Steps / Brackets (step_x along X, step_z along Z; multi-box 1.26.60 collision) ──
+    permutations.extend([
+        {
+            "condition": f"q.block_state('addon:shape') == 'step_x' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_step_bottom",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 0, -4], "size": [16, 8, 8]},
+                    {"origin": [-8, 8, -4], "size": [ 8, 8, 8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -4], "size": [16, 16, 8]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'step_x' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_step_top",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 8, -4], "size": [16, 8, 8]},
+                    {"origin": [-8, 0, -4], "size": [ 8, 8, 8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -4], "size": [16, 16, 8]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'step_z' && {is_bottom}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_step_bottom",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 0, -4], "size": [16, 8, 8]},
+                    {"origin": [-8, 8, -4], "size": [ 8, 8, 8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -4], "size": [16, 16, 8]},
+                "minecraft:transformation": {"rotation": [0, 90, 0]},
+            },
+        },
+        {
+            "condition": f"q.block_state('addon:shape') == 'step_z' && {is_top}",
+            "components": {
+                "minecraft:geometry": "geometry.mini_block_step_top",
+                "minecraft:collision_box": [
+                    {"origin": [-8, 8, -4], "size": [16, 8, 8]},
+                    {"origin": [-8, 0, -4], "size": [ 8, 8, 8]},
+                ],
+                "minecraft:selection_box": {"origin": [-8, 0, -4], "size": [16, 16, 8]},
+                "minecraft:transformation": {"rotation": [0, 90, 0]},
             },
         },
     ])
@@ -846,7 +1035,7 @@ def make_mini_block(slug, hardness, sound, tool_type, flammable, light_emission)
                 # Managed cleanly inside expandable "Mini Blocks (+)" group in crafting_item_catalog.json
                 "menu_category": {"category": "none"},
                 "states": {
-                    "addon:size": ["single", "double", "triple"],
+                    "addon:shape": ["single", "pillar", "beam_x", "beam_z", "corner", "step_x", "step_z"],
                 },
                 "traits": {
                     "minecraft:placement_position": {
