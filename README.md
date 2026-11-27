@@ -38,11 +38,10 @@ The modern Bedrock port reflects an on-device AI pair-programming workflow trace
 ### Core Features (v2.6.0 — Bedrock 26.60)
 * **57 Auto-Connecting Wall Slab Variants**: Complete parity across all vanilla stair-family woods, stones, deepslate, tuff, mud/resin bricks, sandstone, quartz, prismarine, nether/end bricks, weathered cut copper, and seam-free Glass. Auto-connects cross-material into `inner`/`outer` corners with Wall Slabs, Vanilla Stairs, Open Trapdoors, and Wall-Mounted Mini Pillars; crouching locks straight (`locked`) and prevents combining.
 * **71 Mini Blocks (57/57 Wall Slab Parity + 14 Extended Blocks)**: Exact 3D octant volume physics (`1 Full Block = 2 Wall Slabs = 8 Mini Blocks`; `1 Wall Slab = 4 Mini Blocks`; `1 Vanilla Stair = 6 Mini Blocks`).
-* **Geometrically Accurate Combining & Synthesis**:
-  * Stack Mini Blocks `1→2→3→4→5→6→7→8` with tap-aware shapes (`pillar`, `beam`, `corner`, `step`), auto-forming real **Wall Slabs** (`4/8` vertical), real **Vanilla Stairs** (`6/8`, 53 verified variants), and **Full Vanilla Blocks** (`8/8`).
-  * Tap the open inner face of a matching **Wall Slab (`4/8`)** or **Vanilla Horizontal Slab (`4/8`)** with `2` Mini Blocks to form a **Vanilla Stair (`6/8`)** (or `4` Mini Blocks → Full Block where no stair exists).
-  * Tap the open `2/8` cutout of a matching **Vanilla Stair (`6/8`)** with `2` Mini Blocks to complete the **Full Block (`8/8`)**.
-  * Perpendicular planes (vertical Wall Slabs vs. horizontal Slabs / horizontal Mini layers) stay geometrically distinct and never falsely merge.
+* **Geometrically Accurate 1-by-1 Octant Combining & Synthesis**:
+  * Stack Mini Blocks `1→2→3→4→5→6→7→8` one cube per tap (`pillar`, `beam`, `corner`, `step`), auto-forming real **Wall Slabs** (`4/8` vertical), real **Vanilla Stairs** (`6/8`, 53 verified variants), and **Full Vanilla Blocks** (`8/8`).
+  * Build Mini Blocks directly onto matching **Wall Slabs (`4/8`)**, **Vanilla Horizontal Slabs (`4/8`)**, and **Vanilla Stair (`6/8`)** open cutouts `1` cube at a time (`4→5→6 Stairs→7→8 Full Block`) — never requiring 2 or 4 blocks at once.
+  * Combine a **Wall Slab (`4/8`)** with physically non-overlapping Mini Blocks (`single 1/8 → 5/8`, `beam 2/8 → 6/8 Stairs`, `pillar 2/8 → 6/8`, `step 3/8 → 7/8`); perpendicular/overlapping shapes (horizontal slabs, `corner`, `slab_half`, `5/8`–`7/8`, stairs) never falsely merge.
 * **Survival-First Economy & 848 Zero-Conflict Recipes**:
   * Breaking a Wall Slab drops **`4× Mini Blocks`** natively (mirroring vanilla double slabs); **Silk Touch** preserves **`1× Wall Slab`** intact.
   * **Sneak + Break ("Pop 1 Off")** removes `1/8` at a time from multi-cube Mini Blocks and Wall Slabs without shattering the whole block.

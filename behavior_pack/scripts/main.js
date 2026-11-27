@@ -661,80 +661,163 @@ function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = bloc
   return true;
 }
 
-function tryUpgradeWallSlabToStair(player, wallSlabBlock, slabDir, faceLocation, miniTypeId, stairId) {
+function tryAddMiniToSlab(player, slabBlock, miniTypeId, upsideDown, sourceLabel) {
   if (!canBuild(player)) return false;
-  const location = wallSlabBlock.location;
-  const dimension = wallSlabBlock.dimension;
+  const location = slabBlock.location;
+  const dimension = slabBlock.dimension;
   const selectedSlot = player.selectedSlotIndex;
-
-  if (!hasEnoughItems(player, miniTypeId, selectedSlot, 2)) {
-    const have = getItemCount(player, miniTypeId, selectedSlot);
-    showHint(player, `§eNeed 2 Mini Blocks to form Stairs §7(have ${have}/2)`);
-    return false;
-  }
-
-  const weirdo = DIR_TO_STAIR_WEIRDO[slabDir] ?? 3;
-  const upsideDown = (faceLocation?.y ?? 0.4) >= 0.5;
-  const slabTypeId = wallSlabBlock.typeId;
+  const slabTypeId = slabBlock.typeId;
 
   system.run(() => {
     const current = dimension.getBlock(location);
     if (current?.typeId !== slabTypeId) return;
     if (!player?.isValid || !canBuild(player)) return;
-    if (!consumeItem(player, miniTypeId, selectedSlot, 2)) return;
+    if (!consumeItem(player, miniTypeId, selectedSlot, 1)) return;
 
     try {
-      const perm = BlockPermutation.resolve(stairId, {
-        weirdo_direction: weirdo,
-        upside_down_bit: upsideDown,
+      const perm = BlockPermutation.resolve(miniTypeId, {
+        "minecraft:block_face": upsideDown ? "down" : "up",
+        "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+        "addon:shape": "five",
       });
       current.setPermutation(perm);
     } catch {
-      current.setType(stairId);
+      return;
     }
     refreshAdjacentWallSlabs(dimension, location);
-    showHint(player, "§bWall Slab + 2 Mini: §fStairs (6/8) §8(Tap w/ 2 more -> Full Block)");
-    playSound(dimension, location, miniTypeId, SHAPE_PITCH.stair);
+    showHint(player, `§b${sourceLabel} + Mini: §f5/8 Block §8(Tap 1 more -> Stairs)`);
+    playSound(dimension, location, miniTypeId, SHAPE_PITCH.five);
   });
 
   return true;
 }
 
-function tryUpgradeVanillaSlabToStair(player, vanillaSlabBlock, half, miniTypeId, stairId) {
+function tryAddMiniToStair(player, stairBlock, miniTypeId) {
   if (!canBuild(player)) return false;
-  const location = vanillaSlabBlock.location;
-  const dimension = vanillaSlabBlock.dimension;
+  const location = stairBlock.location;
+  const dimension = stairBlock.dimension;
   const selectedSlot = player.selectedSlotIndex;
-
-  if (!hasEnoughItems(player, miniTypeId, selectedSlot, 2)) {
-    const have = getItemCount(player, miniTypeId, selectedSlot);
-    showHint(player, `§eNeed 2 Mini Blocks to form Stairs §7(have ${have}/2)`);
-    return false;
-  }
-
-  const pDir = getPlayerCardinalDir(player);
-  const weirdo = DIR_TO_STAIR_WEIRDO[pDir] ?? 3;
-  const upsideDown = half === "top";
-  const slabTypeId = vanillaSlabBlock.typeId;
+  const stairTypeId = stairBlock.typeId;
+  const upsideDown = Boolean(stairBlock.permutation.getState("upside_down_bit"));
 
   system.run(() => {
     const current = dimension.getBlock(location);
-    if (current?.typeId !== slabTypeId) return;
+    if (current?.typeId !== stairTypeId) return;
     if (!player?.isValid || !canBuild(player)) return;
-    if (!consumeItem(player, miniTypeId, selectedSlot, 2)) return;
+    if (!consumeItem(player, miniTypeId, selectedSlot, 1)) return;
 
     try {
-      const perm = BlockPermutation.resolve(stairId, {
-        weirdo_direction: weirdo,
-        upside_down_bit: upsideDown,
+      const perm = BlockPermutation.resolve(miniTypeId, {
+        "minecraft:block_face": upsideDown ? "down" : "up",
+        "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+        "addon:shape": "seven",
       });
       current.setPermutation(perm);
     } catch {
-      current.setType(stairId);
+      return;
     }
     refreshAdjacentWallSlabs(dimension, location);
-    showHint(player, "§bSlab + 2 Mini: §fStairs (6/8) §8(Tap w/ 2 more -> Full Block)");
-    playSound(dimension, location, miniTypeId, SHAPE_PITCH.stair);
+    showHint(player, "§bStairs + Mini: §f7/8 Block §8(Tap 1 more -> Full Block)");
+    playSound(dimension, location, miniTypeId, SHAPE_PITCH.seven);
+  });
+
+  return true;
+}
+
+// Non-overlapping 3D octant combinations when tapping a compatible 1/8..3/8 Mini Block with a 4/8 Wall Slab:
+//   - single (1/8)  + Wall Slab (4/8) = 5/8 Block (five)
+//   - beam_x/z (2/8)+ Wall Slab (4/8) = 6/8 Real Vanilla Stair (or 6/8 Mini Stair if no stair exists)
+//   - pillar (2/8)  + Wall Slab (4/8) = 6/8 Block (six)
+//   - step_x/z (3/8)+ Wall Slab (4/8) = 7/8 Block (seven)
+// (Horizontal corner/slab_half/5-7/8 span both vertical halves so a vertical Wall Slab cannot fit without overlapping.)
+const WALL_SLAB_COMPATIBLE_MINI_SHAPES = new Set(["single", "beam_x", "beam_z", "pillar", "step_x", "step_z"]);
+
+function tryCombineWallSlabWithMini(player, miniBlock, wallSlabTypeId) {
+  if (!canBuild(player)) return false;
+  const miniTypeId = miniBlock.typeId;
+  const mShape = miniBlock.permutation.getState("addon:shape") || "single";
+  if (!WALL_SLAB_COMPATIBLE_MINI_SHAPES.has(mShape)) return false;
+
+  const location = miniBlock.location;
+  const dimension = miniBlock.dimension;
+  const selectedSlot = player.selectedSlotIndex;
+  const mf = miniBlock.permutation.getState("minecraft:block_face");
+  const vh = miniBlock.permutation.getState("minecraft:vertical_half");
+  const upsideDown = mf === "down" || (mf !== "up" && vh === "top");
+  const pDir = getPlayerCardinalDir(player);
+
+  system.run(() => {
+    const current = dimension.getBlock(location);
+    if (current?.typeId !== miniTypeId) return;
+    const liveShape = current.permutation.getState("addon:shape") || "single";
+    if (!WALL_SLAB_COMPATIBLE_MINI_SHAPES.has(liveShape)) return;
+    if (!player?.isValid || !canBuild(player)) return;
+    if (!consumeItem(player, wallSlabTypeId, selectedSlot, 1)) return;
+
+    if (liveShape === "single") {
+      current.setPermutation(
+        BlockPermutation.resolve(miniTypeId, {
+          "minecraft:block_face": upsideDown ? "down" : "up",
+          "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+          "addon:shape": "five",
+        })
+      );
+      showHint(player, "§bMini (1/8) + Wall Slab (4/8): §f5/8 Block");
+      playSound(dimension, location, wallSlabTypeId, SHAPE_PITCH.five);
+    } else if (liveShape === "beam_x" || liveShape === "beam_z") {
+      const stairId = MINI_BLOCK_TO_STAIR[miniTypeId];
+      if (stairId) {
+        const stairDir =
+          liveShape === "beam_x"
+            ? (pDir === "north" || pDir === "south" ? pDir : "north")
+            : (pDir === "east" || pDir === "west" ? pDir : "west");
+        try {
+          current.setPermutation(
+            BlockPermutation.resolve(stairId, {
+              weirdo_direction: DIR_TO_STAIR_WEIRDO[stairDir] ?? 3,
+              upside_down_bit: upsideDown,
+            })
+          );
+        } catch {
+          current.setType(stairId);
+        }
+        showHint(player, "§bMini Beam (2/8) + Wall Slab (4/8): §fStairs (6/8)");
+        playSound(dimension, location, wallSlabTypeId, SHAPE_PITCH.stair);
+      } else {
+        current.setPermutation(
+          BlockPermutation.resolve(miniTypeId, {
+            "minecraft:block_face": upsideDown ? "down" : "up",
+            "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+            "addon:shape": "six",
+          })
+        );
+        showHint(player, "§bMini Beam (2/8) + Wall Slab (4/8): §fMini Stair (6/8)");
+        playSound(dimension, location, wallSlabTypeId, SHAPE_PITCH.six);
+      }
+    } else if (liveShape === "pillar") {
+      current.setPermutation(
+        BlockPermutation.resolve(miniTypeId, {
+          "minecraft:block_face": upsideDown ? "down" : "up",
+          "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+          "addon:shape": "six",
+        })
+      );
+      showHint(player, "§bMini Pillar (2/8) + Wall Slab (4/8): §f6/8 Block");
+      playSound(dimension, location, wallSlabTypeId, SHAPE_PITCH.six);
+    } else {
+      // step_x / step_z (3/8) + Wall Slab (4/8) = 7/8 Block!
+      current.setPermutation(
+        BlockPermutation.resolve(miniTypeId, {
+          "minecraft:block_face": upsideDown ? "down" : "up",
+          "minecraft:vertical_half": upsideDown ? "top" : "bottom",
+          "addon:shape": "seven",
+        })
+      );
+      showHint(player, "§bMini Step (3/8) + Wall Slab (4/8): §f7/8 Block");
+      playSound(dimension, location, wallSlabTypeId, SHAPE_PITCH.seven);
+    }
+
+    refreshAdjacentWallSlabs(dimension, location);
   });
 
   return true;
@@ -1057,20 +1140,14 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         const slabShape = block.permutation.getState("addon:shape") || "straight";
         const basis = SLAB_BASIS[slabDir];
 
-        // Matching Mini Block tapped onto the Wall Slab's open inner face:
-        //   - If a Vanilla Stair exists: Wall Slab (4/8) + 2 Mini Blocks -> Stairs (6/8)!
-        //   - Otherwise (glass, smooth_stone, cut_sandstone): Wall Slab (4/8) + 4 Mini Blocks -> Full Block (8/8)!
+        // Matching Mini Block tapped onto the Wall Slab's open inner face -> adds 1 Mini Block (4/8 -> 5/8)!
+        // (Tapping 1 more builds into 6/8 Stairs -> 7/8 -> 8/8 Full Block!)
         if (
           MINI_BLOCK_TO_WALL_SLAB[itemTypeId] === block.typeId &&
           isWallSlabCombineFace(slabDir, slabShape, blockFace)
         ) {
-          const matchingStair = MINI_BLOCK_TO_STAIR[itemTypeId];
-          if (matchingStair) {
-            if (tryUpgradeWallSlabToStair(player, block, slabDir, faceLocation, itemTypeId, matchingStair)) {
-              event.cancel = true;
-              return;
-            }
-          } else if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
+          const upsideDown = (faceLocation?.y ?? 0.4) >= 0.5;
+          if (tryAddMiniToSlab(player, block, itemTypeId, upsideDown, "Wall Slab")) {
             event.cancel = true;
             return;
           }
@@ -1091,30 +1168,24 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         }
       }
 
-      // 1C. Tapping a matching Vanilla Stair's (6/8) open 2/8 cutout with 2 Mini Blocks -> Full Vanilla Block (8/8)!
+      // 1C. Tapping a matching Vanilla Stair's (6/8) open 2/8 cutout with 1 Mini Block -> 7/8 Block!
+      // (Tapping 1 more Mini Block completes the 8/8 Full Vanilla Block!)
       if (STAIR_TO_MINI_BLOCK[block.typeId] === itemTypeId && isStairOpenFace(block, blockFace)) {
-        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 2)) {
+        if (tryAddMiniToStair(player, block, itemTypeId)) {
           event.cancel = true;
           return;
         }
       }
 
-      // 1D. Tapping a matching Vanilla Horizontal Slab's (4/8) open inner face with Mini Blocks:
-      //   - If a Vanilla Stair exists: Slab (4/8) + 2 Mini -> Stairs (6/8)!
-      //   - Otherwise (smooth_stone, cut_sandstone): Slab (4/8) + 4 Mini -> Full Block (8/8)!
+      // 1D. Tapping a matching Vanilla Horizontal Slab's (4/8) open inner face with 1 Mini Block -> 5/8 Block!
+      // (Tapping 1 more builds into 6/8 Stairs -> 7/8 -> 8/8 Full Block!)
       if (VANILLA_SLAB_TO_MINI_BLOCK[block.typeId] === itemTypeId) {
         const half = block.permutation.getState("minecraft:vertical_half") || "bottom";
         const isCombineFace =
           (half === "bottom" && blockFace === Direction.Up) ||
           (half === "top" && blockFace === Direction.Down);
         if (isCombineFace) {
-          const matchingStair = MINI_BLOCK_TO_STAIR[itemTypeId];
-          if (matchingStair) {
-            if (tryUpgradeVanillaSlabToStair(player, block, half, itemTypeId, matchingStair)) {
-              event.cancel = true;
-              return;
-            }
-          } else if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 4)) {
+          if (tryAddMiniToSlab(player, block, itemTypeId, half === "top", "Slab")) {
             event.cancel = true;
             return;
           }
@@ -1196,11 +1267,20 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    // (Geometrically: Wall Slabs are vertical 4/8 halves and only combine with complementary
-    // vertical Wall Slabs—never with perpendicular horizontal slabs, horizontal Mini layers,
-    // or 6/8 Stairs whose open notch is only 2/8.)
+    // 2B. Geometrically non-overlapping Wall Slab (4/8) + Mini Block (1/8..3/8) combinations:
+    //   - single (1/8)   + Wall Slab (4/8) -> 5/8 Block
+    //   - beam_x/z (2/8) + Wall Slab (4/8) -> 6/8 Real Vanilla Stair (or 6/8 Mini Stair)
+    //   - pillar (2/8)   + Wall Slab (4/8) -> 6/8 Block
+    //   - step_x/z (3/8) + Wall Slab (4/8) -> 7/8 Block
+    // (Horizontal corner/slab_half/5-7/8 and Vanilla Slabs/Stairs overlap a vertical 4/8 half and never falsely merge.)
+    if (!player.isSneaking && MINI_BLOCK_IDS.has(block.typeId) && WALL_SLAB_TO_MINI_BLOCK[itemTypeId] === block.typeId) {
+      if (tryCombineWallSlabWithMini(player, block, itemTypeId)) {
+        event.cancel = true;
+        return;
+      }
+    }
 
-    // 2B. Tapping an adjacent block face pointing into an existing matching Wall Slab -> combine!
+    // 2C. Tapping an adjacent block face pointing into an existing matching Wall Slab -> combine!
     if (!player.isSneaking && offset) {
       const adjBlock = dim.getBlock({
         x: block.location.x + offset.x,

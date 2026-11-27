@@ -182,9 +182,9 @@ Tracing through the repository commit history reveals how the modern Bedrock rev
   - `1 Vanilla Stair` (2x2 shapeless) -> `6 Mini Blocks`
   - `8 Mini Blocks` (3x3 hollow ring) -> `1 Full Block`
   - `1 Vanilla Horizontal Slab` (2x2 shapeless) -> `1 Wall Slab` (+ Stonecutter `1 Wall Slab -> 1 Vanilla Slab` & `1 Vanilla Slab -> 4 Mini Blocks`)
-* [Geometry] Strict 3D Geometric Accuracy Audit:
-  - Restricted `Vanilla Stair (6/8) + 2 Mini Blocks -> Full Block (8/8)` to the stair's actual open `2/8` cutout (`front` riser or inner tread face) so tapping the solid back/sides/base places a Mini Block adjacent instead of merging.
-  - Removed geometrically overlapping merges (`Wall Slab + horizontal Mini layer` and `Wall Slab + Vanilla Stair`) so vertical 4/8 Wall Slabs only combine with complementary vertical halves.
+* [Geometry] Strict 3D Octant Physics & 1-by-1 Building:
+  - Building Mini Blocks onto a matching Wall Slab (`4/8`), Vanilla Horizontal Slab (`4/8`), or Vanilla Stair (`6/8`) open cutout now adds 1 Mini Block per tap (`4->5->6 Stairs->7->8 Full Block`) — zero multi-item barriers and exact 3D cutout detection (`isStairOpenFace`).
+  - Wall Slabs (`4/8`) combine cleanly with physically non-overlapping Mini Blocks (`single 1/8 -> 5/8`, `beam 2/8 -> 6/8 Stairs`, `pillar 2/8 -> 6/8`, `step 3/8 -> 7/8`), while rejecting perpendicular/overlapping merges (`corner`, `slab_half`, `5/8`..`7/8`, horizontal slabs, and stairs).
 * [Cleanup] Hid legacy `addon:cobblestone_slab` from Creative menu & Survival recipes in favor of real vanilla `minecraft:cobblestone_slab` (kept registered for backward world compatibility).
 
 === v2.5.0 (Bedrock 26.60 — Mini Blocks Build Real Vanilla Stairs at 6/8 Volume! — 2026) ===
