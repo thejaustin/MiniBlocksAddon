@@ -3,9 +3,9 @@
 
 ```text
 // =========================================================================
-// Mini Blocks Mod v1.9 -> v1.5.0 by thejaustin
+// Mini Blocks Mod v1.9 -> v2.6.0 by thejaustin
 // Don't steal this code! Do not take it as your own!
-// Originally created for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.x.
+// Originally created for MCPE 0.10.x / 0.11.1; updated for Bedrock 1.26.60.
 // Directional placement logic originally credited to androidKaghon.
 // =========================================================================
 ```
@@ -35,16 +35,20 @@ The modern Bedrock port reflects an on-device AI pair-programming workflow trace
 * **Claude (Sonnet 4.6 & Opus 5.5) on Termux (Android Mobile)**: Authored October 2026 commits directly on-device in Termux using Claude Code. Modernized block schemas from 1.19 to 1.21/1.26 format, created Python generation tooling, and drafted early server script slab merging. (Any older Warp terminal sessions occurred ~a year prior on separate project work).
 * **Antigravity on Termux (Android Mobile)**: Continued the mobile Termux workflow over loopback ADB in November 2026. Debugged mobile touch-control combining across all faces, created custom pixel iconography, eliminated terrain texture collisions, and finalized native release packaging on-device.
 
-### Core Features
-* **41 Wall Slab Variants**: Full coverage across vanilla wood types (Oak, Spruce, Birch, Jungle, Acacia, Dark Oak, Crimson, Warped, and modern additions Bamboo, Cherry, Mangrove, Pale Oak), stone variants (Cobblestone, Granite, Diorite, Andesite, Deepslate, Blackstone, Bricks), sandstone, quartz, copper, and the newly restored Glass Wall Slab.
-* **Interactive Slab Combining**: Tap any face or place adjacent with a matching wall slab to merge into the full block. Sneaking allows building adjacent slabs without merging.
-* **Directional Placement**: Wall slabs orient automatically toward the player upon placement with robust GUI/in-hand rendering fallback.
-* **Multi-Surface Mini Blocks (9 Variants)**: 8×8×8 miniature decorative blocks with native 6-surface attachment (floors, ceilings, walls) via `minecraft:placement_position` (`minecraft:block_face`). Includes Dirt, Cobblestone, Oak Planks, Stone, Stone Bricks, Brick, Sandstone, Obsidian, and Glass.
-* **Survival & Stonecutter Parity**:
-  * 3 stacked blocks in crafting grid -> 6 wall slabs or 6 mini blocks.
-  * 1 stone-type block in stonecutter -> 2 wall slabs or 2 mini blocks.
-  * Tool destructibility tags (`is_pickaxe_item_destructible`, `is_axe_item_destructible`) for immediate survival tool mining speed parity.
-* **Nostalgic One-Time In-Game Greeting**: Optional welcome greeting on initial world join referencing the original 2015 script release.
+### Core Features (v2.6.0 — Bedrock 26.60)
+* **57 Auto-Connecting Wall Slab Variants**: Complete parity across all vanilla stair-family woods, stones, deepslate, tuff, mud/resin bricks, sandstone, quartz, prismarine, nether/end bricks, weathered cut copper, and seam-free Glass. Auto-connects cross-material into `inner`/`outer` corners with Wall Slabs, Vanilla Stairs, Open Trapdoors, and Wall-Mounted Mini Pillars; crouching locks straight (`locked`) and prevents combining.
+* **71 Mini Blocks (57/57 Wall Slab Parity + 14 Extended Blocks)**: Exact 3D octant volume physics (`1 Full Block = 2 Wall Slabs = 8 Mini Blocks`; `1 Wall Slab = 4 Mini Blocks`; `1 Vanilla Stair = 6 Mini Blocks`).
+* **Geometrically Accurate Combining & Synthesis**:
+  * Stack Mini Blocks `1→2→3→4→5→6→7→8` with tap-aware shapes (`pillar`, `beam`, `corner`, `step`), auto-forming real **Wall Slabs** (`4/8` vertical), real **Vanilla Stairs** (`6/8`, 53 verified variants), and **Full Vanilla Blocks** (`8/8`).
+  * Tap the open inner face of a matching **Wall Slab (`4/8`)** or **Vanilla Horizontal Slab (`4/8`)** with `2` Mini Blocks to form a **Vanilla Stair (`6/8`)** (or `4` Mini Blocks → Full Block where no stair exists).
+  * Tap the open `2/8` cutout of a matching **Vanilla Stair (`6/8`)** with `2` Mini Blocks to complete the **Full Block (`8/8`)**.
+  * Perpendicular planes (vertical Wall Slabs vs. horizontal Slabs / horizontal Mini layers) stay geometrically distinct and never falsely merge.
+* **Survival-First Economy & 848 Zero-Conflict Recipes**:
+  * Breaking a Wall Slab drops **`4× Mini Blocks`** natively (mirroring vanilla double slabs); **Silk Touch** preserves **`1× Wall Slab`** intact.
+  * **Sneak + Break ("Pop 1 Off")** removes `1/8` at a time from multi-cube Mini Blocks and Wall Slabs without shattering the whole block.
+  * Full explosion drop conservation and `2×2` pocket-grid + Stonecutter conversions with 100% exact 8-octant volume conservation.
+* **Clean Creative Menus & Vanilla Textures**: Expandable **Wall Slabs (+)** and **Mini Blocks (+)** drawers under Construction with centered icons and verified `v1.26.60.5` vanilla textures.
+* **Nostalgic One-Time In-Game Greeting**: Welcome greeting on initial world join referencing the original 2015 script release.
 
 ---
 

@@ -593,6 +593,18 @@ function isWallSlabCombineFace(dir, shape, blockFace) {
   return false;
 }
 
+// Geometrically exact open 2/8 cutout faces of a Vanilla Stair (riser front face or inner tread face).
+// Tapping the solid back, sides, or flat base places a Mini Block adjacent instead of merging!
+function isStairOpenFace(stairBlock, blockFace) {
+  const weirdo = stairBlock.permutation.getState("weirdo_direction");
+  const stairDir = STAIR_WEIRDO_TO_DIR[weirdo];
+  const basis = SLAB_BASIS[stairDir];
+  if (!basis) return false;
+  const upsideDown = Boolean(stairBlock.permutation.getState("upside_down_bit"));
+  if (blockFace === basis.front.face) return true;
+  return upsideDown ? blockFace === Direction.Down : blockFace === Direction.Up;
+}
+
 // ── Placement & Combining Actions ───────────────────────────────────────────
 
 function tryMergeToFullBlock(player, targetBlock, blockTypeId, itemTypeId = blockTypeId, consumeCount = 1, refundTypeId = null, refundCount = 0) {
@@ -1079,8 +1091,8 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
         }
       }
 
-      // 1C. Tapping a matching Vanilla Stair (6/8) with 2 Mini Blocks -> completes Full Vanilla Block (8/8)!
-      if (STAIR_TO_MINI_BLOCK[block.typeId] === itemTypeId) {
+      // 1C. Tapping a matching Vanilla Stair's (6/8) open 2/8 cutout with 2 Mini Blocks -> Full Vanilla Block (8/8)!
+      if (STAIR_TO_MINI_BLOCK[block.typeId] === itemTypeId && isStairOpenFace(block, blockFace)) {
         if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 2)) {
           event.cancel = true;
           return;
@@ -1184,29 +1196,11 @@ world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
       }
     }
 
-    // 2B. Tapping a 4/8..7/8 Mini Block OR matching Vanilla Stair (6/8) with a Wall Slab (4/8) -> Volume-conserved combine!
-    if (!player.isSneaking && MINI_BLOCK_IDS.has(block.typeId) && WALL_SLAB_TO_MINI_BLOCK[itemTypeId] === block.typeId) {
-      const mShape = block.permutation.getState("addon:shape") || "single";
-      const mCount = SHAPE_COUNT[mShape] || 1;
-      if (mCount >= 4) {
-        // mCount + 4 >= 8 -> Full Block (8/8) + exact refund of (mCount - 4) Mini Blocks!
-        const refund = mCount - 4;
-        if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1, refund > 0 ? block.typeId : null, refund)) {
-          event.cancel = true;
-          return;
-        }
-      }
-    }
-    if (!player.isSneaking && STAIR_TO_MINI_BLOCK[block.typeId] && STAIR_TO_MINI_BLOCK[block.typeId] === WALL_SLAB_TO_MINI_BLOCK[itemTypeId]) {
-      // Vanilla Stair (6/8) + Wall Slab (4/8) = Full Block (8/8) + refund 2 Mini Blocks!
-      const miniRefundId = STAIR_TO_MINI_BLOCK[block.typeId];
-      if (tryMergeToFullBlock(player, block, block.typeId, itemTypeId, 1, miniRefundId, 2)) {
-        event.cancel = true;
-        return;
-      }
-    }
+    // (Geometrically: Wall Slabs are vertical 4/8 halves and only combine with complementary
+    // vertical Wall Slabs—never with perpendicular horizontal slabs, horizontal Mini layers,
+    // or 6/8 Stairs whose open notch is only 2/8.)
 
-    // 2C. Tapping an adjacent block face pointing into an existing matching Wall Slab -> combine!
+    // 2B. Tapping an adjacent block face pointing into an existing matching Wall Slab -> combine!
     if (!player.isSneaking && offset) {
       const adjBlock = dim.getBlock({
         x: block.location.x + offset.x,
