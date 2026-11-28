@@ -10,3 +10,8 @@ Newest entry last. One entry per session: what changed, what's unverified, what'
 - v2.6: Survival economy (4-mini wall slab drops, Silk Touch, sneak-pop undo, explosion conservation); non-overlapping wall slab + 1-by-1 building on slabs/stairs.
 - Unverified: on-device behaviour of v2.4–2.6 combine/stair logic; branch awaits review.
 - Next: device-test survival drops and stair conversion; then merge `feat/bedrock-26.50`.
+
+## 2026-11-28 — GitHub Releases & Documentation Sync (Antigravity)
+- Synced README.md and RELEASE_NOTES.md with full Bedrock history across v1.2.0–v2.6.0.
+- Published GitHub releases for all 13 Bedrock editions (v1.2.0 through v2.6.0 latest) complete with tagged git commits, formatted release notes, and compiled .mcaddon and .mcpack packages.
+- PR #3 currently tracks merging `feat/bedrock-26.50` into `main`.
